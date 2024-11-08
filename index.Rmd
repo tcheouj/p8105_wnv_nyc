@@ -1,6 +1,5 @@
 ---
 title: "index"
-author: "Johnstone Tcheou"
 date: "2024-11-07"
 output: html_document
 ---
@@ -31,3 +30,16 @@ Figures:
 ## Planned analyses/visualizations/challenges
 
 * Visualizations 
+  * Prevalence of difference mosquito diseases from 2015-2020
+  * Graph of changing West Nile Virus prevalence (and maybe case fatality rate)
+  * Map of neighborhood heat vulnerability and West Nile Virus detection 
+* Challenges
+  * Ensuring that all data sets have similar indicators/variables so they can be merged (and are complete)
+  * Comparability of ZIP code metrics to NTA metrics (like WNV prevalence by ZIP to heat vulnerability by NTA)
+
+## Planned timeline 
+
+* November 8: Finding and confirming appropriate datasets to use
+* November 11-15: Project review meeting and finalize analysis plan
+* November 30: Cleaning and merging datasets
+* December 7: Creating visualizations, site, and screencast 
