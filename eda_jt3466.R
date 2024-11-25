@@ -18,6 +18,9 @@ wnv_mosquito_detection |>
   ) |> 
   arrange(desc(count))
 
+# May need to use ZCTA level HVI data instead of NTA level HVI 
+# - ZCTA is designed to approximate ZIP codes, when our WNV counts are by ZIP code
+
 hvi_zcta <- read_csv("https://data.cityofnewyork.us/resource/4mhf-duep.csv")  
 
 hvi_wnv_zip <-
@@ -51,33 +54,6 @@ stations <-
 
 # Some stations only have historical data preceding our years of interest of 2021-2024, these have been filtered out
 
-This station, 999999-14732, only provides data for years 1948 to 1972.
-Please send a request that falls within these years. 
-2: 
-  This station, 725033-94728, only provides data for years 1943 to 1997.
-Please send a request that falls within these years. 
-3: 
-  This station, 725060-94728, only provides data for years 2010 to 2012.
-Please send a request that falls within these years. 
-4: 
-  This station, 999999-94728, only provides data for years 1965 to 1997.
-Please send a request that falls within these years. 
-5: 
-  This station, 744976-99999, only provides data for years 1975 to 1996.
-Please send a request that falls within these years. 
-6: 
-  This station, 999999-14786, only provides data for years 1945 to 1970.
-Please send a request that falls within these years. 
-7: 
-  This station, 999999-94789, only provides data for years 1948 to 1972.
-Please send a request that falls within these years. 
-8: 
-  This station, 725026-99999, only provides data for years 1975 to 1979.
-Please send a request that falls within these years. 
-9: 
-  This station, 997439-99999, only provides data for years 2008 to 2008.
-Please send a request that falls within these years. 
-
 stations <- 
   stations |> 
   filter(!(STNID %in% c("999999-14732",
@@ -94,3 +70,70 @@ weather_df <-
     years = c(2021:2024),
     station = stations$STNID
   )
+
+# Mosquito counts by year and borough - does mosquito season start earlier?
+grouping_counts <- function(x) {
+  df <-
+    x |> 
+    group_by(borough, date) |> 
+    summarize(
+      count = n()
+    )
+  
+  df
+}
+
+
+borough_counts <-
+  tibble(
+    counts = list(mosquitoes_2021_table, mosquitoes_2022_table, mosquitoes_2023_table)
+  ) |> 
+  mutate(
+    borough_counts = map(counts, grouping_counts)
+  ) |>
+  select(borough_counts) |> 
+  unnest(cols = c(borough_counts)) |> 
+  mutate(
+    month = month(date),
+    year = year(date)
+  ) |> 
+  select(borough, month, year, date, count)
+
+borough_counts |>
+  filter(year == 2021) |> 
+  ggplot(aes(x = date, y = count)) +
+  geom_point() + 
+  geom_smooth(se = FALSE) +
+  facet_grid(~borough)
+
+borough_counts |>
+  filter(year == 2022) |> 
+  ggplot(aes(x = date, y = count)) +
+  geom_point() + 
+  geom_smooth(se = FALSE) +
+  facet_grid(~borough)
+
+borough_counts |>
+  filter(year == 2023) |> 
+  ggplot(aes(x = date, y = count)) +
+  geom_point() + 
+  geom_smooth(se = FALSE) +
+  facet_grid(~borough)
+
+borough_counts |> 
+  filter(year == 2021) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_bar(stat = "identity") +
+  facet_grid(~borough)
+
+borough_counts |> 
+  filter(year == 2022) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_bar(stat = "identity") +
+  facet_grid(~borough)
+
+borough_counts |> 
+  filter(year == 2023) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_bar(stat = "identity") +
+  facet_grid(~borough)
