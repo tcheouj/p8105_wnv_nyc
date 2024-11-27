@@ -269,14 +269,39 @@ borough_counts |>
 
 ![](eda_jt3466_files/figure-gfm/cursory%20graphs-9.png)<!-- -->
 
-    ## Reading layer `tl_2021_us_zcta520' from data source 
-    ##   `C:\Users\bschn\OneDrive\Documents\P8105 Data Science I\GitHub repos\p8105_wnv_nyc\data\shapefiles\tl_2021_us_zcta520.shp' 
+``` r
+# is there much variation between the different weather stations?
+
+weather_df |>
+#  filter(name %in% c("Central Park", "Wall St")) |> 
+  ggplot(aes(x = yearmoda, y = temp, color = name)) +
+  geom_point(size = 0.5, alpha = 0.5) +
+  geom_smooth(se = FALSE, color = "white", alpha = 0.5) +
+  theme(legend.position = "bottom") + 
+  geom_errorbar(aes(ymin = min, ymax = max), alpha = 0.5)  
+```
+
+    ## `geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'
+
+![](eda_jt3466_files/figure-gfm/cursory%20graphs-10.png)<!-- -->
+
+``` r
+# despite being different boroughs, measured temperatures between stations are largely coincident - can get by with just one like Central Park
+```
+
+    ## Reading layer `MODZCTA_2010' from data source 
+    ##   `C:\Users\bschn\OneDrive\Documents\P8105 Data Science I\GitHub repos\p8105_wnv_nyc\data\shapefiles\MODZCTA_2010.shp' 
     ##   using driver `ESRI Shapefile'
-    ## Simple feature collection with 33791 features and 9 fields
+    ## Simple feature collection with 178 features and 2 fields
     ## Geometry type: MULTIPOLYGON
     ## Dimension:     XY
-    ## Bounding box:  xmin: -176.6967 ymin: -14.37378 xmax: 145.8305 ymax: 71.34132
-    ## Geodetic CRS:  NAD83
+    ## Bounding box:  xmin: 913176 ymin: 120122 xmax: 1067382 ymax: 272844
+    ## Projected CRS: Lambert_Conformal_Conic
+
+    ## Warning: There was 1 warning in `stopifnot()`.
+    ## ℹ In argument: `zip_code = as.double(label)`.
+    ## Caused by warning:
+    ## ! NAs introduced by coercion
 
     ## Joining with `by = join_by(zip_code, year, count, borough, neighborhood)`
 
@@ -285,64 +310,105 @@ borough_counts |>
     ## #   neighborhood <chr>
 
 ``` r
-cases_by_zcta_shp |> 
+cases_by_modzcta |> 
+  filter(zip_code != modzcta) # no ZIP codes that were reallocated to a differently named MODZCTA, do not need to group by and sum as below 
+```
+
+    ## # A tibble: 0 × 8
+    ## # ℹ 8 variables: zip_code <dbl>, year <dbl>, count <dbl>, borough <chr>,
+    ## #   neighborhood <chr>, modzcta <dbl>, label <chr>,
+    ## #   geometry <GEOMETRY [US_survey_foot]>
+
+``` r
+# cases_by_modzcta |> 
+#   group_by(modzcta, year, geometry) |> 
+#   summarize(
+#     count = sum(count)
+#   ) |> 
+#   filter(year == 2021) |> 
+#   ggplot(aes(fill = count, geometry = geometry)) +
+#   geom_sf()
+
+modzcta_2021 <-
+  cases_by_modzcta |> 
   filter(year == 2021) |> 
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() +
+  labs(
+    fill = "WNV cases",
+    title = "2021"
+  ) +
+  theme(
+    axis.text.x = element_blank(), 
+    axis.title.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank()
+  ) +
   viridis::scale_fill_viridis(limits = c(0, 25)) # highest count is 23 in 2024, 10314
-```
 
-![](eda_jt3466_files/figure-gfm/maps%20of%20counts%20by%20zcta-1.png)<!-- -->
-
-``` r
-cases_by_zcta_shp |> 
-  filter(year == 2022) |> 
+modzcta_2022 <-
+  cases_by_modzcta |>
+  filter(year == 2022) |>
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() +
+  labs(
+    fill = "WNV cases",
+    title = "2022"
+  ) +
+  theme(
+    axis.text.x = element_blank(), 
+    axis.title.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank()
+  ) +
   viridis::scale_fill_viridis(limits = c(0, 25))
-```
 
-![](eda_jt3466_files/figure-gfm/maps%20of%20counts%20by%20zcta-2.png)<!-- -->
-
-``` r
-cases_by_zcta_shp |> 
-  filter(year == 2023) |> 
+modzcta_2023 <-
+  cases_by_modzcta |>
+  filter(year == 2023) |>
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() +
+  labs(
+    fill = "WNV cases",
+    title = "2023"
+  ) +
+  theme(
+    axis.text.x = element_blank(), 
+    axis.title.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank()
+  ) +
   viridis::scale_fill_viridis(limits = c(0, 25))
-```
 
-![](eda_jt3466_files/figure-gfm/maps%20of%20counts%20by%20zcta-3.png)<!-- -->
-
-``` r
-cases_by_zcta_shp |> 
-  filter(year == 2024) |> 
+modzcta_2024 <-
+  cases_by_modzcta |>
+  filter(year == 2024) |>
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() +
-  viridis::scale_fill_viridis(limits = c(0, 25)) 
+  labs(
+    fill = "WNV cases",
+    title = "2024"
+  ) +
+  theme(
+    axis.text.x = element_blank(), 
+    axis.title.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank()
+  ) +
+  viridis::scale_fill_viridis(limits = c(0, 25))
+
+modzcta_2021 + modzcta_2022 + modzcta_2023 + modzcta_2024 + 
+  plot_annotation(
+    title = "NYC WNV cases by MODZCTA",
+    caption = "Data from NYC DOHMH, shapefile from NYC Open Data"
+  ) +
+  plot_layout(guides = "collect") 
 ```
 
-![](eda_jt3466_files/figure-gfm/maps%20of%20counts%20by%20zcta-4.png)<!-- -->
+![](eda_jt3466_files/figure-gfm/map%20counts%20per%20modzcta-1.png)<!-- -->
 
 ``` r
-cases_by_zcta_shp |> 
-   filter(year == 2024) |> 
-   arrange(desc(count))
+# cases_by_modzcta |> 
+#    filter(year == 2024) |> 
+#    arrange(desc(count))
 ```
-
-    ## # A tibble: 299 × 15
-    ##    zip_code  year count borough neighborhood zcta5ce20 geoid20 classfp20 mtfcc20
-    ##       <dbl> <dbl> <dbl> <chr>   <chr>        <chr>     <chr>   <chr>     <chr>  
-    ##  1    10314  2024    23 Staten… Mid-Island   10314     10314   B5        G6350  
-    ##  2    10465  2024    13 Bronx   Southeast B… 10465     10465   B5        G6350  
-    ##  3    10301  2024    10 Staten… Stapleton a… 10301     10301   B5        G6350  
-    ##  4    10305  2024    10 Staten… Stapleton a… 10305     10305   B5        G6350  
-    ##  5    10306  2024    10 Staten… South Shore  10306     10306   B5        G6350  
-    ##  6    10307  2024    10 Staten… South Shore  10307     10307   B5        G6350  
-    ##  7    10309  2024    10 Staten… South Shore  10309     10309   B5        G6350  
-    ##  8    10310  2024    10 Staten… Port Richmo… 10310     10310   B5        G6350  
-    ##  9    10312  2024    10 Staten… South Shore  10312     10312   B5        G6350  
-    ## 10    10471  2024    10 Bronx   Kingsbridge… 10471     10471   B5        G6350  
-    ## # ℹ 289 more rows
-    ## # ℹ 6 more variables: funcstat20 <chr>, aland20 <dbl>, awater20 <dbl>,
-    ## #   intptlat20 <chr>, intptlon20 <chr>, geometry <MULTIPOLYGON [°]>
