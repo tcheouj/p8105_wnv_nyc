@@ -9,13 +9,13 @@ Our group has a shared interest in climate change, infectious diseases,
 and their complex interconnections. Inspiration for this project stems
 from several relevant news articles and papers:
 
-- A 2024 *New York Times article*
-  (<https://www.nytimes.com/article/west-nile-virus-nyc.html>)
+- A [2024 New York Times
+  article](https://www.nytimes.com/article/west-nile-virus-nyc.html)
   highlights the rising concern for an increased number of mosquitoes
   infected with West Nile virus over the summer in New York City and how
   this likely driven by climate change.
-- A 2020 article in *Nature*
-  (<https://www.nature.com/articles/s41590-020-0648-y>) finds that
+- A [2020 Nature
+  article](https://www.nature.com/articles/s41590-020-0648-y) finds that
   climate change can affect mosquito abundance, survival, transmission
   dynamics, and pathogen development within vectors.
 
@@ -28,7 +28,7 @@ is being done to control its spread.
 
 ## Initial Questions
 
-With this inspiration, we wanted to explore the available data sets to
+With this inspiration, we wanted to explore available NYC data sets to
 answer some of these initial questions:
 
 - What communities are affected most by rising temperatures? (heat
@@ -45,3 +45,23 @@ answer some of these initial questions:
 We hypothesize that ***the NYC regions with the highest heat
 vulnerability index score will have the highest incidence of West Nile
 virus cases***.
+
+## Data
+
+### Sources
+
+We utilized the [Supplmentary Dataset of NYC Zip
+Codes](https://p8105.com/data/zip_codes.html) that was provided on our
+P8105 class website, which includes information on *NYC zipcodes,
+boroughs*, and *neighborhoods*.
+
+We located the [NYC Heat Vulnerability Index
+(HVI)](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary)
+through the NYC Department of Health and Mental Hygiene Environment and
+Health Data Portal. The HVI shows the risk of community-level health
+impacts due to extreme heat and includes factors such as surface
+temperatures, green spaces, access to home air conditioning, median
+income, and the percentage of residents who are low-income or non-Latinx
+Black (who are often excluded from heat resources). Neighborhoods with a
+**HVI score of 1** have the lowest risk while those with a **HVI score
+of 5** have the highest risk.
