@@ -12,7 +12,7 @@ Our group has a shared interest in climate change, infectious diseases, and thei
 * A [2024 New York Times article](https://www.nytimes.com/article/west-nile-virus-nyc.html) highlights the rising concern for an increased number of mosquitoes infected with West Nile virus over the summer in New York City and how this likely driven by climate change. 
 * A [2020 Nature article](https://www.nature.com/articles/s41590-020-0648-y) finds that climate change can affect mosquito abundance, survival, transmission dynamics, and pathogen development within vectors.
 
-This issue is concerning as worsening of climate change trends and warmer temperatures in NYC can create more hospitable environments for mosquitoes carrying West Nile virus and may increase human-mosquito interaction. Motivated by these concerns, we aimed to explore the rising temperatures trends in NYC, West Nile virus incidence in NYC, and what is being done to control its spread. 
+This issue is concerning as worsening climate change trends and warmer temperatures in NYC can create more hospitable environments for mosquitoes carrying West Nile virus and may increase human-mosquito interaction. Motivated by these concerns, we aimed to explore the rising temperatures trends in NYC, West Nile virus incidence in NYC, and what is being done to control its spread. 
 
 ## Initial Questions
 
@@ -57,6 +57,11 @@ For all datasets, we reformatted the `zip_code` column to integers and the `date
 
 **NYC Positive Cases of West Nile Virus Dataset (1999-2023)**
 
+Data was downloaded as a .csv file, imported using `read_csv`, and initially cleaned using `janitor::clean_names`. The data was reshaped using `pivot_longer` such that each year has the number of West Nile virus cases for each borough.
+
+**NYC Heat Vulnerability Index Dataset**
+
+This dataset was already in a tidy format after downloading. We simply imported the dataset using `read_csv` and applied `janitor::clean_names` for consistency.
 
 
 

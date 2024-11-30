@@ -19,8 +19,8 @@ from several relevant news articles and papers:
   climate change can affect mosquito abundance, survival, transmission
   dynamics, and pathogen development within vectors.
 
-This issue is concerning as worsening of climate change trends and
-warmer temperatures in NYC can create more hospitable environments for
+This issue is concerning as worsening climate change trends and warmer
+temperatures in NYC can create more hospitable environments for
 mosquitoes carrying West Nile virus and may increase human-mosquito
 interaction. Motivated by these concerns, we aimed to explore the rising
 temperatures trends in NYC, West Nile virus incidence in NYC, and what
@@ -118,3 +118,14 @@ the `date` column to a date object, corrected any zip code and date
 entry errors, and removed unnecessary columns and NA values.
 
 **NYC Positive Cases of West Nile Virus Dataset (1999-2023)**
+
+Data was downloaded as a .csv file, imported using `read_csv`, and
+initially cleaned using `janitor::clean_names`. The data was reshaped
+using `pivot_longer` such that each year has the number of West Nile
+virus cases for each borough.
+
+**NYC Heat Vulnerability Index Dataset**
+
+This dataset was already in a tidy format after downloading. We simply
+imported the dataset using `read_csv` and applied `janitor::clean_names`
+for consistency.
