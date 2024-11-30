@@ -54,7 +54,7 @@ highest incidence of West Nile virus cases***.
 
 We utilized the [Supplmentary Dataset of NYC Zip
 Codes](https://p8105.com/data/zip_codes.html) that was provided on our
-P8105 class website, which includes information on *NYC zipcodes,
+P8105 class website, which includes information on *NYC zip codes,
 boroughs*, and *neighborhoods*.
 
 We located the [NYC Heat Vulnerability Index
@@ -77,8 +77,8 @@ DOHMH.
 We located the [West Nile Virus Positive NYC
 Cases](https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2024/wnvplan2024.pdf)
 through the *2024 NYC DOHMH Comprehensive Mosquito Surveillance and
-Control Plan*. The report provides West Nile virus cases in NYC between
-1999-2023, separated by borough.
+Control Plan*. The report provides the number of West Nile virus cases
+in NYC between 1999-2023, separated by borough.
 
 The [Global Surface Summary of the Day (GSOD)
 package](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516)
@@ -87,6 +87,8 @@ stations. Indicators include mean temperature, dew point temperature,
 sea level pressure, station pressure, visibility, wind speed, gust,
 precipitation amount, and snow depth. This data is provided by the
 National Oceanic and Atmospheric Administration.
+
+(should i include which stations we used for NY?)
 
 ### Cleaning
 
@@ -106,8 +108,8 @@ simple html tables that were imported using `read_html` and cleaned
 using `janitor::clean_names`. Zip codes for each detection of positive
 mosquitoes on a specific day are listed and separated by commas. To
 clean this, we used multiple `separate_longer_delim` steps to separate
-each positive mosquito detection into a separate observation with the
-corresponding day.
+each positive mosquito detection into a separate observation, while
+keeping the corresponding day.
 
 For the year 2024, a .csv file was imported using `read_csv` and
 reshaped using `pivot_longer` to consolidate all positive mosquito
@@ -115,17 +117,19 @@ detection dates into a single `date` column.
 
 For all datasets, we reformatted the `zip_code` column to integers and
 the `date` column to a date object, corrected any zip code and date
-entry errors, and removed unnecessary columns and NA values.
+entry errors, and removed unnecessary columns and N/A values.
 
 **NYC Positive Cases of West Nile Virus Dataset (1999-2023)**
 
 Data was downloaded as a .csv file, imported using `read_csv`, and
 initially cleaned using `janitor::clean_names`. The data was reshaped
-using `pivot_longer` such that each year has the number of West Nile
-virus cases for each borough.
+using `pivot_longer` such that our columns are now: `year`, `borough`,
+and `wnv_cases` (i.e. the number of West Nile virus cases counted).
 
 **NYC Heat Vulnerability Index Dataset**
 
 This dataset was already in a tidy format after downloading. We simply
 imported the dataset using `read_csv` and applied `janitor::clean_names`
 for consistency.
+
+## Exploratory Analysis
