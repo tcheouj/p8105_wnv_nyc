@@ -541,6 +541,18 @@ yearly_weather <-
     avg_dewp = mean(dewp)
   )
 
+day_weather <-
+  weather_1999_2023 |> 
+  group_by(date) |> 
+  summarize(
+    avg_temp = mean(temp),
+    avg_min = mean(min),
+    avg_max = mean(max), 
+    avg_prcp = mean(prcp, na.rm = TRUE),
+    avg_dewp = mean(dewp)
+  )
+#write_csv(yearly_weather, "cleaned_data/yearly_weather.csv")
+#write_csv(day_weather, "cleaned_data/day_weather.csv")
 wnv_cases <-
   wnv_cases |> 
   mutate(

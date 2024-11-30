@@ -85,11 +85,13 @@ wnv_mosquito_detection <- bind_rows(
   mosquitoes_2023_table,
   mosquitoes_2022_table,
   mosquitoes_2021_table,
-) |> left_join(y = zip_nbhd, by = join_by(zip_code))
+) |> left_join(y = zip_nbhd, by = join_by(zip_code)) |>
+  write_csv("cleaned_data/wnv_mosquitoes.csv")
 
 ######### Heat Vulnerability by Neighborhood
 heat_vuln <- read_csv("data/heat_vulnerability.csv") |>
-  janitor::clean_names() #Already clean! Thank you NYC environment and health
+  janitor::clean_names() |> #Already clean! Thank you NYC environment and health
+  write_csv("cleaned_data/heat_vuln.csv")
 
 ######### West Nile Virus Cases by Year and Borough
 wnv_cases <- read_csv("data/wnv_cases.csv") |>
@@ -102,4 +104,5 @@ wnv_cases <- read_csv("data/wnv_cases.csv") |>
     staten_island
   ),
   names_to = "borough",
-  values_to = "wnv_cases")
+  values_to = "wnv_cases") |>
+  write_csv("cleaned_data/wnv_cases.csv")
