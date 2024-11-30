@@ -5,9 +5,10 @@ Mahdi Maktabi
 
 ## Related Work
 
-Our group has a shared interest in climate change, infectious diseases,
-and hating mosquito bites. Inspiration for this project stems from
-several relevant news articles and papers:
+Our group has a shared interest in addressing climate change, studying
+infectious diseases, and uniting over our mutual hatred of mosquito
+bites. Inspiration for this project stems from several relevant news
+articles and papers:
 
 - A [2024 New York Times
   article](https://www.nytimes.com/article/west-nile-virus-nyc.html)
