@@ -59,7 +59,7 @@ For all datasets, we reformatted the `zip_code` column to integers and the `date
 
 **NYC Positive Cases of West Nile Virus Dataset (1999-2023)**
 
-Data was downloaded as a .csv file, imported using `read_csv`, and initially cleaned using `janitor::clean_names`. The data was reshaped using `pivot_longer` such that our columns are now: `year`, `borough`, and `wnv_cases` (i.e. the number of West Nile virus cases counted).
+Data was downloaded as a .csv file, imported using `read_csv`, and initially cleaned using `janitor::clean_names`. The data was reshaped using `pivot_longer` such that our columns are now: `year`, `borough`, and `wnv_cases` (i.e. the number of West Nile virus cases counted within that borough).
 
 **NYC Heat Vulnerability Index Dataset**
 

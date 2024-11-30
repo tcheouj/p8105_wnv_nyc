@@ -124,7 +124,8 @@ entry errors, and removed unnecessary columns and N/A values.
 Data was downloaded as a .csv file, imported using `read_csv`, and
 initially cleaned using `janitor::clean_names`. The data was reshaped
 using `pivot_longer` such that our columns are now: `year`, `borough`,
-and `wnv_cases` (i.e. the number of West Nile virus cases counted).
+and `wnv_cases` (i.e. the number of West Nile virus cases counted within
+that borough).
 
 **NYC Heat Vulnerability Index Dataset**
 
