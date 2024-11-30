@@ -138,12 +138,10 @@ wnv_cases <- read_csv("data/wnv_cases.csv") |>
 # May need to use ZCTA level HVI data instead of NTA level HVI 
 # - ZCTA is designed to approximate ZIP codes, when our WNV counts are by ZIP code
 
-hvi_zcta <- read_csv("https://data.cityofnewyork.us/resource/4mhf-duep.csv")  
+hvi_zcta <- read_csv("https://data.cityofnewyork.us/resource/4mhf-duep.csv")  |> 
+  rename(zip_code = zcta20)
 
-hvi_wnv_zip <-
-  inner_join(wnv_mosquito_detection, hvi_zcta, by = join_by(zip_code == zcta20))
-
-hvi_wnv_zip |> 
+inner_join(wnv_mosquito_detection, hvi_zcta, by = join_by(zip_code)) |> 
   group_by(hvi) |> 
   summarize(
     count = n()
@@ -153,47 +151,49 @@ hvi_wnv_zip |>
 ```{r add no wnv zctas}
 # get ZIP codes that did not have counts of WNV using anti_join with original ZIP code list (for generating proportions and to ensure ZIPs without cases can still be mapped later)
 
+
 all_zctas <-
   zip_nbhd |> 
   pull(zip_code) |> 
-  c(10000) 
-
-wnv_pos_zctas <-
-  wnv_mosquito_detection |> 
-  pull(zip_code) |> 
-  unique()
-
-wnv_neg_zctas <-
-  zip_nbhd |> 
-  filter(!(zip_code %in% wnv_pos_zctas)) # summing negative and positive ZCTAs gets 131 instead of 130 from the ZIP list as 10000 not in the ZIP list
-
-pos_cases_by_zcta <- 
-  wnv_mosquito_detection |> 
-  mutate(
-    year = year(date)
-  ) |> 
-  group_by(zip_code, year) |> 
-  summarize(
-    count = n()
-  ) |> 
-  arrange(zip_code, year) 
-
-neg_cases_by_zcta <-
-  wnv_neg_zctas |> 
-  pull(zip_code) |> 
+  c(10000) |> 
   expand_grid(
     zip_code = _,
-    year = c(2021, 2022, 2023, 2024)
-  ) |> 
-  mutate(
+    year = c(2021, 2022, 2023, 2024),
     count = 0
   )
 
-cases_by_zcta <- 
-  rbind(neg_cases_by_zcta, pos_cases_by_zcta) |> 
-  arrange(zip_code, year) |> 
-  left_join(zip_nbhd, by = join_by(zip_code)) |>  # bring borough back in after getting counts grouped by zip
-  mutate( # catch the 10000 ZIP code
+fill_neg_zctas <- function(yr) {
+  
+  pos = 
+    wnv_mosquito_detection |> 
+    mutate(
+      year = year(date)
+    ) |> 
+    filter(year == yr) |> 
+    group_by(zip_code, neighborhood, year) |> 
+    summarize(
+      count = n()
+    ) |>
+    arrange(count)
+  
+  neg = 
+    all_zctas |> 
+    filter(year == yr) |> 
+    anti_join(pos, by = join_by(zip_code))
+  
+  rbind(pos, neg)
+    
+}
+
+wnv_mosquito_data <-
+  tibble(
+    years = c(2021, 2022, 2023, 2024),
+    mosquito_data = map(years, fill_neg_zctas)
+  ) |> 
+  unnest(mosquito_data) |> 
+  select(-years) |> 
+  left_join(zip_nbhd, by = join_by(zip_code, neighborhood)) |> # rejoin borough variable from original ZIP code list 
+  mutate(
     borough = case_when(
       zip_code == 10000 ~ "Manhattan",
       .default = borough
@@ -204,23 +204,13 @@ cases_by_zcta <-
     )
   )
 
+wnv_mosquito_data |> 
+  pull(count) |> 
+  sum() # 2924
 
-### check this - if i can get zctas without cases for each year to appear then i can calculate correct proportions and fix the maps
-prptn_wnv_borough <- # calculate each borough's proportion of positive ZIPs out of total ZIPs in that borough
-  cases_by_zcta |> 
-  mutate(
-    detected = case_when(
-      count > 0 ~ 1,
-      count == 0 ~ 0, 
-      .default = NA
-    )
-  ) |> 
-  group_by(borough, year) |> 
-  summarize(
-    total = n(),
-    positive = sum(detected)
-  ) |> 
-  mutate(prtpn_pos = positive/total)
+wnv_mosquito_detection |> 
+  nrow() # 2924 - matches
+
 ```
 
 
@@ -230,11 +220,11 @@ prptn_wnv_borough <- # calculate each borough's proportion of positive ZIPs out 
 # Wakefield at the top of the Bronx is around 33 km/20.5 mi away from Bushwick, creating the radius of stations to search for
 # Filter for non NYC stations, by filtering out NJ and filtering out Kings Point and Sandy Hook and other Long Island locations
 
-stations <-
+station_ids <-
   nearest_stations(
     LAT = 40.6958, 
     LON = -73.9171,
-    distance = 33
+    distance = 20
   ) |> 
   filter(STATE != "NJ" & !(NAME %in% c("KINGS POINT", 
                                        "SANDY HOOK", 
@@ -243,13 +233,7 @@ stations <-
                                        "HEMPSTEAD MITCHELL FLD AFB", 
                                        "AMBROSE LIGHT  NY", 
                                        "AMBROSE / FT. TILDEN", 
-                                       "FREEPORT")))
-
-
-# Some stations only have historical data preceding our years of interest of 2021-2024, these have been filtered out
-
-stations <- 
-  stations |> 
+                                       "FREEPORT"))) |> 
   filter(!(STNID %in% c("999999-14732",
                         "725033-94728",
                         "725060-94728",
@@ -258,11 +242,14 @@ stations <-
                         "999999-14786",
                         "999999-94789",
                         "725026-99999",
-                        "997439-99999")))
-weather_df <-
+                        "997439-99999"))) |> # Some stations only have historical data preceding our years of interest of 2021-2024, these have been filtered out
+  janitor::clean_names() |> 
+  pull(stnid)
+
+weather_2021_2024 <-
   get_GSOD(
     years = c(2021:2024),
-    station = stations$STNID
+    station = station_ids
   ) |> 
   janitor::clean_names() |>
   select(name, latitude, longitude, yearmoda, temp, max, min, prcp, dewp) |>  # retain relevant variables - station name, latitude and longitude, date (yearmoda) mean temperature (temp), mean precipitation (prcp), mean dew point (dewp) to get an idea of water content in the air, max temperature, and min temperature
@@ -281,97 +268,10 @@ weather_df <-
       "THE BATTERY" ~ "The Battery"
     )
   )
-```
-
-``` {r cursory graphs}
-# Mosquito counts by year and borough - does mosquito season start earlier?
-grouping_counts <- function(x) {
-  df <-
-    x |> 
-    group_by(borough, date) |> 
-    summarize(
-      count = n()
-    )
-  
-  df
-}
-
-borough_counts <-
-  tibble(
-    counts = list(mosquitoes_2021_table, mosquitoes_2022_table, mosquitoes_2023_table)
-  ) |> 
-  mutate(
-    borough_counts = map(counts, grouping_counts)
-  ) |>
-  select(borough_counts) |> 
-  unnest(cols = c(borough_counts)) |> 
-  mutate(
-    month = month(date),
-    year = year(date)
-  ) |> 
-  select(borough, month, year, date, count)
-
-borough_counts |>
-  filter(year == 2021) |> 
-  ggplot(aes(x = date, y = count)) +
-  geom_point() + 
-  geom_smooth(se = FALSE) +
-  facet_grid(~borough)
-
-borough_counts |>
-  filter(year == 2022) |> 
-  ggplot(aes(x = date, y = count)) +
-  geom_point() + 
-  geom_smooth(se = FALSE) +
-  facet_grid(~borough)
-
-borough_counts |>
-  filter(year == 2023) |> 
-  ggplot(aes(x = date, y = count)) +
-  geom_point() + 
-  geom_smooth(se = FALSE) +
-  facet_grid(~borough)
-
-borough_counts |> 
-  filter(year == 2021) |> 
-  ggplot(aes(x = date, y = count, fill = borough)) +
-  geom_col(stat = "identity") +
-  facet_grid(~borough)
-
-borough_counts |> 
-  filter(year == 2022) |> 
-  ggplot(aes(x = date, y = count, fill = borough)) +
-  geom_bar(stat = "identity") +
-  facet_grid(~borough)
-
-borough_counts |> 
-  filter(year == 2023) |> 
-  ggplot(aes(x = date, y = count, fill = borough)) +
-  geom_bar(stat = "identity") +
-  facet_grid(~borough)
-
-borough_counts |> 
-  filter(year == 2021) |> 
-  ggplot(aes(x = date, y = count, fill = borough)) +
-  geom_col(stat = "identity") +
-  facet_grid(~borough)
-
-borough_counts |> 
-  filter(year == 2022) |> 
-  ggplot(aes(x = date, y = count, fill = borough)) +
-  geom_bar(stat = "identity") +
-  facet_grid(~borough)
-
-borough_counts |> 
-  filter(year == 2023) |> 
-  ggplot(aes(x = date, y = count, fill = borough)) +
-  geom_col(width = 2.0) +
-  facet_grid(~borough)
-
 
 # is there much variation between the different weather stations?
 
-weather_df |>
+weather_2021_2024 |>
 #  filter(name %in% c("Central Park", "Wall St")) |> 
   ggplot(aes(x = yearmoda, y = temp, color = name)) +
   geom_point(size = 0.5, alpha = 0.5) +
@@ -382,8 +282,115 @@ weather_df |>
 # despite being different boroughs, measured temperatures between stations are largely coincident - can get by with just one like Central Park
 ```
 
+``` {r cursory graphs}
+# Mosquito counts by year and borough - does mosquito season start earlier?
 
-```{r geocoding count data by zcta, echo = FALSE}
+mosquitoes_2021_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count)) +
+  geom_point() + 
+  geom_smooth(se = FALSE) +
+  facet_grid(~borough)
+
+mosquitoes_2022_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |>   
+  ggplot(aes(x = date, y = count)) +
+  geom_point() + 
+  geom_smooth(se = FALSE) +
+  facet_grid(~borough)
+
+
+mosquitoes_2023_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count)) +
+  geom_point() + 
+  geom_smooth(se = FALSE) +
+  facet_grid(~borough)
+
+mosquitoes_2024_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count)) +
+  geom_point() + 
+  geom_smooth(se = FALSE) +
+  facet_grid(~borough)
+
+mosquitoes_2021_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_col(stat = "identity") +
+  facet_grid(~borough)
+
+mosquitoes_2022_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_col(stat = "identity") +
+  facet_grid(~borough)
+
+mosquitoes_2023_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_col(stat = "identity") +
+  facet_grid(~borough)
+
+mosquitoes_2024_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_col(stat = "identity") +
+  facet_grid(~borough)
+
+wnv_mosquito_detection |> 
+  mutate(count = 1) |> 
+  group_by(date) |> 
+  summarize(
+    count = sum(count)
+  ) |> 
+  ggplot(aes(x = date, y = count)) +
+  geom_point()
+
+# is heat vulnerability associated with WNV+ mosquitoes?
+
+wnv_mosquito_detection |>
+  mutate(
+    month = month(date), 
+    year = year(date)
+  ) |> 
+  group_by(zip_code, borough) |> 
+  summarize(
+    count = n()
+  ) |> 
+  left_join(hvi_zcta, by = join_by(zip_code)) |> 
+  ggplot(aes(x = hvi, y = count, color = borough)) +
+  geom_point()
+
+# not really
+```
+
+
+```{r geocoding mosquito data by zcta, echo = FALSE}
 # get geographic coordinates for use in ggplot later
 # cannot use shapefiles for a singular year - may need to use 2010 MODZCTA shapefiles from DOHMH? https://github.com/nychealth/coronavirus-data/tree/master/Geography-resources
 # or maybe this since this gives geoms alone? https://data.cityofnewyork.us/Health/Modified-Zip-Code-Tabulation-Areas-MODZCTA-/pri4-ifjk/about_data 
@@ -402,37 +409,29 @@ zip_shp <-
 
 # get MODZCTA for each ZIP code (approximating ZIP code as ZCTA)
 
-cases_by_modzcta <- 
-   left_join(cases_by_zcta, zip_shp, by = join_by("zip_code")) 
+mos_by_modzcta <- 
+   left_join(wnv_mosquito_data, zip_shp, by = join_by("zip_code")) 
  
-anti_join(cases_by_zcta, cases_by_modzcta) 
+anti_join(wnv_mosquito_data, mos_by_modzcta) 
 
 # still some ZCTAs without geographic areas - need to resolve later 
 
 # NYC open data source
 ```
 
-```{r map counts per modzcta}
+```{r map pos mosquito per modzcta}
 
-cases_by_modzcta |> 
-  filter(zip_code != modzcta) # no ZIP codes that were reallocated to a differently named MODZCTA, do not need to group by and sum as below 
+mos_by_modzcta |> 
+  filter(zip_code != modzcta) # no ZIP codes that were reallocated to a differently named MODZCTA, do not need to consolidate ZIP codes within the same MODZCTA
 
-# cases_by_modzcta |> 
-#   group_by(modzcta, year, geometry) |> 
-#   summarize(
-#     count = sum(count)
-#   ) |> 
-#   filter(year == 2021) |> 
-#   ggplot(aes(fill = count, geometry = geometry)) +
-#   geom_sf()
 
 modzcta_2021 <-
-  cases_by_modzcta |> 
+  mos_by_modzcta |> 
   filter(year == 2021) |> 
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() +
   labs(
-    fill = "WNV cases",
+    fill = "WNV+ mosquitoes",
     title = "2021"
   ) +
   theme(
@@ -444,12 +443,12 @@ modzcta_2021 <-
   viridis::scale_fill_viridis(limits = c(0, 25)) # highest count is 23 in 2024, 10314
 
 modzcta_2022 <-
-  cases_by_modzcta |>
+  mos_by_modzcta |>
   filter(year == 2022) |>
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() +
   labs(
-    fill = "WNV cases",
+    fill = "WNV+ mosquitoes",
     title = "2022"
   ) +
   theme(
@@ -461,12 +460,12 @@ modzcta_2022 <-
   viridis::scale_fill_viridis(limits = c(0, 25))
 
 modzcta_2023 <-
-  cases_by_modzcta |>
+  mos_by_modzcta |>
   filter(year == 2023) |>
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() +
   labs(
-    fill = "WNV cases",
+    fill = "WNV+ mosquitoes",
     title = "2023"
   ) +
   theme(
@@ -478,12 +477,12 @@ modzcta_2023 <-
   viridis::scale_fill_viridis(limits = c(0, 25))
 
 modzcta_2024 <-
-  cases_by_modzcta |>
+  mos_by_modzcta |>
   filter(year == 2024) |>
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() +
   labs(
-    fill = "WNV cases",
+    fill = "WNV+ mosquitoes",
     title = "2024"
   ) +
   theme(
@@ -496,13 +495,152 @@ modzcta_2024 <-
 
 modzcta_2021 + modzcta_2022 + modzcta_2023 + modzcta_2024 + 
   plot_annotation(
-    title = "NYC WNV cases by MODZCTA",
+    title = "WNV positive mosquitoes by MODZCTA",
     caption = "Data from NYC DOHMH, shapefile from NYC Open Data"
   ) +
   plot_layout(guides = "collect") 
 
-# cases_by_modzcta |> 
-#    filter(year == 2024) |> 
-#    arrange(desc(count))
+```
+
+```{r case data}
+
+wnv_cases
+
+weather_1999_2023 <-
+  get_GSOD(
+    years = c(1999:2023),
+    station = c("725030-14732", "720553-99999", "744860-94789")
+  ) |> 
+  janitor::clean_names() |>
+  select(name, latitude, longitude, yearmoda, temp, max, min, prcp, dewp) |>  # retain relevant variables - station name, latitude and longitude, date (yearmoda) mean temperature (temp), mean precipitation (prcp), mean dew point (dewp) to get an idea of water content in the air, max temperature, and min temperature
+  mutate(
+    temp = (temp * 9/5) + 32, # convert from Celsius to Fahrenheit
+    max = (max * 9/5) + 32,
+    min = (min * 9/5) + 32,
+    prcp = (prcp * 0.0393701), # convert from mm to in
+    year = year(yearmoda) # give stations more intuitive names
+  ) |> 
+  rename(date = yearmoda)
+# 725030-14732 - LGA
+# 725053-94728 - Central Park - only data from 2005-2024
+# 744860-94789 - JFK 
+# 720553-99999 - Port Authority Downtown Helipad - only data from 2016-2024
+
+
+yearly_weather <-
+  weather_1999_2023 |> 
+  mutate(
+    year = year(date)
+  ) |> 
+  group_by(year) |> 
+  summarize(
+    avg_temp = mean(temp),
+    avg_min = mean(min),
+    avg_max = mean(max), 
+    avg_prcp = mean(prcp, na.rm = TRUE),
+    avg_dewp = mean(dewp)
+  )
+
+wnv_cases <-
+  wnv_cases |> 
+  mutate(
+    borough = case_match(
+      borough, 
+      "manhattan" ~ "Manhattan",
+      "brooklyn" ~ "Brooklyn",
+      "queens" ~ "Queens",
+      "bronx" ~ "Bronx",
+      "staten_island" ~ "Staten Island"
+    )
+  )
+
+avg_hvi_borough <-
+  left_join(hvi_zcta, zip_nbhd, by = join_by(zip_code)) |> 
+    group_by(borough) |> 
+    summarize(
+      avg_hvi = mean(hvi)
+    )
+
+# is heat vulnerability associated with WNV+ human cases?
+
+left_join(wnv_cases, yearly_weather, by = join_by(year)) |> 
+  left_join(avg_hvi_borough, by = join_by(borough)) |> 
+  ggplot(aes(x = avg_hvi, y = wnv_cases, fill = year, shape = borough)) +
+  geom_point() + 
+  stat_summary(fun.y = mean, color = "red")  # perhaps hvi is a parabolic distribution?
+
+
+
+wnv_case_temp_hvi_df <- 
+  wnv_mosquito_data |> 
+  filter(!is.na(borough)) |>  # there are (likely nonresidential) ZIP codes with no boroughs and no detected WNV in mosquitoes and humans
+  group_by(year, borough) |> 
+  summarize(
+    wnv_mosquitoes = sum(count) 
+  ) |> 
+  right_join(wnv_cases, by = join_by(year, borough)) |> 
+  left_join(yearly_weather, by = join_by(year)) |> 
+  left_join(avg_hvi_borough, by = join_by(borough)) |>  
+  select(year, borough, starts_with("wnv_"), everything()) |> 
+  arrange(year, borough)
+
+```
+
+
+```{r poisson assumptions}
+
+# check assumption that mean and variance are approximately equal for each group of x (temperature)
+# graphically 
+
+left_join(wnv_cases, yearly_weather, by = join_by(year)) |> 
+  left_join(avg_hvi_borough, by = join_by(borough)) |> 
+  ggplot(aes(x = avg_temp, y = wnv_cases)) + 
+  geom_point() +
+  geom_smooth(se = FALSE)
+
+# tabular check 
+left_join(wnv_cases, yearly_weather, by = join_by(year)) |> 
+  left_join(avg_hvi_borough, by = join_by(borough)) |> 
+  group_by(avg_temp) |> 
+  summarize(
+    avg_count = mean(wnv_cases), 
+    variance = var(wnv_cases)
+  )
+
+# are wnv+ mosquitoes detected associated with year and borough?
+
+pos_mosquito_model <-
+  wnv_case_temp_hvi_df |> 
+  filter(year %in% 2021:2024) |> 
+  glm(wnv_mosquitoes ~ year + borough,
+      family = poisson,
+      data = _)
+
+pos_mosquito_model |> 
+  broom::tidy()
+
+pos_mosquito_model_saturated <-
+wnv_case_temp_hvi_df |> 
+  filter(year %in% 2021:2024) |> 
+  glm(wnv_mosquitoes ~ year + borough + avg_temp + avg_hvi,
+      family = poisson,
+      data = _)
+
+pos_mosquito_model_saturated |> 
+  broom::tidy()
+
+# this data aggregates ZIP code data together to borough level, may have greater power on ZIP code level 
+
+pos_human_model <-
+  wnv_case_temp_hvi_df |> 
+  glm(wnv_cases ~ year + borough,
+      family = poisson,
+      data = _)
+
+pos_human_model |> 
+  broom::tidy() 
+
+pos_human_model |> 
+  broom::glance()
 ```
 
