@@ -41,6 +41,8 @@ answer some of these initial questions:
   incidence of West Nile virus?
 - Are there specific boroughs in NYC that are disproportionately
   affected by West Nile virus?
+- How has the NYC DOHMH’s mosquito control efforts during the summer
+  affected the incidence of West Nile virus case detection?
 
 We hypothesize that ***between the years of 2021 to 2024, the NYC
 regions with the highest heat vulnerability index score will have the
@@ -57,20 +59,26 @@ boroughs*, and *neighborhoods*.
 
 We located the [NYC Heat Vulnerability Index
 (HVI)](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary)
-through the NYC Department of Health and Mental Hygiene Environment and
-Health Data Portal. The HVI shows the risk of community-level health
-impacts due to extreme heat and includes factors such as surface
-temperatures, green spaces, access to home air conditioning, median
-income, and the percentage of residents who are low-income or non-Latinx
-Black (who are often excluded from heat resources). Neighborhoods with a
-**HVI score of 1** have the lowest risk while those with a **HVI score
-of 5** have the highest risk.
+through the NYC Department of Health and Mental Hygiene (DOHMH)
+Environment and Health Data Portal. The HVI shows the risk of
+community-level health impacts due to extreme heat and includes factors
+such as surface temperatures, green spaces, access to home air
+conditioning, median income, and the percentage of residents who are
+low-income or non-Latinx Black (who are often excluded from heat
+resources). Neighborhoods with a **HVI score of 1** have the lowest risk
+while those with a **HVI score of 5** have the highest risk.
 
-Data from the [West Nile Virus Activity
+Data from the [West Nile Virus Mosquito Activity
 reports](https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page)
 was used to show the detection of positive mosquitoes for West Nile
 virus in various NYC neighborhoods. This data is provided by the NYC
-Department of Health and Mental Hygiene.
+DOHMH.
+
+We located the [West Nile Virus Positive NYC
+Cases](https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2024/wnvplan2024.pdf)
+through the *2024 NYC DOHMH Comprehensive Mosquito Surveillance and
+Control Plan*. The report provides West Nile virus cases in NYC between
+1999-2023, separated by borough.
 
 The [Global Surface Summary of the Day (GSOD)
 package](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516)
@@ -79,3 +87,34 @@ stations. Indicators include mean temperature, dew point temperature,
 sea level pressure, station pressure, visibility, wind speed, gust,
 precipitation amount, and snow depth. This data is provided by the
 National Oceanic and Atmospheric Administration.
+
+### Cleaning
+
+**P8105 Zip Codes Dataset**
+
+The supplementary zip codes dataset was imported using `read_html` and
+initially cleaned using `janitor::clean_names`. We filtered the dataset
+to only include zip codes within NYC, used a mutate step to change
+borough names to: *Brooklyn*, *Manhattan*, and *Staten Island*, and only
+selected relevant variables: *zip_code*, *borough*, and *neighborhood*.
+
+**Positive Mosquitoes Detected with West Nile Virus Datsets
+(2021-2024)**
+
+For the years 2021-2023, the datasets provided by the NYC DOHMH are
+simple html tables that were imported using `read_html` and cleaned
+using `janitor::clean_names`. Zip codes for each detection of positive
+mosquitoes on a specific day are listed and separated by commas. To
+clean this, we used multiple `separate_longer_delim` steps to separate
+each positive mosquito detection into a separate observation with the
+corresponding day.
+
+For the year 2024, a .csv file was imported using `read_csv` and
+reshaped using `pivot_longer` to consolidate all positive mosquito
+detection dates into a single `date` column.
+
+For all datasets, we reformatted the `zip_code` column to integers and
+the `date` column to a date object, corrected any zip code and date
+entry errors, and removed unnecessary columns and NA values.
+
+**NYC Positive Cases of West Nile Virus Dataset (1999-2023)**
