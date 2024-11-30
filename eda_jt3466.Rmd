@@ -589,23 +589,101 @@ wnv_case_temp_hvi_df <-
 
 ```{r poisson assumptions}
 
+wnv_case_temp_hvi_df |> 
+  ggplot(aes(x = wnv_cases)) +
+  geom_histogram() +
+  facet_grid(~borough) # right tailed
+
+temp_quantiles <-
+  wnv_case_temp_hvi_df |> 
+  pull(avg_temp) |> 
+  quantile(probs = c(0.25, 0.50, 0.75))
+
+test <-
+  wnv_case_temp_hvi_df |> 
+  mutate(
+    temp_quantile = case_when(
+      avg_temp < temp_quantiles[1] ~ 1,
+      avg_temp < temp_quantiles[2] ~ 2,
+      avg_temp < temp_quantiles[3] ~ 3,
+      avg_temp > temp_quantiles[3] ~ 4,
+      .default = NA
+    )
+  ) # right tailed
+
+
+test |> 
+  ggplot(aes(x = wnv_cases)) +
+  geom_histogram() +
+  facet_grid(~temp_quantile) 
+
+  
 # check assumption that mean and variance are approximately equal for each group of x (temperature)
 # graphically 
 
-left_join(wnv_cases, yearly_weather, by = join_by(year)) |> 
-  left_join(avg_hvi_borough, by = join_by(borough)) |> 
+wnv_case_temp_hvi_df |> 
   ggplot(aes(x = avg_temp, y = wnv_cases)) + 
   geom_point() +
   geom_smooth(se = FALSE)
 
+wnv_case_temp_hvi_df |> 
+  ggplot(aes(x = avg_temp, y = wnv_cases, color = borough)) + 
+  geom_point() +
+  geom_smooth(se = FALSE)
+
+wnv_case_temp_hvi_df |> 
+  ggplot(aes(x = avg_temp, y = wnv_cases, color =)) + 
+  geom_point() +
+  geom_smooth(se = FALSE)
+
+wnv_case_temp_hvi_df |> 
+  pull(wnv_cases) |> 
+  max() # highest number of human WNV cases is 34 - which happened in 1999, when WNV first reached NYC
+
+wnv_case_temp_hvi_df |> 
+  filter(wnv_cases == 34)
+  
 # tabular check 
-left_join(wnv_cases, yearly_weather, by = join_by(year)) |> 
-  left_join(avg_hvi_borough, by = join_by(borough)) |> 
+wnv_case_temp_hvi_df |> 
   group_by(avg_temp) |> 
   summarize(
     avg_count = mean(wnv_cases), 
     variance = var(wnv_cases)
-  )
+  ) |> 
+  arrange(desc(avg_count))
+
+
+# borough vs count
+wnv_case_temp_hvi_df |> 
+  group_by(borough) |> 
+  summarize(
+    avg_count = mean(wnv_cases), 
+    variance = var(wnv_cases)
+  ) |> 
+  arrange(desc(avg_count)) 
+
+# test if log of wnv count is linearly related to predictors
+
+wnv_case_temp_hvi_df |> 
+  mutate(
+    log_cases = log(wnv_cases)
+  ) |> 
+  ggplot(aes(x = avg_temp, y = log_cases)) +
+  geom_point() +
+  geom_smooth( se = FALSE) # not really
+
+wnv_case_temp_hvi_df |> 
+  mutate(
+    log_cases = log(wnv_cases)
+  ) |> 
+  ggplot(aes(x = avg_temp, y = log_cases, color = borough)) +
+  geom_point() +
+  geom_smooth( se = FALSE) # not really
+
+
+```
+
+```{r poisson regressions}
 
 # are wnv+ mosquitoes detected associated with year and borough?
 
@@ -619,8 +697,11 @@ pos_mosquito_model <-
 pos_mosquito_model |> 
   broom::tidy()
 
+pos_mosquito_model |> 
+  broom::glance()
+
 pos_mosquito_model_saturated <-
-wnv_case_temp_hvi_df |> 
+  wnv_case_temp_hvi_df |> 
   filter(year %in% 2021:2024) |> 
   glm(wnv_mosquitoes ~ year + borough + avg_temp + avg_hvi,
       family = poisson,
@@ -628,6 +709,27 @@ wnv_case_temp_hvi_df |>
 
 pos_mosquito_model_saturated |> 
   broom::tidy()
+
+pos_mosquito_model_saturated |> 
+  broom::glance()
+
+mosquito_naive_model <-
+  wnv_case_temp_hvi_df |> 
+  filter(year %in% 2021:2024) |> 
+  glm(wnv_mosquitoes ~ 1,
+      family = poisson, 
+      data = _)
+
+mosquito_naive_model |> 
+  broom::tidy()
+
+mosquito_naive_model |> 
+  broom::glance()
+
+# LRT to compare saturated model  
+
+-2 * (logLik(pos_mosquito_model) - logLik(pos_mosquito_model_saturated)) # 2 df
+pchisq(-2 * (as.numeric(logLik(pos_mosquito_model)) - as.numeric(logLik(pos_mosquito_model_saturated))), df = 2, lower.tail = FALSE) # p value = 0.1318
 
 # this data aggregates ZIP code data together to borough level, may have greater power on ZIP code level 
 
@@ -642,5 +744,62 @@ pos_human_model |>
 
 pos_human_model |> 
   broom::glance()
+
+pos_human_model_saturated <-
+  wnv_case_temp_hvi_df |> 
+  glm(wnv_cases ~ year + borough + avg_hvi + avg_temp + wnv_mosquitoes, 
+      family = poisson,
+      data = _)
+
+pos_human_model_saturated |> 
+  broom::tidy() 
+
+
+# remove wnv+ mosquitoes as predictor - likely bc we only have mosquito data from 2021-2024
+
+# testing with only 2021-2024 data
+# saturated_human_2021_2024 <-
+#   wnv_case_temp_hvi_df |> 
+#   filter(year %in% 2021:2024) |> 
+#   glm(wnv_cases ~ year + borough + avg_hvi + avg_temp + wnv_mosquitoes, 
+#       family = poisson,
+#       data = _)
+# 
+# saturated_human_2021_2024 |> 
+#   broom::tidy() # positive mosquitos detected predictor still not significant 
+
+
+pos_human_model_saturated <-
+  wnv_case_temp_hvi_df |> 
+  glm(wnv_cases ~ year + borough + avg_hvi + avg_temp, 
+      family = poisson,
+      data = _)
+
+pos_human_model_saturated |> 
+  broom::tidy() 
+
+pos_human_model_saturated |> 
+  broom::glance() 
+
+human_naive_model <-
+  wnv_case_temp_hvi_df |> 
+  glm(wnv_cases ~ 1,
+      family = poisson, 
+      data = _)
+
+human_naive_model |> 
+  broom::tidy()
+
+human_naive_model |> 
+  broom::glance()
+
+# goodness of fit tests
+
+pchisq(pos_mosquito_model_saturated$deviance, df = pos_mosquito_model_saturated$df.residual, lower.tail = FALSE) # p = 0.2239, not a good fit
+pchisq(pos_human_model$deviance, df = pos_human_model$df.residual, lower.tail = FALSE) # p = 5.04e-34, not a good fit
+
+pchisq(pos_human_model_saturated$deviance, df = pos_human_model_saturated$df.residual, lower.tail = FALSE) # p = 3.72e-32, not a good fit
+
+
 ```
 
