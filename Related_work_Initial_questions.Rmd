@@ -24,7 +24,7 @@ With this inspiration, we wanted to explore available NYC data sets to answer so
 * Is there a relationship between heat vulnerability index score and incidence of West Nile virus?
 * Are there specific boroughs in NYC that are disproportionately affected by West Nile virus?
 
-We hypothesize that ***the NYC regions with the highest heat vulnerability index score will have the highest incidence of West Nile virus cases***. 
+We hypothesize that ***between the years of 2021 to 2024, the NYC regions with the highest heat vulnerability index score will have the highest incidence of West Nile virus cases***. 
 
 ## Data
 
@@ -33,6 +33,11 @@ We hypothesize that ***the NYC regions with the highest heat vulnerability index
 We utilized the [Supplmentary Dataset of NYC Zip Codes](https://p8105.com/data/zip_codes.html) that was provided on our P8105 class website, which includes information on *NYC zipcodes, boroughs*, and *neighborhoods*.
 
 We located the [NYC Heat Vulnerability Index (HVI)](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary) through the NYC Department of Health and Mental Hygiene Environment and Health Data Portal. The HVI shows the risk of community-level health impacts due to extreme heat and includes factors such as surface temperatures, green spaces, access to home air conditioning, median income, and the percentage of residents who are low-income or non-Latinx Black (who are often excluded from heat resources). Neighborhoods with a **HVI score of 1** have the lowest risk while those with a **HVI score of 5** have the highest risk.
+
+Data from the [West Nile Virus Activity reports](https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page) was used to show the detection of positive mosquitoes for West Nile virus in various NYC neighborhoods. This data is provided by the NYC Department of Health and Mental Hygiene.
+
+The [Global Surface Summary of the Day (GSOD) package](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) contains global daily average weather observations from weather stations. Indicators include mean temperature, dew point temperature, sea level pressure, station pressure, visibility, wind speed, gust, precipitation amount, and snow depth. This data is provided by the National Oceanic and Atmospheric Administration. 
+
 
 
 

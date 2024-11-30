@@ -42,9 +42,9 @@ answer some of these initial questions:
 - Are there specific boroughs in NYC that are disproportionately
   affected by West Nile virus?
 
-We hypothesize that ***the NYC regions with the highest heat
-vulnerability index score will have the highest incidence of West Nile
-virus cases***.
+We hypothesize that ***between the years of 2021 to 2024, the NYC
+regions with the highest heat vulnerability index score will have the
+highest incidence of West Nile virus cases***.
 
 ## Data
 
@@ -65,3 +65,17 @@ income, and the percentage of residents who are low-income or non-Latinx
 Black (who are often excluded from heat resources). Neighborhoods with a
 **HVI score of 1** have the lowest risk while those with a **HVI score
 of 5** have the highest risk.
+
+Data from the [West Nile Virus Activity
+reports](https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page)
+was used to show the detection of positive mosquitoes for West Nile
+virus in various NYC neighborhoods. This data is provided by the NYC
+Department of Health and Mental Hygiene.
+
+The [Global Surface Summary of the Day (GSOD)
+package](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516)
+contains global daily average weather observations from weather
+stations. Indicators include mean temperature, dew point temperature,
+sea level pressure, station pressure, visibility, wind speed, gust,
+precipitation amount, and snow depth. This data is provided by the
+National Oceanic and Atmospheric Administration.
