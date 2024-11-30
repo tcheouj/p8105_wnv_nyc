@@ -6,8 +6,8 @@ Mahdi Maktabi
 ## Related Work
 
 Our group has a shared interest in climate change, infectious diseases,
-and their complex interconnections. Inspiration for this project stems
-from several relevant news articles and papers:
+and hating mosquito bites. Inspiration for this project stems from
+several relevant news articles and papers:
 
 - A [2024 New York Times
   article](https://www.nytimes.com/article/west-nile-virus-nyc.html)
@@ -46,7 +46,10 @@ answer some of these initial questions:
 
 We hypothesize that ***between the years of 2021 to 2024, the NYC
 regions with the highest heat vulnerability index score will have the
-highest incidence of West Nile virus cases***.
+highest incidence of West Nile virus cases***. We expect these results
+because areas with a high HVI may be more likely to experience greater
+heat conditions and potentially create more suitable environments for
+mosquitoes infected with West Nile virus.
 
 ## Data
 
