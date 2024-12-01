@@ -20,12 +20,16 @@ With this inspiration, we wanted to explore available NYC data sets to answer so
 
 * What communities are affected most by rising temperatures? (heat vulnerability index)
 * Are heat vulnerability index scores a good indicator for visualizing temperature trends in NYC?
+  * What about precipitation?
 * What is the incidence of West Nile virus in NYC over time? Has it changed?
 * Is there a relationship between heat vulnerability index score and incidence of West Nile virus?
 * Are there specific boroughs in NYC that are disproportionately affected by West Nile virus?
 * How has the NYC DOHMH's mosquito control efforts during the summer affected the incidence of West Nile virus case detection?
+* 
 
 We hypothesize that ***between the years of 2021 to 2024, the NYC regions with the highest heat vulnerability index score will have the highest incidence of West Nile virus cases***. We expect these results because areas with a high HVI may be more likely to experience worse heat conditions and potentially create more suitable environments for mosquitoes infected with West Nile virus.
+
+Higher temperature -> higher incidence of WNV
 
 ## Data
 
@@ -35,7 +39,7 @@ We utilized the [Supplmentary Dataset of NYC Zip Codes](https://p8105.com/data/z
 
 We located the [NYC Heat Vulnerability Index (HVI)](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary) through the NYC Department of Health and Mental Hygiene (DOHMH) Environment and Health Data Portal. The HVI shows the risk of community-level health impacts due to extreme heat and includes factors such as surface temperatures, green spaces, access to home air conditioning, median income, and the percentage of residents who are low-income or non-Latinx Black (who are often excluded from heat resources). Neighborhoods with a **HVI score of 1** have the lowest risk while those with a **HVI score of 5** have the highest risk.
 
-Data from the [West Nile Virus Mosquito Activity reports](https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page) was used to show the detection of positive mosquitoes for West Nile virus in various NYC neighborhoods. This data is provided by the NYC DOHMH.
+Data from the [West Nile Virus Mosquito Activity reports](https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page) was used to show the detection of positive mosquitoes for West Nile virus in various NYC neighborhoods. This data is provided by the NYC DOHMH. 
 
 We located the [West Nile Virus Positive NYC Cases](https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2024/wnvplan2024.pdf) through the *2024 NYC DOHMH Comprehensive Mosquito Surveillance and Control Plan*. The report provides the number of West Nile virus cases in NYC between 1999-2023, separated by borough.
 
@@ -66,10 +70,18 @@ This dataset was already in a tidy format after downloading. We simply imported 
 
 **GSODR Dataset**
 
+Ask about this.
+
+Merged all the mosquito dataset (wnv) - all zipcodes that did not have mosquito detected will have zero - goal: 
+
 
 
 
 ## Exploratory Analysis
+
+look at the distribution of wnv by borough
+
+is heat vulnerability assocaited with wnv+ mosquitoes (no assocaition)
 
 
 

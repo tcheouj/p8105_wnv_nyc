@@ -48,7 +48,7 @@ answer some of these initial questions:
 We hypothesize that ***between the years of 2021 to 2024, the NYC
 regions with the highest heat vulnerability index score will have the
 highest incidence of West Nile virus cases***. We expect these results
-because areas with a high HVI may be more likely to experience greater
+because areas with a high HVI may be more likely to experience worse
 heat conditions and potentially create more suitable environments for
 mosquitoes infected with West Nile virus.
 
@@ -92,8 +92,6 @@ sea level pressure, station pressure, visibility, wind speed, gust,
 precipitation amount, and snow depth. This data is provided by the
 National Oceanic and Atmospheric Administration.
 
-(should i include which stations we used for NY?)
-
 ### Cleaning
 
 **P8105 Zip Codes Dataset**
@@ -136,5 +134,7 @@ that borough).
 This dataset was already in a tidy format after downloading. We simply
 imported the dataset using `read_csv` and applied `janitor::clean_names`
 for consistency.
+
+**GSODR Dataset**
 
 ## Exploratory Analysis
