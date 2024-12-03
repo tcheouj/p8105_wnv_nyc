@@ -36,6 +36,7 @@ answer some of these initial questions:
   vulnerability index)
 - Are heat vulnerability index scores a good indicator for visualizing
   temperature trends in NYC?
+  - What about precipitation?
 - What is the incidence of West Nile virus in NYC over time? Has it
   changed?
 - Is there a relationship between heat vulnerability index score and
@@ -44,6 +45,7 @@ answer some of these initial questions:
   affected by West Nile virus?
 - How has the NYC DOHMH’s mosquito control efforts during the summer
   affected the incidence of West Nile virus case detection?
+- 
 
 We hypothesize that ***between the years of 2021 to 2024, the NYC
 regions with the highest heat vulnerability index score will have the
@@ -51,6 +53,8 @@ highest incidence of West Nile virus cases***. We expect these results
 because areas with a high HVI may be more likely to experience worse
 heat conditions and potentially create more suitable environments for
 mosquitoes infected with West Nile virus.
+
+Higher temperature -\> higher incidence of WNV
 
 ## Data
 
@@ -87,10 +91,12 @@ in NYC between 1999-2023, separated by borough.
 The [Global Surface Summary of the Day (GSOD)
 package](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516)
 contains global daily average weather observations from weather
-stations. Indicators include mean temperature, dew point temperature,
-sea level pressure, station pressure, visibility, wind speed, gust,
-precipitation amount, and snow depth. This data is provided by the
-National Oceanic and Atmospheric Administration.
+stations. A `GSODR` package exists where we can load in data from
+specific stations with specific measurements. Our indicators included:
+mean temperature, dew point temperature, sea level pressure, station
+pressure, visibility, wind speed, gust, precipitation amount, and snow
+depth. This data is provided by the National Oceanic and Atmospheric
+Administration.
 
 ### Cleaning
 
@@ -137,4 +143,62 @@ for consistency.
 
 **GSODR Dataset**
 
+We identified Bushwick, Brooklyn as the geographical center of NYC. We
+loaded the `GSODR` package and used the `nearest_stations` function to
+identify weather stations surrounding the longitude and latitude
+coordinates of Bushwick. We used a 20 mile radius to capture stations in
+all boroughs. We then filtered out stations not in NYC and those without
+2021-2024 weather data. This left us with only 5 stations: **Wall St**,
+**LGA**, **Central Park**, **JFK**, and **The Battery**.
+
+We pulled weather data between 2021-2024 from the 5 weather stations
+using `get_GSOD`, applied `janitor::cleannames()`, and selected these
+variables: `station name`, `latitude` and `longitude`, date (`yearmoda`)
+mean temperature (`temp`), mean precipitation (`prcp`), mean dew point
+(`dewp`) (to get an idea of water content in the air), and `max` and
+`min` temperature. Finally, we applied a series of mutate steps to
+convert temperature measurements to Fahrenheit, precipitation to inches,
+and renamed weather stations to more intuitive names.
+
+### Merging
+
+Merged all the mosquito dataset (wnv) by zip codes - all zipcodes that
+did not have mosquito detected will have zero - goal:
+
+Relevant variables included in dataset:
+
+- 
+
 ## Exploratory Analysis
+
+look at the distribution of wnv by borough
+
+is heat vulnerability assocaited with wnv+ mosquitoes (no assocaition)
+
+We first wanted to look at which weather station to use for our
+temperature analysis as we were curious of whether there were any
+variations between temperature data from these 5 stations. We plotted
+the temperature data between 2021 and 2024 and we found that, despite
+being in different boroughs, there is not much variation in measured
+temperatures. From this, we understood that we could get by with using
+just one station and chose weather data from **Central Park**.
+
+We then wanted to focus on the mosquito data. Specifically, we wanted to
+look at the number of mosquito counts by year and borough to explore
+whether mosquito season starts earlier. Since we predicted that
+temperatures are rising in NYC, then we should expect that warmer
+climates may cause mosquito season to start sooner. To visualize this,
+we created four separate plots of counts of mosquitoes positive for WNV
+for each year from 2021 through 2024, separated by borough. (**The
+figures show that - add conclusion here**). We also created an
+additional plot just looking at (**ask Johnstone about what the plot
+with the merged dataset is showing**).
+
+We then wanted to look at whether heat vulnerability index is associated
+with WNV+ mosquitoes. To do this, we used our merged dataset, grouped by
+zipcode and borough, and then plotted hvi score and WNV+ mosquito
+counts. **The results showed that there were no clear visual trends of
+association between HVI score, WNV+ mosquitoes, and borough. One
+noteworthy pattern was that neighborhoods with an HVI score of 5 had
+generally lower counts of WNV+ mosquito counts compared to neighborhoods
+with an HVI score of 1, which were more spread out.**
