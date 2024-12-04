@@ -34,27 +34,27 @@ answer some of these initial questions:
 
 - What communities are affected most by rising temperatures? (heat
   vulnerability index)
-- Are heat vulnerability index scores a good indicator for visualizing
-  temperature trends in NYC?
-  - What about precipitation?
-- What is the incidence of West Nile virus in NYC over time? Has it
-  changed?
+- What do average temperatures look like over time in NYC? Is there any
+  shift?
+  - What about precipitation trends?
+- If climate change is causing temperatures to rise in NYC, does this
+  affect mosquito season?
+- What is the incidence of mosquitoes carrying West Nile virus in NYC
+  over time? Is it different across boroughs?
 - Is there a relationship between heat vulnerability index score and
   incidence of West Nile virus?
 - Are there specific boroughs in NYC that are disproportionately
   affected by West Nile virus?
 - How has the NYC DOHMH’s mosquito control efforts during the summer
   affected the incidence of West Nile virus case detection?
-- 
 
 We hypothesize that ***between the years of 2021 to 2024, the NYC
-regions with the highest heat vulnerability index score will have the
-highest incidence of West Nile virus cases***. We expect these results
-because areas with a high HVI may be more likely to experience worse
-heat conditions and potentially create more suitable environments for
-mosquitoes infected with West Nile virus.
-
-Higher temperature -\> higher incidence of WNV
+boroughs with warmer average temperatures will have a higher incidence
+of mosquitoes carrying West Nile virus***. We also predict that areas
+with higher HVI scores will also have more positive WNV mosquitoes as
+these areas may be more likely to experience worse heat conditions and
+potentially create more suitable environments for mosquitoes infected
+with West Nile virus.
 
 ## Data
 
@@ -79,8 +79,10 @@ while those with a **HVI score of 5** have the highest risk.
 Data from the [West Nile Virus Mosquito Activity
 reports](https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page)
 was used to show the detection of positive mosquitoes for West Nile
-virus in various NYC neighborhoods. This data is provided by the NYC
-DOHMH.
+virus in various NYC neighborhoods. Further, we used geographic files
+for [Modified ZIP Code Tabulation Areas
+(MODZCTA)](https://github.com/nychealth/coronavirus-data/tree/master/Geography-resources)
+to create the NYC maps. All data is provided by the NYC DOHMH.
 
 We located the [West Nile Virus Positive NYC
 Cases](https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2024/wnvplan2024.pdf)
@@ -92,11 +94,11 @@ The [Global Surface Summary of the Day (GSOD)
 package](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516)
 contains global daily average weather observations from weather
 stations. A `GSODR` package exists where we can load in data from
-specific stations with specific measurements. Our indicators included:
-mean temperature, dew point temperature, sea level pressure, station
-pressure, visibility, wind speed, gust, precipitation amount, and snow
-depth. This data is provided by the National Oceanic and Atmospheric
-Administration.
+specific stations with specific weather measurements. Our indicators
+included: mean temperature, dew point temperature, sea level pressure,
+station pressure, visibility, wind speed, gust, precipitation amount,
+and snow depth. This data is provided by the National Oceanic and
+Atmospheric Administration.
 
 ### Cleaning
 
@@ -152,7 +154,7 @@ all boroughs. We then filtered out stations not in NYC and those without
 **LGA**, **Central Park**, **JFK**, and **The Battery**.
 
 We pulled weather data between 2021-2024 from the 5 weather stations
-using `get_GSOD`, applied `janitor::cleannames()`, and selected these
+using `get_GSOD`, applied `janitor::cleannames`, and selected these
 variables: `station name`, `latitude` and `longitude`, date (`yearmoda`)
 mean temperature (`temp`), mean precipitation (`prcp`), mean dew point
 (`dewp`) (to get an idea of water content in the air), and `max` and
@@ -162,18 +164,49 @@ and renamed weather stations to more intuitive names.
 
 ### Merging
 
-Merged all the mosquito dataset (wnv) by zip codes - all zipcodes that
-did not have mosquito detected will have zero - goal:
+To integrate our datasets, we utilized the shared `zip_code` variable as
+a key for merging. This allowed us to successfully combine WNV-positive
+mosquito datasets (2021–2024), HVI scores, and MODZCTA shapefiles. For
+the mosquito data, we ensured that zip codes without mosquito detection
+were assigned a value of zero.
 
-Relevant variables included in dataset:
+Relevant variables included in datasets:
+
+- zip_code
+
+- borough
+
+- date
+
+- neighborhood
+
+- hvi
+
+- name
+
+- latitude
+
+- longtitude
+
+- yearmoda
+
+- temp
+
+- max
+
+- min
+
+- prcp
+
+- dewp
+
+- year
 
 - 
 
 ## Exploratory Analysis
 
 look at the distribution of wnv by borough
-
-is heat vulnerability assocaited with wnv+ mosquitoes (no assocaition)
 
 We first wanted to look at which weather station to use for our
 temperature analysis as we were curious of whether there were any
@@ -194,6 +227,14 @@ figures show that - add conclusion here**). We also created an
 additional plot just looking at (**ask Johnstone about what the plot
 with the merged dataset is showing**).
 
+To visualize this further, we wanted to create a map of NYC between
+2021-2024 and overlay the positive WNV mosquitoes data to see if we
+could visualize any trends on which boroughs or neighborhoods may be
+affected more. Interestingly, from the figure, we found that there are
+zip codes in Queens and Staten Island that appear to have an increase in
+the number of mosquitoes positive for WNV from 2021 to 2024. Manhattan,
+Brooklyn, and the Bronx remained relatively low.
+
 We then wanted to look at whether heat vulnerability index is associated
 with WNV+ mosquitoes. To do this, we used our merged dataset, grouped by
 zipcode and borough, and then plotted hvi score and WNV+ mosquito
@@ -202,3 +243,5 @@ association between HVI score, WNV+ mosquitoes, and borough. One
 noteworthy pattern was that neighborhoods with an HVI score of 5 had
 generally lower counts of WNV+ mosquito counts compared to neighborhoods
 with an HVI score of 1, which were more spread out.**
+
+**Need to add poisson description**
