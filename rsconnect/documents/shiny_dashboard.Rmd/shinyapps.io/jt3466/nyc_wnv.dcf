@@ -1,0 +1,13 @@
+name: nyc_wnv
+title: nyc_wnv
+username: jt3466
+account: jt3466
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13517381
+bundleId: 9459201
+url: https://jt3466.shinyapps.io/nyc_wnv/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+additionalFiles: data/shapefiles/MODZCTA_2010.dbf|data/shapefiles/MODZCTA_2010.prj|data/shapefiles/MODZCTA_2010.shx|data/shapefiles/nybb.dbf|data/shapefiles/nybb.prj|data/shapefiles/nybb.shp.xml|data/shapefiles/nybb.shx

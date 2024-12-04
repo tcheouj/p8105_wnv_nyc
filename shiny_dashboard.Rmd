@@ -1,9 +1,18 @@
 ---
-title: "shiny_dashboard"
-output: 
+title: "NYC WNV in mosquitoes and humans"
+output:
   flexdashboard::flex_dashboard:
     orientation: columns
+    vertical_layout: fill
 runtime: shiny
+resource_files:
+- data/shapefiles/MODZCTA_2010.dbf
+- data/shapefiles/MODZCTA_2010.prj
+- data/shapefiles/MODZCTA_2010.shx
+- data/shapefiles/nybb.dbf
+- data/shapefiles/nybb.prj
+- data/shapefiles/nybb.shp.xml
+- data/shapefiles/nybb.shx
 ---
 
 ```{r setup, include=FALSE}
@@ -12,7 +21,6 @@ library(flexdashboard)
 library(tidyverse)
 library(rvest)
 library(httr)
-library(GSODR)
 library(sf)
 library(plotly)
 
@@ -177,6 +185,18 @@ zip_shp <-
   ) |> 
   separate_longer_delim(label, delim = ", ")
 
+# Get borough shapefile data for mapping WNV+ cases
+
+boro_path <- "data/shapefiles/nybb.shp"
+
+boro_shp <-
+  boro_path |>
+  st_read() |> 
+  janitor::clean_names() |> 
+  rename(borough = boro_name) |> 
+  select(borough, geometry)
+
+
 # Add 0s for MODZCTAs without detected WNV+ mosquitoes
 
 all_zctas <-
@@ -244,6 +264,10 @@ mos_by_modzcta <-
     )
   )
 
+# Merge human data with shapefiles by borough
+
+wnv_cases_shp <-
+  left_join(wnv_cases, boro_shp, by = join_by(borough))
 
 # Combine WNV human case, WNV mosquitoes, HVI, and temperature data
 
@@ -272,16 +296,18 @@ wnv_case_temp_hvi_df <-
 Sidebar {.sidebar}
 -----------------------------------------------------------------------
 
+Note that mosquito data is only available from 2021-2024, and human data is only available from 1999-2023.
+
 ```{r, echo=FALSE}
 years <- 
-  mos_by_modzcta |> 
+  wnv_cases |> 
   pull(year) |> 
   unique() 
 
 selectInput(
   inputId = "year_choice",
   label = h3("Select year"),
-  choices = years, selected = 2024
+  choices = years, selected = 2023
 )
 
 boroughs <-
@@ -307,10 +333,22 @@ sliderInput(
   label = h3("Choose range of WNV+ mosquitoes"),
   min = min_mosquitoes, max = max_mosquitoes, value = c(0,25)
 )
+
+max_cases <- 35
+min_cases <-
+  wnv_cases |> 
+  distinct(wnv_cases) |> 
+  min()
+
+sliderInput(
+  inputId = "case_range",
+  label = h3("Choose range of WNV+ cases"),
+  min = min_cases, max = max_cases, value = c(0, 35)
+)
 ```
 
 
-Column
+Column {data-width=500}
 -----------------------------------------------------------------------
 
 ### Citywide WNV+ mosquitoes by ZIP code per year
@@ -358,3 +396,49 @@ renderPlotly({
 ```
 
 
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Citywide WNV+ cases by borough per year
+
+```{r, echo=FALSE}
+renderPlotly({
+  plot <-
+    wnv_cases_shp |>
+    filter(!st_is_empty(geometry) & year == input$year_choice) |>
+    ggplot(aes(fill = wnv_cases, geometry = geometry, text = paste(borough, " - ", wnv_cases))) +
+    geom_sf() +
+    labs(
+      fill = "WNV+ cases"
+    ) +
+    theme(
+      axis.text.x = element_blank(),
+      axis.title.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.title.y = element_blank()
+    ) +
+    viridis::scale_fill_viridis(limits = c(0, 35))
+  
+  ggplotly(plot)
+})
+```
+
+### Most WNV+ detected boroughs
+
+```{r, echo=FALSE}
+renderPlotly({
+  wnv_cases_shp |> 
+  filter(
+    !st_is_empty(geometry),
+    year == input$year_choice,
+    wnv_cases %in% input$case_range[1]:input$case_range[2]
+  ) |>
+  mutate(
+    borough = as.factor(borough),
+    borough = fct_reorder(borough, wnv_cases),
+    text_label = str_c(borough, " - ", wnv_cases)
+  ) |> 
+  plot_ly(x = ~borough, y = ~wnv_cases, color = ~borough, text = ~text_label, type = "bar", colors = "viridis")
+})
+```

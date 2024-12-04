@@ -1,0 +1,12 @@
+name: shiny_dashboard
+title: shiny_dashboard
+username: jt3466
+account: jt3466
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13517217
+bundleId: 9459043
+url: https://jt3466.shinyapps.io/shiny_dashboard/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
