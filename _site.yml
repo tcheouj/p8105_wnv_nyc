@@ -1,0 +1,20 @@
+name: "Buzzing Threats"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "About"
+      href: about.html
+    - text: "Report"
+      href: report.html
+    - text: "Data Exploration"
+      href: data_exploration.html
+    - text: "Data Analysis"
+      href: data_analysis.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<mm6410@cumc.columbia.edu>,<jt3466@cumc.columbia.edu>, <ssr2195@cumc.columbia.edu>, <ss7332@cumc.columbia.edu>
+    - icon: fa-github fa-lg
+      href: https://github.com/tcheouj/p8105_wnv_nyc
+output:
+  html_document:
+   theme: yeti
