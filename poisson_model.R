@@ -165,3 +165,26 @@ lines(lag_mosq_cases$weekyear, predict(lag_null, type = "response"), col = "red"
 
 ## This is not the best model in the entire world, and the plots need to be cleaned up
 # But this is good enough to answer our research questions so far I think
+
+final_fit <- ar_min_rain_2
+
+car::influencePlot(final_fit)
+AER::dispersiontest(final_fit) # heavily overdispersed
+
+## MASS:glm.nb for a negative binomial fit
+final_nb_fit <- MASS::glm.nb(formula = formula(ar_min_rain_2), data = lag_mosq_cases)
+
+plot(count ~ weekyear, mosq_cases_temp, ylim = c(0,200))
+lines(lag_mosq_cases$weekyear, predict(final_nb_fit, type = "response"))
+lines(lag_mosq_cases$weekyear, predict(final_fit, type = "response"), col = "blue")
+lines(lag_mosq_cases$weekyear, predict(lag_null, type = "response"), col = "red")
+
+car::influencePlot(final_nb_fit) # Less Influential Residuals than a Poisson model
+
+# Resid vs Predicted
+par(mfrow=c(1,2))
+plot(lag_mosq_cases$count, resid(final_fit), main = "Poisson Model")
+abline(h=0)
+plot(lag_mosq_cases$count, resid(final_nb_fit), main = "Neg. Bin. Model")
+abline(h=0)
+par(mfrow=c(1,1))
