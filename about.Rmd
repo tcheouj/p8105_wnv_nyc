@@ -1,0 +1,21 @@
+---
+title: "About Us"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Our Team
+
+### Mahdi Maktabi
+Mahdi is a second year MPH student in the Department of Epidemiology with a certificate in Infectious Disease Epidemiology. Learn more about Mahdi [here](https://mahdi-maktabi.github.io/).
+
+### Johnstone Tcheou
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+
+### Samina Rashiq
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+
+### Sean Sorek
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris

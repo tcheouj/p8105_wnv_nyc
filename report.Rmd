@@ -1,0 +1,39 @@
+---
+title: "Report"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Motivation
+merging motivaion (project goals, motivation) and related work (things that inspired us)
+  
+## Initial Questions
+*questions we want to answer  
+*how questions evolved  
+* how questions evolved  
+  
+## Data
+*source  
+*scraping method (?)  
+*cleaning  
+  
+## Data Exploration
+visualizations, summaries, exploratory statistical analyses  
+can link to page with full code  
+  
+## Data Analysis
+formal statistical analyses  
+can link to page with full code  
+  
+## Discussion
+*findings  
+*are they what we expected?  
+*what insights into data can we make?   
+
+
