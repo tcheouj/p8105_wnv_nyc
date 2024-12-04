@@ -11,6 +11,8 @@ navbar:
       href: data_exploration.html
     - text: "Data Analysis"
       href: data_analysis.html
+    - text: "Dashboard"
+      href: https://jt3466.shinyapps.io/nyc_wnv/
     - icon: fa-envelope fa-lg
       href: mailto:<mm6410@cumc.columbia.edu>,<jt3466@cumc.columbia.edu>, <ssr2195@cumc.columbia.edu>, <ss7332@cumc.columbia.edu>
     - icon: fa-github fa-lg
