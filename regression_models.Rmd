@@ -11,6 +11,8 @@ library(tidyverse)
 library(modelr)
 library(broom)
 library(car)
+library(GGally)
+library(broom.helpers)
 ```
 
 # Data import
@@ -221,7 +223,7 @@ mosq_month_year |>
     resid = resid(fit4)
   ) |> 
   ggplot(aes(x = pred, y = resid)) +
-  geom_point(color = "#31688EFF",, size = 0.6) + 
+  geom_point(color = "#31688EFF",, size = 3) + 
   geom_hline(yintercept = 0)
 
 performance::check_overdispersion(fit4) 
@@ -278,11 +280,13 @@ weekly_weather <-
          lag_min =  lag(avg_min)) |>
   mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021
 
-mosq_cases_temp <- mosq_cases |>
+mosq_cases_temp <- 
+  mosq_cases |>
   left_join(y = weekly_weather, by = join_by(weekyear)) |>
   select(-ends_with(".y")) |>
   rename(year = year.x, week = week.x) |>
   mutate(
+    id = row_number(),
     lag_count = lag(count),
     lag_count = case_when(
       is.na(lag_count) ~ 0,
@@ -359,7 +363,9 @@ mosq_cases_temp |>
   geom_point(color = "#31688EFF") 
 ```
 
-```{r}
+Next, we have a model with just the lagging count of mosquitoes. The estimated increase in counts based on the prior count of mosquitoes is `r ar_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)` with a p value of `r ar_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`. The lagging mosquito count is then a significant predictor of estimated mosquito counts, and the graph illustrates the model fits the observed points well, except for the peaks in the 2021 data.
+
+```{r lag count temp model}
 ar_temp_fit <- MASS::glm.nb(count ~ lag_count + lag_temp, mosq_cases_temp)
 
 ar_temp_fit |> 
@@ -387,7 +393,6 @@ mosq_cases_temp |>
   geom_line(aes(y = pred_ar_temp, color = "AR+temp"), linetype = "solid", size = 0.6) +
   scale_color_manual(name = "models", values = c("AR" = "#31688EFF", "AR+temp" = "#1F9A8AFF"))
 
-
 mosq_cases_temp |> 
   cbind(resid = resid(ar_temp_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
@@ -395,7 +400,11 @@ mosq_cases_temp |>
 
 ```
 
-```{r}
+Afterwards, a model that also has lagging average temperature has significant terms for both lagging temperature and lagging mosquito counts. The associated estimate for lagging count is now `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`, with a p value of `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`. For lagging temperature, the estimate is `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` , with a  p value of `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(p.value) |> round(4)`. This model indicates lagging temperature has a larger effect on estimating mosquito counts than lagging mosquito counts. Compared to the model with just lagging mosquito counts, lagging mosquito counts has a slightly smaller effect on predicting counts in this model.
+
+Lastly, when we explored Poisson models, we had a saturated model that included precipitation as a predictor and found it was a considerably significant predictor with a larger effect size than the other predictors. However, since a Poisson regression is overdispersed for our data, we wanted to see if precipitation also has a considerable impact on predicting mosquito counts in a negative binomial regression model. 
+
+```{r lag count temp rain}
 ar_temp_rain_fit <- MASS::glm.nb(count ~ lag_count + lag_temp + lag_prcp, mosq_cases_temp)
 
 ar_temp_rain_fit |> 
@@ -429,15 +438,171 @@ mosq_cases_temp |>
   cbind(resid = resid(ar_temp_rain_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
   geom_point(color = "#5DC863FF") 
+```
 
+For this model, the estimated coefficient for lagging mosquito counts is `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`, compared to its coefficient in the model without rain with `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`. The p value for this estimate is `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`, while it has a p value in the prior model of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`. With lagging average temperature, the estimate is now `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` (p = `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_temp") |> pull(p.value) |> round(4)` compared to `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` (p = `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`). 
+
+The new term of lagging precipitation has an estimate of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_prcp") |> pull(estimate) |> round(4)` with a p value of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_prcp") |> pull(p.value) |> round(4)`. Despite having a large effect size compared to the other predictors, it is now no longer a significant estimate in a negative binomial model. This is likely from adjusting for the overdispersion, which would have biased the standard error of the lagging precipitation estimate towards zero and artificially inflated the significance. In terms of model fit, including the lagging precipitation term only slightly improved model fit for 2023. As such, for maintaining parsimony, our final model only includes lagging average temperature and lagging mosquito counts, not lagging rain.
+
+
+```{r final model}
 # rain doesnt significantly contribute, but makes fit visually better
 # especially for 2023
-```
 
-```{r }
 final_fit <- ar_temp_fit
-car::influencePlot(final_fit) |> 
-  knitr::kable(col.names = c("Studentized residuals", "Hat values (influence)", "Cook's distance"))
+
+final_fit |> 
+  ggcoef_model(
+    variable_labels = c(
+      lag_count = "Lagging \nmosquito count",
+      lag_temp = "Lagging \naverage temperature"
+    ),
+    signif_stars = FALSE
+    ) +
+    labs(
+      title = "Predicted WNV+ mosquito counts in NYC",
+      x = "Negative binomial regression estimated coefficients"
+    )
 
 ```
 
+```{r influence analysis}
+augment_df <- 
+  augment(final_fit) |>
+  mutate(
+    id = row_number(),
+    avg_hat_2 = 2*mean(.hat),
+    avg_hat_3 = 3*mean(.hat),
+    influential = case_when(
+      .cooksd > avg_hat_2 ~ 1,
+      .cooksd > avg_hat_3 ~ 1,
+      .std.resid > 2 ~ 1, 
+      .default = 0
+    )
+  ) |> 
+  select(id, everything())
+
+avg_hat_2 <- 
+  augment_df |> 
+  pull(avg_hat_2) |> 
+  nth(1)
+  
+avg_hat_3 <-
+  augment_df |> 
+  pull(avg_hat_3) |> 
+  nth(1)
+  
+augment_df |> 
+  ggplot(aes(x = .hat, y = .std.resid)) + 
+  geom_point(aes(size = .cooksd, color = .cooksd)) +
+  geom_hline(
+    yintercept = c(-2, 0, 2)
+  ) +
+  geom_vline(
+    xintercept = c(avg_hat_2, avg_hat_3)
+  ) +
+  guides(
+    color = "none",
+    size = "none"
+  )
+
+augment_df |> 
+  filter(influential == 1) |> 
+  select(-c(id, starts_with("avg_hat"), influential)) |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Count", "Lagging count", "Lagging temperature", "Fitted", "Residual", "Hat", "Sigma", "Cook's distance", "Studentized residuals")
+  )
+
+# car::influencePlot(final_fit) |> 
+#  knitr::kable(col.names = c("Studentized residuals", "Hat values (influence)", "Cook's distance"))
+```
+
+When looking at influential points in our dataset, there are 3 different influential points that may warrant further analysis to see if omitting them alter the model parameter estimates.
+
+```{r omit influential points}
+
+influential_ids <- 
+  augment_df |> 
+  filter(influential == 1) |> 
+  pull(id)
+
+final_fit_omitted <-
+  mosq_cases_temp |> 
+  select(id, count, lag_count, everything()) |> 
+  filter(!(id %in% influential_ids)) |> 
+  MASS::glm.nb(count ~ lag_count + lag_temp, data = _)
+  
+final_fit |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+final_fit |> 
+  ggcoef_model(
+    variable_labels = c(
+      lag_count = "Lagging \nmosquito count",
+      lag_temp = "Lagging \naverage temperature"
+    ),
+    signif_stars = FALSE
+    ) +
+    labs(
+      title = "Predicted WNV+ mosquito counts in NYC",
+      x = "Negative binomial regression estimated coefficients"
+    )
+
+final_fit_omitted |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  ) 
+
+final_fit_omitted |> 
+  ggcoef_model(
+    variable_labels = c(
+      lag_count = "Lagging \nmosquito count",
+      lag_temp = "Lagging \naverage temperature"
+    ),
+    signif_stars = FALSE
+    ) +
+    labs(
+      title = "Predicted WNV+ mosquito counts in NYC",
+      x = "Negative binomial regression estimated coefficients"
+    )
+
+
+```
+
+When omitting the influential points, the lagging count estimate does not change much, going from `r final_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)` to `r final_fit_omitted |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`. The lagging temperature estimate does change a bit, changing from `r final_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` to `r final_fit_omitted |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`.
+
+```{r predicted vals}
+pred_vals_omit <-
+  mosq_cases_temp |> 
+  filter(!(id %in% influential_ids)) |>  
+  cbind( 
+    pred_fin_omit = predict(final_fit_omitted, type = "response")
+  ) |> 
+  select(id, count, pred_fin_omit)
+
+pred_vals <-
+  mosq_cases_temp |> 
+  cbind(
+    pred_fin = predict(final_fit, type = "response")
+  ) |> 
+  select(id, count, pred_fin)
+
+inner_join(pred_vals, pred_vals_omit, by = join_by(id)) |> 
+  select(-ends_with(".y")) |>
+  rename(count = count.x) |> 
+  ggplot(aes(x = count, y = pred_fin)) +
+  geom_point(color = "#404788FF") +
+  geom_point(aes(y = pred_fin_omit), color = "#55C667FF") +
+  labs(
+    y = "Predicted values",
+    x = "Observed values"
+  )
+```
+When plotting predicted values from both models for a given observed count, the values do not seem to differ much either, especially for smaller observed values. These influential points therefore do not seem to be weighing the model heavily. 

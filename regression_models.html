@@ -1016,7 +1016,7 @@ significantly improve model prediction.</p>
     resid = resid(fit4)
   ) |&gt; 
   ggplot(aes(x = pred, y = resid)) +
-  geom_point(color = &quot;#31688EFF&quot;,, size = 0.6) + 
+  geom_point(color = &quot;#31688EFF&quot;,, size = 3) + 
   geom_hline(yintercept = 0)</code></pre>
 <p><img src="regression_models_files/figure-html/poisson%20overdispersion-2.png" width="672" /></p>
 <pre class="r"><code>performance::check_overdispersion(fit4) </code></pre>
@@ -1107,11 +1107,13 @@ mosq_cases &lt;-
   mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
 ## `.groups` argument.</code></pre>
-<pre class="r"><code>mosq_cases_temp &lt;- mosq_cases |&gt;
+<pre class="r"><code>mosq_cases_temp &lt;- 
+  mosq_cases |&gt;
   left_join(y = weekly_weather, by = join_by(weekyear)) |&gt;
   select(-ends_with(&quot;.y&quot;)) |&gt;
   rename(year = year.x, week = week.x) |&gt;
   mutate(
+    id = row_number(),
     lag_count = lag(count),
     lag_count = case_when(
       is.na(lag_count) ~ 0,
@@ -1122,7 +1124,7 @@ mosq_cases &lt;-
 
 mosq_cases_temp |&gt; 
   knitr::kable()</code></pre>
-<table>
+<table style="width:100%;">
 <colgroup>
 <col width="3%" />
 <col width="3%" />
@@ -1138,6 +1140,7 @@ mosq_cases_temp |&gt;
 <col width="7%" />
 <col width="6%" />
 <col width="6%" />
+<col width="2%" />
 <col width="7%" />
 </colgroup>
 <thead>
@@ -1156,6 +1159,7 @@ mosq_cases_temp |&gt;
 <th align="right">lag_dewp</th>
 <th align="right">lag_max</th>
 <th align="right">lag_min</th>
+<th align="right">id</th>
 <th align="right">lag_count</th>
 </tr>
 </thead>
@@ -1175,6 +1179,7 @@ mosq_cases_temp |&gt;
 <td align="right">11.728571</td>
 <td align="right">77.91286</td>
 <td align="right">61.63571</td>
+<td align="right">1</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
@@ -1192,6 +1197,7 @@ mosq_cases_temp |&gt;
 <td align="right">19.450000</td>
 <td align="right">89.03429</td>
 <td align="right">69.35000</td>
+<td align="right">2</td>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
@@ -1209,6 +1215,7 @@ mosq_cases_temp |&gt;
 <td align="right">18.435714</td>
 <td align="right">84.97143</td>
 <td align="right">65.64714</td>
+<td align="right">3</td>
 <td align="right">24</td>
 </tr>
 <tr class="even">
@@ -1226,6 +1233,7 @@ mosq_cases_temp |&gt;
 <td align="right">19.342857</td>
 <td align="right">87.86429</td>
 <td align="right">71.44571</td>
+<td align="right">4</td>
 <td align="right">31</td>
 </tr>
 <tr class="odd">
@@ -1243,6 +1251,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.814286</td>
 <td align="right">86.06429</td>
 <td align="right">68.57857</td>
+<td align="right">5</td>
 <td align="right">47</td>
 </tr>
 <tr class="even">
@@ -1260,6 +1269,7 @@ mosq_cases_temp |&gt;
 <td align="right">14.178571</td>
 <td align="right">81.77000</td>
 <td align="right">64.95286</td>
+<td align="right">6</td>
 <td align="right">60</td>
 </tr>
 <tr class="odd">
@@ -1277,6 +1287,7 @@ mosq_cases_temp |&gt;
 <td align="right">19.585714</td>
 <td align="right">86.15429</td>
 <td align="right">69.41429</td>
+<td align="right">7</td>
 <td align="right">152</td>
 </tr>
 <tr class="even">
@@ -1294,6 +1305,7 @@ mosq_cases_temp |&gt;
 <td align="right">20.571429</td>
 <td align="right">87.91571</td>
 <td align="right">72.98857</td>
+<td align="right">8</td>
 <td align="right">77</td>
 </tr>
 <tr class="odd">
@@ -1311,6 +1323,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.014286</td>
 <td align="right">81.73143</td>
 <td align="right">64.13000</td>
+<td align="right">9</td>
 <td align="right">144</td>
 </tr>
 <tr class="even">
@@ -1328,6 +1341,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.242857</td>
 <td align="right">83.27429</td>
 <td align="right">66.04571</td>
+<td align="right">10</td>
 <td align="right">95</td>
 </tr>
 <tr class="odd">
@@ -1345,6 +1359,7 @@ mosq_cases_temp |&gt;
 <td align="right">10.285714</td>
 <td align="right">77.63000</td>
 <td align="right">58.98714</td>
+<td align="right">11</td>
 <td align="right">35</td>
 </tr>
 <tr class="even">
@@ -1362,6 +1377,7 @@ mosq_cases_temp |&gt;
 <td align="right">13.121429</td>
 <td align="right">75.07143</td>
 <td align="right">57.57286</td>
+<td align="right">12</td>
 <td align="right">47</td>
 </tr>
 <tr class="odd">
@@ -1380,6 +1396,7 @@ mosq_cases_temp |&gt;
 <td align="right">74.86571</td>
 <td align="right">60.74857</td>
 <td align="right">13</td>
+<td align="right">13</td>
 </tr>
 <tr class="even">
 <td align="right">2022</td>
@@ -1396,6 +1413,7 @@ mosq_cases_temp |&gt;
 <td align="right">10.800000</td>
 <td align="right">80.42000</td>
 <td align="right">59.37286</td>
+<td align="right">14</td>
 <td align="right">3</td>
 </tr>
 <tr class="odd">
@@ -1413,6 +1431,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.021429</td>
 <td align="right">86.56571</td>
 <td align="right">66.38000</td>
+<td align="right">15</td>
 <td align="right">8</td>
 </tr>
 <tr class="even">
@@ -1430,6 +1449,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.035714</td>
 <td align="right">87.86429</td>
 <td align="right">69.64571</td>
+<td align="right">16</td>
 <td align="right">11</td>
 </tr>
 <tr class="odd">
@@ -1448,6 +1468,7 @@ mosq_cases_temp |&gt;
 <td align="right">87.83857</td>
 <td align="right">68.70714</td>
 <td align="right">17</td>
+<td align="right">17</td>
 </tr>
 <tr class="even">
 <td align="right">2022</td>
@@ -1464,6 +1485,7 @@ mosq_cases_temp |&gt;
 <td align="right">19.671429</td>
 <td align="right">90.92429</td>
 <td align="right">72.93714</td>
+<td align="right">18</td>
 <td align="right">28</td>
 </tr>
 <tr class="odd">
@@ -1481,6 +1503,7 @@ mosq_cases_temp |&gt;
 <td align="right">18.657143</td>
 <td align="right">90.93714</td>
 <td align="right">73.55429</td>
+<td align="right">19</td>
 <td align="right">53</td>
 </tr>
 <tr class="even">
@@ -1498,6 +1521,7 @@ mosq_cases_temp |&gt;
 <td align="right">18.042857</td>
 <td align="right">90.29429</td>
 <td align="right">71.35571</td>
+<td align="right">20</td>
 <td align="right">79</td>
 </tr>
 <tr class="odd">
@@ -1515,6 +1539,7 @@ mosq_cases_temp |&gt;
 <td align="right">19.664286</td>
 <td align="right">92.01714</td>
 <td align="right">75.20000</td>
+<td align="right">21</td>
 <td align="right">92</td>
 </tr>
 <tr class="even">
@@ -1532,6 +1557,7 @@ mosq_cases_temp |&gt;
 <td align="right">12.764286</td>
 <td align="right">84.93286</td>
 <td align="right">65.76286</td>
+<td align="right">22</td>
 <td align="right">95</td>
 </tr>
 <tr class="odd">
@@ -1549,6 +1575,7 @@ mosq_cases_temp |&gt;
 <td align="right">18.585714</td>
 <td align="right">88.77714</td>
 <td align="right">71.89571</td>
+<td align="right">23</td>
 <td align="right">92</td>
 </tr>
 <tr class="even">
@@ -1566,6 +1593,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.771429</td>
 <td align="right">88.01857</td>
 <td align="right">71.35571</td>
+<td align="right">24</td>
 <td align="right">82</td>
 </tr>
 <tr class="odd">
@@ -1583,6 +1611,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.957143</td>
 <td align="right">82.31000</td>
 <td align="right">66.00714</td>
+<td align="right">25</td>
 <td align="right">70</td>
 </tr>
 <tr class="even">
@@ -1600,6 +1629,7 @@ mosq_cases_temp |&gt;
 <td align="right">14.042857</td>
 <td align="right">82.92714</td>
 <td align="right">64.40000</td>
+<td align="right">26</td>
 <td align="right">61</td>
 </tr>
 <tr class="odd">
@@ -1617,6 +1647,7 @@ mosq_cases_temp |&gt;
 <td align="right">13.335714</td>
 <td align="right">82.19429</td>
 <td align="right">62.42000</td>
+<td align="right">27</td>
 <td align="right">50</td>
 </tr>
 <tr class="even">
@@ -1634,6 +1665,7 @@ mosq_cases_temp |&gt;
 <td align="right">7.871429</td>
 <td align="right">73.22000</td>
 <td align="right">54.51286</td>
+<td align="right">28</td>
 <td align="right">30</td>
 </tr>
 <tr class="odd">
@@ -1651,6 +1683,7 @@ mosq_cases_temp |&gt;
 <td align="right">9.328571</td>
 <td align="right">65.08143</td>
 <td align="right">50.86143</td>
+<td align="right">29</td>
 <td align="right">14</td>
 </tr>
 <tr class="even">
@@ -1668,6 +1701,7 @@ mosq_cases_temp |&gt;
 <td align="right">18.335714</td>
 <td align="right">83.32571</td>
 <td align="right">66.50857</td>
+<td align="right">30</td>
 <td align="right">7</td>
 </tr>
 <tr class="odd">
@@ -1685,6 +1719,7 @@ mosq_cases_temp |&gt;
 <td align="right">21.328571</td>
 <td align="right">88.23714</td>
 <td align="right">71.44571</td>
+<td align="right">31</td>
 <td align="right">5</td>
 </tr>
 <tr class="even">
@@ -1702,6 +1737,7 @@ mosq_cases_temp |&gt;
 <td align="right">20.014286</td>
 <td align="right">88.30143</td>
 <td align="right">71.93429</td>
+<td align="right">32</td>
 <td align="right">11</td>
 </tr>
 <tr class="odd">
@@ -1719,6 +1755,7 @@ mosq_cases_temp |&gt;
 <td align="right">20.464286</td>
 <td align="right">86.07714</td>
 <td align="right">71.83143</td>
+<td align="right">33</td>
 <td align="right">23</td>
 </tr>
 <tr class="even">
@@ -1736,6 +1773,7 @@ mosq_cases_temp |&gt;
 <td align="right">19.514286</td>
 <td align="right">89.42000</td>
 <td align="right">71.15000</td>
+<td align="right">34</td>
 <td align="right">33</td>
 </tr>
 <tr class="odd">
@@ -1753,6 +1791,7 @@ mosq_cases_temp |&gt;
 <td align="right">13.850000</td>
 <td align="right">83.06857</td>
 <td align="right">66.08429</td>
+<td align="right">35</td>
 <td align="right">41</td>
 </tr>
 <tr class="even">
@@ -1770,6 +1809,7 @@ mosq_cases_temp |&gt;
 <td align="right">17.550000</td>
 <td align="right">85.52429</td>
 <td align="right">68.79714</td>
+<td align="right">36</td>
 <td align="right">57</td>
 </tr>
 <tr class="odd">
@@ -1787,6 +1827,7 @@ mosq_cases_temp |&gt;
 <td align="right">18.485714</td>
 <td align="right">84.20000</td>
 <td align="right">68.37286</td>
+<td align="right">37</td>
 <td align="right">73</td>
 </tr>
 <tr class="even">
@@ -1804,6 +1845,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.492857</td>
 <td align="right">82.94000</td>
 <td align="right">65.84000</td>
+<td align="right">38</td>
 <td align="right">86</td>
 </tr>
 <tr class="odd">
@@ -1821,6 +1863,7 @@ mosq_cases_temp |&gt;
 <td align="right">15.457143</td>
 <td align="right">81.74429</td>
 <td align="right">65.49286</td>
+<td align="right">39</td>
 <td align="right">85</td>
 </tr>
 <tr class="even">
@@ -1838,6 +1881,7 @@ mosq_cases_temp |&gt;
 <td align="right">20.728571</td>
 <td align="right">91.56714</td>
 <td align="right">71.62571</td>
+<td align="right">40</td>
 <td align="right">79</td>
 </tr>
 <tr class="odd">
@@ -1855,6 +1899,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.642857</td>
 <td align="right">81.15286</td>
 <td align="right">65.50571</td>
+<td align="right">41</td>
 <td align="right">72</td>
 </tr>
 <tr class="even">
@@ -1872,6 +1917,7 @@ mosq_cases_temp |&gt;
 <td align="right">12.071429</td>
 <td align="right">75.26429</td>
 <td align="right">58.79429</td>
+<td align="right">42</td>
 <td align="right">68</td>
 </tr>
 <tr class="odd">
@@ -1890,6 +1936,7 @@ mosq_cases_temp |&gt;
 <td align="right">65.90429</td>
 <td align="right">55.78571</td>
 <td align="right">43</td>
+<td align="right">43</td>
 </tr>
 <tr class="even">
 <td align="right">2023</td>
@@ -1906,6 +1953,7 @@ mosq_cases_temp |&gt;
 <td align="right">16.128571</td>
 <td align="right">76.94857</td>
 <td align="right">59.25714</td>
+<td align="right">44</td>
 <td align="right">17</td>
 </tr>
 <tr class="odd">
@@ -1923,6 +1971,7 @@ mosq_cases_temp |&gt;
 <td align="right">7.100000</td>
 <td align="right">67.08714</td>
 <td align="right">51.20857</td>
+<td align="right">45</td>
 <td align="right">11</td>
 </tr>
 <tr class="even">
@@ -1940,6 +1989,7 @@ mosq_cases_temp |&gt;
 <td align="right">9.242857</td>
 <td align="right">64.70857</td>
 <td align="right">51.05429</td>
+<td align="right">46</td>
 <td align="right">5</td>
 </tr>
 </tbody>
@@ -2142,6 +2192,12 @@ ar_fit |&gt;
   ggplot(aes(x = count, y = resid)) +
   geom_point(color = &quot;#31688EFF&quot;) </code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20model-2.png" width="672" /></p>
+<p>Next, we have a model with just the lagging count of mosquitoes. The
+estimated increase in counts based on the prior count of mosquitoes is
+0.0206 with a p value of 0. The lagging mosquito count is then a
+significant predictor of estimated mosquito counts, and the graph
+illustrates the model fits the observed points well, except for the
+peaks in the 2021 data.</p>
 <pre class="r"><code>ar_temp_fit &lt;- MASS::glm.nb(count ~ lag_count + lag_temp, mosq_cases_temp)
 
 ar_temp_fit |&gt; 
@@ -2236,12 +2292,27 @@ ar_temp_fit |&gt;
   geom_line(aes(y = pred_ar, color = &quot;AR&quot;), linetype = &quot;dashed&quot;, size = 0.6) +
   geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;), linetype = &quot;solid&quot;, size = 0.6) +
   scale_color_manual(name = &quot;models&quot;, values = c(&quot;AR&quot; = &quot;#31688EFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;))</code></pre>
-<p><img src="regression_models_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="regression_models_files/figure-html/lag%20count%20temp%20model-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 
   cbind(resid = resid(ar_temp_fit)) |&gt; 
   ggplot(aes(x = count, y = resid)) +
   geom_point(color = &quot;#1F9A8AFF&quot;) </code></pre>
-<p><img src="regression_models_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<p><img src="regression_models_files/figure-html/lag%20count%20temp%20model-2.png" width="672" /></p>
+<p>Afterwards, a model that also has lagging average temperature has
+significant terms for both lagging temperature and lagging mosquito
+counts. The associated estimate for lagging count is now 0.0182, with a
+p value of 0. For lagging temperature, the estimate is 0.0665 , with a p
+value of 0. This model indicates lagging temperature has a larger effect
+on estimating mosquito counts than lagging mosquito counts. Compared to
+the model with just lagging mosquito counts, lagging mosquito counts has
+a slightly smaller effect on predicting counts in this model.</p>
+<p>Lastly, when we explored Poisson models, we had a saturated model
+that included precipitation as a predictor and found it was a
+considerably significant predictor with a larger effect size than the
+other predictors. However, since a Poisson regression is overdispersed
+for our data, we wanted to see if precipitation also has a considerable
+impact on predicting mosquito counts in a negative binomial regression
+model.</p>
 <pre class="r"><code>ar_temp_rain_fit &lt;- MASS::glm.nb(count ~ lag_count + lag_temp + lag_prcp, mosq_cases_temp)
 
 ar_temp_rain_fit |&gt; 
@@ -2345,49 +2416,309 @@ ar_temp_rain_fit |&gt;
   geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;), linetype = &quot;solid&quot;, size = 0.6) +
   geom_line(aes(y = pred_ar_temp_rain, color = &quot;AR+temp+rain&quot;), linetype = &quot;dashed&quot;, size = 0.6) +
   scale_color_manual(name = &quot;models&quot;, values = c(&quot;null&quot; = &quot;#472D7BFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;, &quot;AR+temp+rain&quot; = &quot;#5DC863FF&quot;))</code></pre>
-<p><img src="regression_models_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="regression_models_files/figure-html/lag%20count%20temp%20rain-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 
   cbind(resid = resid(ar_temp_rain_fit)) |&gt; 
   ggplot(aes(x = count, y = resid)) +
   geom_point(color = &quot;#5DC863FF&quot;) </code></pre>
-<p><img src="regression_models_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p><img src="regression_models_files/figure-html/lag%20count%20temp%20rain-2.png" width="672" /></p>
+<p>For this model, the estimated coefficient for lagging mosquito counts
+is 0.0179, compared to its coefficient in the model without rain with
+0.0182. The p value for this estimate is 0, while it has a p value in
+the prior model of 0. With lagging average temperature, the estimate is
+now 0.0717 (p = 0 compared to 0.0665 (p = 0).</p>
+<p>The new term of lagging precipitation has an estimate of 0.5452 with
+a p value of 0.1088. Despite having a large effect size compared to the
+other predictors, it is now no longer a significant estimate in a
+negative binomial model. This is likely from adjusting for the
+overdispersion, which would have biased the standard error of the
+lagging precipitation estimate towards zero and artificially inflated
+the significance. In terms of model fit, including the lagging
+precipitation term only slightly improved model fit for 2023. As such,
+for maintaining parsimony, our final model only includes lagging average
+temperature and lagging mosquito counts, not lagging rain.</p>
 <pre class="r"><code># rain doesnt significantly contribute, but makes fit visually better
 # especially for 2023
 
 final_fit &lt;- ar_temp_fit
-car::influencePlot(final_fit) |&gt; 
-  knitr::kable(col.names = c(&quot;Studentized residuals&quot;, &quot;Hat values (influence)&quot;, &quot;Cook&#39;s distance&quot;))</code></pre>
-<p><img src="regression_models_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
-<table>
+
+final_fit |&gt; 
+  ggcoef_model(
+    variable_labels = c(
+      lag_count = &quot;Lagging \nmosquito count&quot;,
+      lag_temp = &quot;Lagging \naverage temperature&quot;
+    ),
+    signif_stars = FALSE
+    ) +
+    labs(
+      title = &quot;Predicted WNV+ mosquito counts in NYC&quot;,
+      x = &quot;Negative binomial regression estimated coefficients&quot;
+    )</code></pre>
+<p><img src="regression_models_files/figure-html/final%20model-1.png" width="672" /></p>
+<pre class="r"><code>augment_df &lt;- 
+  augment(final_fit) |&gt;
+  mutate(
+    id = row_number(),
+    avg_hat_2 = 2*mean(.hat),
+    avg_hat_3 = 3*mean(.hat),
+    influential = case_when(
+      .cooksd &gt; avg_hat_2 ~ 1,
+      .cooksd &gt; avg_hat_3 ~ 1,
+      .std.resid &gt; 2 ~ 1, 
+      .default = 0
+    )
+  ) |&gt; 
+  select(id, everything())</code></pre>
+<pre><code>## Warning: The `augment()` method for objects of class `negbin` is not maintained by the broom team, and is only supported through the `glm` tidier method. Please be cautious in interpreting and reporting broom output.
+## 
+## This warning is displayed once per session.</code></pre>
+<pre class="r"><code>avg_hat_2 &lt;- 
+  augment_df |&gt; 
+  pull(avg_hat_2) |&gt; 
+  nth(1)
+  
+avg_hat_3 &lt;-
+  augment_df |&gt; 
+  pull(avg_hat_3) |&gt; 
+  nth(1)
+  
+augment_df |&gt; 
+  ggplot(aes(x = .hat, y = .std.resid)) + 
+  geom_point(aes(size = .cooksd, color = .cooksd)) +
+  geom_hline(
+    yintercept = c(-2, 0, 2)
+  ) +
+  geom_vline(
+    xintercept = c(avg_hat_2, avg_hat_3)
+  ) +
+  guides(
+    color = &quot;none&quot;,
+    size = &quot;none&quot;
+  )</code></pre>
+<p><img src="regression_models_files/figure-html/influence%20analysis-1.png" width="672" /></p>
+<pre class="r"><code>augment_df |&gt; 
+  filter(influential == 1) |&gt; 
+  select(-c(id, starts_with(&quot;avg_hat&quot;), influential)) |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Count&quot;, &quot;Lagging count&quot;, &quot;Lagging temperature&quot;, &quot;Fitted&quot;, &quot;Residual&quot;, &quot;Hat&quot;, &quot;Sigma&quot;, &quot;Cook&#39;s distance&quot;, &quot;Studentized residuals&quot;)
+  )</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="5%" />
+<col width="12%" />
+<col width="18%" />
+<col width="6%" />
+<col width="8%" />
+<col width="6%" />
+<col width="6%" />
+<col width="14%" />
+<col width="20%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left"></th>
-<th align="right">Studentized residuals</th>
-<th align="right">Hat values (influence)</th>
+<th align="right">Count</th>
+<th align="right">Lagging count</th>
+<th align="right">Lagging temperature</th>
+<th align="right">Fitted</th>
+<th align="right">Residual</th>
+<th align="right">Hat</th>
+<th align="right">Sigma</th>
 <th align="right">Cook’s distance</th>
+<th align="right">Studentized residuals</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">6</td>
-<td align="right">3.461981</td>
-<td align="right">0.0253540</td>
-<td align="right">0.2133250</td>
+<td align="right">152</td>
+<td align="right">60</td>
+<td align="right">72.7314</td>
+<td align="right">3.7853</td>
+<td align="right">3.1521</td>
+<td align="right">0.0254</td>
+<td align="right">0.9386</td>
+<td align="right">0.2133</td>
+<td align="right">3.1928</td>
 </tr>
 <tr class="even">
-<td align="left">7</td>
-<td align="right">-2.517598</td>
-<td align="right">0.2074798</td>
-<td align="right">0.2680531</td>
+<td align="right">77</td>
+<td align="right">152</td>
+<td align="right">76.8457</td>
+<td align="right">5.7297</td>
+<td align="right">-2.3341</td>
+<td align="right">0.2075</td>
+<td align="right">0.9798</td>
+<td align="right">0.2681</td>
+<td align="right">-2.6218</td>
 </tr>
 <tr class="odd">
-<td align="left">9</td>
-<td align="right">-1.409527</td>
-<td align="right">0.1954560</td>
-<td align="right">0.1176286</td>
+<td align="right">47</td>
+<td align="right">35</td>
+<td align="right">67.4214</td>
+<td align="right">2.9783</td>
+<td align="right">1.9720</td>
+<td align="right">0.0445</td>
+<td align="right">1.0133</td>
+<td align="right">0.1128</td>
+<td align="right">2.0174</td>
 </tr>
 </tbody>
 </table>
+<pre class="r"><code># car::influencePlot(final_fit) |&gt; 
+#  knitr::kable(col.names = c(&quot;Studentized residuals&quot;, &quot;Hat values (influence)&quot;, &quot;Cook&#39;s distance&quot;))</code></pre>
+<p>When looking at influential points in our dataset, there are 3
+different influential points that may warrant further analysis to see if
+omitting them alter the model parameter estimates.</p>
+<pre class="r"><code>influential_ids &lt;- 
+  augment_df |&gt; 
+  filter(influential == 1) |&gt; 
+  pull(id)
+
+final_fit_omitted &lt;-
+  mosq_cases_temp |&gt; 
+  select(id, count, lag_count, everything()) |&gt; 
+  filter(!(id %in% influential_ids)) |&gt; 
+  MASS::glm.nb(count ~ lag_count + lag_temp, data = _)
+  
+final_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.1404</td>
+<td align="right">0.9371</td>
+<td align="right">-2.2840</td>
+<td align="right">0.0224</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0182</td>
+<td align="right">0.0021</td>
+<td align="right">8.6333</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">lag_temp</td>
+<td align="right">0.0665</td>
+<td align="right">0.0129</td>
+<td align="right">5.1451</td>
+<td align="right">0.0000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>final_fit |&gt; 
+  ggcoef_model(
+    variable_labels = c(
+      lag_count = &quot;Lagging \nmosquito count&quot;,
+      lag_temp = &quot;Lagging \naverage temperature&quot;
+    ),
+    signif_stars = FALSE
+    ) +
+    labs(
+      title = &quot;Predicted WNV+ mosquito counts in NYC&quot;,
+      x = &quot;Negative binomial regression estimated coefficients&quot;
+    )</code></pre>
+<p><img src="regression_models_files/figure-html/omit%20influential%20points-1.png" width="672" /></p>
+<pre class="r"><code>final_fit_omitted |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  ) </code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.8242</td>
+<td align="right">0.7706</td>
+<td align="right">-3.6652</td>
+<td align="right">2e-04</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0194</td>
+<td align="right">0.0018</td>
+<td align="right">11.0384</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="odd">
+<td align="left">lag_temp</td>
+<td align="right">0.0740</td>
+<td align="right">0.0105</td>
+<td align="right">7.0591</td>
+<td align="right">0e+00</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>final_fit_omitted |&gt; 
+  ggcoef_model(
+    variable_labels = c(
+      lag_count = &quot;Lagging \nmosquito count&quot;,
+      lag_temp = &quot;Lagging \naverage temperature&quot;
+    ),
+    signif_stars = FALSE
+    ) +
+    labs(
+      title = &quot;Predicted WNV+ mosquito counts in NYC&quot;,
+      x = &quot;Negative binomial regression estimated coefficients&quot;
+    )</code></pre>
+<p><img src="regression_models_files/figure-html/omit%20influential%20points-2.png" width="672" /></p>
+<p>When omitting the influential points, the lagging count estimate does
+not change much, going from 0.0182 to 0.0194. The lagging temperature
+estimate does change a bit, changing from 0.0665 to 0.0194.</p>
+<pre class="r"><code>pred_vals_omit &lt;-
+  mosq_cases_temp |&gt; 
+  filter(!(id %in% influential_ids)) |&gt;  
+  cbind( 
+    pred_fin_omit = predict(final_fit_omitted, type = &quot;response&quot;)
+  ) |&gt; 
+  select(id, count, pred_fin_omit)
+
+pred_vals &lt;-
+  mosq_cases_temp |&gt; 
+  cbind(
+    pred_fin = predict(final_fit, type = &quot;response&quot;)
+  ) |&gt; 
+  select(id, count, pred_fin)
+
+inner_join(pred_vals, pred_vals_omit, by = join_by(id)) |&gt; 
+  select(-ends_with(&quot;.y&quot;)) |&gt;
+  rename(count = count.x) |&gt; 
+  ggplot(aes(x = count, y = pred_fin)) +
+  geom_point(color = &quot;#404788FF&quot;) +
+  geom_point(aes(y = pred_fin_omit), color = &quot;#55C667FF&quot;) +
+  labs(
+    y = &quot;Predicted values&quot;,
+    x = &quot;Observed values&quot;
+  )</code></pre>
+<p><img src="regression_models_files/figure-html/predicted%20vals-1.png" width="672" />
+When plotting predicted values from both models for a given observed
+count, the values do not seem to differ much either, especially for
+smaller observed values. These influential points therefore do not seem
+to be weighing the model heavily.</p>
 </div>
 
 
