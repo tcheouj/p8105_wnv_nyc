@@ -1,5 +1,8 @@
 ## Sean Sorek 11/30/24
 
+
+library(tidyverse)
+
 wnv_cases <- read_csv("cleaned_data/wnv_cases.csv")
 wnv_mosquitoes <- read_csv("cleaned_data/wnv_mosquitoes.csv")
 heat_vuln <- read_csv("cleaned_data/heat_vuln.csv")
@@ -128,3 +131,7 @@ plot(mosq_cases_temp$count, resid(ar_temp_rain_fit))
 
 final_fit <- ar_temp_fit
 car::influencePlot(final_fit)
+
+
+final_fit |> 
+  broom::tidy() 

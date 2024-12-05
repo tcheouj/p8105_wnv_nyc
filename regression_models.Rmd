@@ -8,6 +8,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(modelr)
 library(broom)
 library(car)
 ```
@@ -18,10 +19,9 @@ First, we need to import our WNV data and predictor data. Ultimately, we are onl
 
 ```{r data import, message=FALSE}
 wnv_cases <- read_csv("cleaned_data/wnv_cases.csv")
-wnv_mosquitoes <- read_csv("cleaned_data/wnv_mosquitoes_test.csv") 
+wnv_mosquitoes <- read_csv("cleaned_data/wnv_mosquitoes.csv") 
 heat_vuln <- read_csv("cleaned_data/heat_vuln.csv")
 day_weather <- read_csv("cleaned_data/day_weather.csv")
-
 ```
 
 # Model with year 
@@ -33,8 +33,7 @@ mosq_count_by_year <-
   wnv_mosquitoes |>
   mutate(year = lubridate::year(date)) |>
   group_by(year) |>
-  summarise(count = n()) |>
-  filter(year < 3000)
+  summarise(count = n()) 
 
 mosq_count_by_year |> 
   knitr::kable(col.names = c("Year", "Count of WNV+ mosquitoes")) 
@@ -114,7 +113,7 @@ mosq_count_by_month |>
   cbind(pred = predict(fit2, type = "response")) |> 
   ggplot(aes(x = month, y = count)) +
   geom_point(color = "#404688FF", alpha = 0.5) + 
-  geom_line(aes(y = pred))
+  geom_line(aes(y = pred), size = 0.6)
 ```
 
 However, despite a significant model, the model does not fit our dataset well, so it is not useful in predicting counts. When plotting the predicted values against the observed values, the predicted values are linear since model is represented as a linear term, while our observed counts are parabolic.
@@ -144,8 +143,8 @@ With this model, both linear and second order terms are significant predictors o
 mosq_count_by_month |> 
   cbind(pred = predict(fit3, type = "response")) |> 
   ggplot(aes(x = month, y = count)) +
-  geom_point(color = "#3B528BFF", alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred))
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred), color = "#3B528BFF", size = 0.6)
 
 ```
 
@@ -161,8 +160,7 @@ mosq_month_year <-
   mutate(month = lubridate::month(date),
          year = lubridate::year(date)) |>
   group_by(year, month) |>
-  summarise(count = n()) |>
-  filter(year < 3000)
+  summarise(count = n()) 
 
 mosq_month_year |> 
   knitr::kable(col.names = c("Year", "Month", "Count of WNV+ mosquitoes"))
@@ -209,11 +207,49 @@ anova(fit3.5, fit4) |>
 
 In the model with year as a predictor, year is not significantly predicting mosquito counts, with a p value of `r fit4 |> tidy() |> filter(term == "year") |> pull(p.value) |> round(4)`. When conducting a chi-squared test to determine whether the addition of year is significant, the associated p value is `r anova(fit3.5, fit4) |> tidy() |> filter(term == "count ~ month + I(month^2) + year") |> pull(p.value) |> round(4)`. Adding year to a model that already has month as linear and second order terms does not significantly improve model prediction. 
 
+```{r poisson overdispersion}
+mosq_month_year |> 
+  cbind(pred = predict(fit4, type = "response")) |> 
+  mutate(monthyear = (year - 2021)*12 + month) |> 
+  ggplot(aes(x = monthyear, y = count)) +
+  geom_point(alpha = 0.5) +
+  geom_line(aes(y = pred), color = "#365D8DFF", size = 0.6)
+
+mosq_month_year |> 
+  cbind(
+    pred = predict(fit4, type = "response"),
+    resid = resid(fit4)
+  ) |> 
+  ggplot(aes(x = pred, y = resid)) +
+  geom_point(color = "#31688EFF",, size = 0.6) + 
+  geom_hline(yintercept = 0)
+
+performance::check_overdispersion(fit4) 
+
+
+```
+
+However, before proceeding with the next model, we wanted to check model fit and see if the assumptions of the Poisson distribution still hold. When graphing the predicted values for the model with month and year, it is able to capture the peaks and declines in counts better than the simple linear model, but isn't quite the best fit. 
+
+One of the Poisson model assumptions is that variance is approximately equal to the mean, so as the mean increases, the variance does as well. However, when the observed variance is much higher than the mean, and therefore higher than the expected variance, the data is overdispersed and a Poisson model may not be the best choice for the data. 
+
+When plotting the residuals vs fitted values, we would expect a fanning pattern as we would see the variance increase as the mean predicted values increase. However, at higher predicted values, the variance starts to decrease, indicating overdispersion. 
+
+This is confirmed using the `check_overdispersion` test from the `performance` package, which tests the dispersion ratio of observed variance to the expected variance. The null hypothesis of this test is that the dispersion ratio is 1, so the observed and expected variances are equal. However, our test result is significant, rejecting the null hypothesis and indicating our model is overdispersed for our data. This suggests we may need to use a different model that accounts for dispersion, like a negative binomial model. 
+
 # Model with week and temperature
 
-To create a model that includes week as a parameter, we need aggregated mosquito counts by year and week. This is done again by `mutate` to make year and week variables, creating a variable `weekyear` that calculates the number of weeks from 2021 (the first year of available mosquito data), and grouping counts by combinations of year and week. 
+To create a model that includes week as a parameter, we need aggregated mosquito counts by year and week. This is done again by `mutate` to make year and week variables, creating a variable `weekyear` that calculates the number of weeks from 2021 (the first year of available mosquito data), and grouping counts by combinations of year and week. This `weekyear` variable is used to merge with weather data from GSOD. 
+
+Daily weather readings from GSOD are aggregated to be by week, calculating the average temperature, precipitation, dewpoint, maximum temperature, and minimum temperature across several stations in NYC, by combinations of year and week. Additionally, since week-to-week weather is likely not independent as the weather conditions of the prior week probably influences the following week, lagging temperature variables are also created for the above weather variables. `weekyear` was also created. 
+
+The mosquito counts and weather data are merged by `weekyear`, with duplicate columns from the weather data dropped. As with the weather, circulating WNV+ mosquitoes from week to week are also hypothesized to not be independent, since the presence of WNV+ circulating the week prior will persist and infect other mosquitoes in the following week. Therefore, lagging mosquito counts are also created.
 
 ```{r week and temp data}
+
+# mosq_cases |> 
+#   ggplot(aes(x = weekyear, y = count)) +
+#   geom_point()
 mosq_cases <-
   wnv_mosquitoes |>
   mutate(
@@ -221,28 +257,8 @@ mosq_cases <-
     week = lubridate::week(date)) |>
   group_by(year, week) |>
   summarise(count = n()) |>
-  mutate(weekyear = (year - 2021)*52 + week) |>
-  filter(year < 3000)
-
-wnv_mosquitoes |>
-  mutate(
-    year = lubridate::year(date),
-    week = lubridate::week(date)) |>
-  group_by(year, week) |>
-  summarise(count = n()) |>
   mutate(weekyear = (year - 2021)*52 + week) 
   
-mosq_cases |> 
-  mutate(
-    year_2021 = year - 2021,
-    year_2021x52 = (year - 2021) * 52
-  ) |> 
-  knitr::kable()
-
-mosq_cases |>
-  ggplot(aes(x = weekyear, y = count)) +
-  geom_point()
-
 weekly_weather <- 
   day_weather |>
   mutate(
@@ -275,6 +291,153 @@ mosq_cases_temp <- mosq_cases |>
   ) |>
   na.omit()
 
+mosq_cases_temp |> 
+  knitr::kable()
+```
+
+The first model is just the week as a linear and a second order term as well as year to predict mosquito counts, using a negative binomial model this time.
+
+```{r week year model}
+null_fit <- MASS::glm.nb(count ~ week + I(week^2) + year, mosq_cases_temp)
+
+null_fit |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+null_fit |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+
+mosq_cases_temp |> 
+  cbind(pred = predict(null_fit, type = "response")) |> 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred), color = "#472D7BFF", size = 0.6)
+
+mosq_cases_temp |> 
+  cbind(resid = resid(null_fit)) |> 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = "#472D7BFF") # null model works well
+```
+
+All predictors in the model are significant, with p values for first order week and second order week of `r null_fit |> tidy() |> filter(term == "week") |>  pull(p.value) |> round(4)` and `r null_fit |> tidy() |> filter(term == "I(week^2)") |>  pull(p.value) |> round(4)`, respectively. Year has a p value of `r null_fit |> tidy() |> filter(term == "year") |>  pull(p.value) |> round(4)`. 
+
+When fitting the model to the data, we see that it also fits well.
+
+```{r lag count model}
+ar_fit <- MASS::glm.nb(count ~ lag_count, mosq_cases_temp)
+
+ar_fit |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+ar_fit |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+
+mosq_cases_temp |> 
+  cbind(pred = predict(ar_fit, type = "response")) |> 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred), color = "#31688EFF", size = 0.6)
+
+mosq_cases_temp |> 
+  cbind(resid = resid(ar_fit)) |> 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = "#31688EFF") 
+```
+
+```{r}
+ar_temp_fit <- MASS::glm.nb(count ~ lag_count + lag_temp, mosq_cases_temp)
+
+ar_temp_fit |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+ar_temp_fit |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+
+mosq_cases_temp |> 
+  cbind(
+    pred_ar = predict(ar_fit, type = "response"),
+    pred_ar_temp = predict(ar_temp_fit, type = "response")
+  ) |> 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred_ar, color = "AR"), linetype = "dashed", size = 0.6) +
+  geom_line(aes(y = pred_ar_temp, color = "AR+temp"), linetype = "solid", size = 0.6) +
+  scale_color_manual(name = "models", values = c("AR" = "#31688EFF", "AR+temp" = "#1F9A8AFF"))
+
+
+mosq_cases_temp |> 
+  cbind(resid = resid(ar_temp_fit)) |> 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = "#1F9A8AFF") 
+
+```
+
+```{r}
+ar_temp_rain_fit <- MASS::glm.nb(count ~ lag_count + lag_temp + lag_prcp, mosq_cases_temp)
+
+ar_temp_rain_fit |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+ar_temp_rain_fit |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+
+mosq_cases_temp |> 
+  cbind(
+    pred_null = predict(null_fit, type = "response"),
+    pred_ar_temp = predict(ar_temp_fit, type = "response"),
+    pred_ar_temp_rain = predict(ar_temp_rain_fit, type = "response")
+  ) |> 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 3) + 
+  geom_line(aes(y = pred_null, color = "null"), linetype = "dotted", size = 1.9) +
+  geom_line(aes(y = pred_ar_temp, color = "AR+temp"), linetype = "solid", size = 0.6) +
+  geom_line(aes(y = pred_ar_temp_rain, color = "AR+temp+rain"), linetype = "dashed", size = 0.6) +
+  scale_color_manual(name = "models", values = c("null" = "#472D7BFF", "AR+temp" = "#1F9A8AFF", "AR+temp+rain" = "#5DC863FF"))
+
+mosq_cases_temp |> 
+  cbind(resid = resid(ar_temp_rain_fit)) |> 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = "#5DC863FF") 
+
+# rain doesnt significantly contribute, but makes fit visually better
+# especially for 2023
+```
+
+```{r }
+final_fit <- ar_temp_fit
+car::influencePlot(final_fit) |> 
+  knitr::kable(col.names = c("Studentized residuals", "Hat values (influence)", "Cook's distance"))
 
 ```
 

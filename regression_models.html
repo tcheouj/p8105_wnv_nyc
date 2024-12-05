@@ -310,7 +310,7 @@ vulnerability to extreme heat and heatstroke, we do not hypothesize it
 to be causally relevant. This is supported by the lack of association
 between HVI and WNV+ mosquito count.</p>
 <pre class="r"><code>wnv_cases &lt;- read_csv(&quot;cleaned_data/wnv_cases.csv&quot;)
-wnv_mosquitoes &lt;- read_csv(&quot;cleaned_data/wnv_mosquitoes_test.csv&quot;) 
+wnv_mosquitoes &lt;- read_csv(&quot;cleaned_data/wnv_mosquitoes.csv&quot;) 
 heat_vuln &lt;- read_csv(&quot;cleaned_data/heat_vuln.csv&quot;)
 day_weather &lt;- read_csv(&quot;cleaned_data/day_weather.csv&quot;)</code></pre>
 </div>
@@ -325,8 +325,7 @@ calculate the count for each year.</p>
   wnv_mosquitoes |&gt;
   mutate(year = lubridate::year(date)) |&gt;
   group_by(year) |&gt;
-  summarise(count = n()) |&gt;
-  filter(year &lt; 3000)
+  summarise(count = n()) 
 
 mosq_count_by_year |&gt; 
   knitr::kable(col.names = c(&quot;Year&quot;, &quot;Count of WNV+ mosquitoes&quot;)) </code></pre>
@@ -582,18 +581,19 @@ by 1 month, with a p value of 0.0022.</p>
   cbind(pred = predict(fit2, type = &quot;response&quot;)) |&gt; 
   ggplot(aes(x = month, y = count)) +
   geom_point(color = &quot;#404688FF&quot;, alpha = 0.5) + 
-  geom_line(aes(y = pred))</code></pre>
+  geom_line(aes(y = pred), size = 0.6)</code></pre>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <p><img src="regression_models_files/figure-html/month%20model%20fit-1.png" width="672" /></p>
 <p>However, despite a significant model, the model does not fit our
 dataset well, so it is not useful in predicting counts. When plotting
 the predicted values against the observed values, the predicted values
 are linear since model is represented as a linear term, while our
 observed counts are parabolic.</p>
-<pre class="r"><code># mosq_cases |&gt; 
-#   ggplot(aes(x = weekyear, y = count)) +
-#   geom_point()
-
-fit3 &lt;- glm(count ~ month + I(month^2), mosq_count_by_month, family = &quot;poisson&quot;)
+<pre class="r"><code>fit3 &lt;- glm(count ~ month + I(month^2), mosq_count_by_month, family = &quot;poisson&quot;)
 
 fit3 |&gt; 
   tidy() |&gt; 
@@ -683,8 +683,8 @@ respectively.</p>
 <pre class="r"><code>mosq_count_by_month |&gt; 
   cbind(pred = predict(fit3, type = &quot;response&quot;)) |&gt; 
   ggplot(aes(x = month, y = count)) +
-  geom_point(color = &quot;#3B528BFF&quot;, alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred))</code></pre>
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred), color = &quot;#3B528BFF&quot;, size = 0.6)</code></pre>
 <p><img src="regression_models_files/figure-html/linear%20and%20quadratic%20month%20fit-1.png" width="672" /></p>
 <p>With an included second order term for month, our predicted values
 better fit the observed values, depicting the parabolic shape of the
@@ -702,8 +702,7 @@ follows.</p>
   mutate(month = lubridate::month(date),
          year = lubridate::year(date)) |&gt;
   group_by(year, month) |&gt;
-  summarise(count = n()) |&gt;
-  filter(year &lt; 3000)
+  summarise(count = n()) 
 
 mosq_month_year |&gt; 
   knitr::kable(col.names = c(&quot;Year&quot;, &quot;Month&quot;, &quot;Count of WNV+ mosquitoes&quot;))</code></pre>
@@ -1004,6 +1003,52 @@ chi-squared test to determine whether the addition of year is
 significant, the associated p value is 0.1452. Adding year to a model
 that already has month as linear and second order terms does not
 significantly improve model prediction.</p>
+<pre class="r"><code>mosq_month_year |&gt; 
+  cbind(pred = predict(fit4, type = &quot;response&quot;)) |&gt; 
+  mutate(monthyear = (year - 2021)*12 + month) |&gt; 
+  ggplot(aes(x = monthyear, y = count)) +
+  geom_point(alpha = 0.5) +
+  geom_line(aes(y = pred), color = &quot;#365D8DFF&quot;, size = 0.6)</code></pre>
+<p><img src="regression_models_files/figure-html/poisson%20overdispersion-1.png" width="672" /></p>
+<pre class="r"><code>mosq_month_year |&gt; 
+  cbind(
+    pred = predict(fit4, type = &quot;response&quot;),
+    resid = resid(fit4)
+  ) |&gt; 
+  ggplot(aes(x = pred, y = resid)) +
+  geom_point(color = &quot;#31688EFF&quot;,, size = 0.6) + 
+  geom_hline(yintercept = 0)</code></pre>
+<p><img src="regression_models_files/figure-html/poisson%20overdispersion-2.png" width="672" /></p>
+<pre class="r"><code>performance::check_overdispersion(fit4) </code></pre>
+<pre><code>## # Overdispersion test
+## 
+##        dispersion ratio =  42.234
+##   Pearson&#39;s Chi-Squared = 633.504
+##                 p-value = &lt; 0.001</code></pre>
+<pre><code>## Overdispersion detected.</code></pre>
+<p>However, before proceeding with the next model, we wanted to check
+model fit and see if the assumptions of the Poisson distribution still
+hold. When graphing the predicted values for the model with month and
+year, it is able to capture the peaks and declines in counts better than
+the simple linear model, but isn’t quite the best fit.</p>
+<p>One of the Poisson model assumptions is that variance is
+approximately equal to the mean, so as the mean increases, the variance
+does as well. However, when the observed variance is much higher than
+the mean, and therefore higher than the expected variance, the data is
+overdispersed and a Poisson model may not be the best choice for the
+data.</p>
+<p>When plotting the residuals vs fitted values, we would expect a
+fanning pattern as we would see the variance increase as the mean
+predicted values increase. However, at higher predicted values, the
+variance starts to decrease, indicating overdispersion.</p>
+<p>This is confirmed using the <code>check_overdispersion</code> test
+from the <code>performance</code> package, which tests the dispersion
+ratio of observed variance to the expected variance. The null hypothesis
+of this test is that the dispersion ratio is 1, so the observed and
+expected variances are equal. However, our test result is significant,
+rejecting the null hypothesis and indicating our model is overdispersed
+for our data. This suggests we may need to use a different model that
+accounts for dispersion, like a negative binomial model.</p>
 </div>
 <div id="model-with-week-and-temperature" class="section level1">
 <h1>Model with week and temperature</h1>
@@ -1012,19 +1057,28 @@ aggregated mosquito counts by year and week. This is done again by
 <code>mutate</code> to make year and week variables, creating a variable
 <code>weekyear</code> that calculates the number of weeks from 2021 (the
 first year of available mosquito data), and grouping counts by
-combinations of year and week.</p>
-<pre class="r"><code>mosq_cases &lt;-
+combinations of year and week. This <code>weekyear</code> variable is
+used to merge with weather data from GSOD.</p>
+<p>Daily weather readings from GSOD are aggregated to be by week,
+calculating the average temperature, precipitation, dewpoint, maximum
+temperature, and minimum temperature across several stations in NYC, by
+combinations of year and week. Additionally, since week-to-week weather
+is likely not independent as the weather conditions of the prior week
+probably influences the following week, lagging temperature variables
+are also created for the above weather variables. <code>weekyear</code>
+was also created.</p>
+<p>The mosquito counts and weather data are merged by
+<code>weekyear</code>, with duplicate columns from the weather data
+dropped. As with the weather, circulating WNV+ mosquitoes from week to
+week are also hypothesized to not be independent, since the presence of
+WNV+ circulating the week prior will persist and infect other mosquitoes
+in the following week. Therefore, lagging mosquito counts are also
+created.</p>
+<pre class="r"><code># mosq_cases |&gt; 
+#   ggplot(aes(x = weekyear, y = count)) +
+#   geom_point()
+mosq_cases &lt;-
   wnv_mosquitoes |&gt;
-  mutate(
-    year = lubridate::year(date),
-    week = lubridate::week(date)) |&gt;
-  group_by(year, week) |&gt;
-  summarise(count = n()) |&gt;
-  mutate(weekyear = (year - 2021)*52 + week) |&gt;
-  filter(year &lt; 3000)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>wnv_mosquitoes |&gt;
   mutate(
     year = lubridate::year(date),
     week = lubridate::week(date)) |&gt;
@@ -1033,553 +1087,6 @@ combinations of year and week.</p>
   mutate(weekyear = (year - 2021)*52 + week) </code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
 ## `.groups` argument.</code></pre>
-<pre><code>## # A tibble: 64 × 4
-## # Groups:   year [4]
-##     year  week count weekyear
-##    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;
-##  1  2021    25     4       25
-##  2  2021    27    24       27
-##  3  2021    28    31       28
-##  4  2021    30    47       30
-##  5  2021    31    60       31
-##  6  2021    32   152       32
-##  7  2021    33    77       33
-##  8  2021    35   144       35
-##  9  2021    37    95       37
-## 10  2021    38    35       38
-## # ℹ 54 more rows</code></pre>
-<pre class="r"><code>mosq_cases |&gt; 
-  mutate(
-    year_2021 = year - 2021,
-    year_2021x52 = (year - 2021) * 52
-  ) |&gt; 
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">year</th>
-<th align="right">week</th>
-<th align="right">count</th>
-<th align="right">weekyear</th>
-<th align="right">year_2021</th>
-<th align="right">year_2021x52</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">25</td>
-<td align="right">4</td>
-<td align="right">25</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">2021</td>
-<td align="right">27</td>
-<td align="right">24</td>
-<td align="right">27</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">28</td>
-<td align="right">31</td>
-<td align="right">28</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">2021</td>
-<td align="right">30</td>
-<td align="right">47</td>
-<td align="right">30</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">31</td>
-<td align="right">60</td>
-<td align="right">31</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">2021</td>
-<td align="right">32</td>
-<td align="right">152</td>
-<td align="right">32</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">33</td>
-<td align="right">77</td>
-<td align="right">33</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">2021</td>
-<td align="right">35</td>
-<td align="right">144</td>
-<td align="right">35</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">37</td>
-<td align="right">95</td>
-<td align="right">37</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">2021</td>
-<td align="right">38</td>
-<td align="right">35</td>
-<td align="right">38</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">40</td>
-<td align="right">47</td>
-<td align="right">40</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">2021</td>
-<td align="right">41</td>
-<td align="right">13</td>
-<td align="right">41</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">42</td>
-<td align="right">3</td>
-<td align="right">42</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">26</td>
-<td align="right">8</td>
-<td align="right">78</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">27</td>
-<td align="right">11</td>
-<td align="right">79</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">28</td>
-<td align="right">17</td>
-<td align="right">80</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">29</td>
-<td align="right">28</td>
-<td align="right">81</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">30</td>
-<td align="right">53</td>
-<td align="right">82</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">31</td>
-<td align="right">79</td>
-<td align="right">83</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">32</td>
-<td align="right">92</td>
-<td align="right">84</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">33</td>
-<td align="right">95</td>
-<td align="right">85</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">34</td>
-<td align="right">92</td>
-<td align="right">86</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">35</td>
-<td align="right">82</td>
-<td align="right">87</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">36</td>
-<td align="right">70</td>
-<td align="right">88</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">37</td>
-<td align="right">61</td>
-<td align="right">89</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">38</td>
-<td align="right">50</td>
-<td align="right">90</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">39</td>
-<td align="right">30</td>
-<td align="right">91</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">40</td>
-<td align="right">14</td>
-<td align="right">92</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">41</td>
-<td align="right">7</td>
-<td align="right">93</td>
-<td align="right">1</td>
-<td align="right">52</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">27</td>
-<td align="right">5</td>
-<td align="right">131</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">28</td>
-<td align="right">11</td>
-<td align="right">132</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">29</td>
-<td align="right">23</td>
-<td align="right">133</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">30</td>
-<td align="right">33</td>
-<td align="right">134</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">31</td>
-<td align="right">41</td>
-<td align="right">135</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">32</td>
-<td align="right">57</td>
-<td align="right">136</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">33</td>
-<td align="right">73</td>
-<td align="right">137</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">34</td>
-<td align="right">86</td>
-<td align="right">138</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">35</td>
-<td align="right">85</td>
-<td align="right">139</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">36</td>
-<td align="right">79</td>
-<td align="right">140</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">37</td>
-<td align="right">72</td>
-<td align="right">141</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">38</td>
-<td align="right">68</td>
-<td align="right">142</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">39</td>
-<td align="right">43</td>
-<td align="right">143</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">40</td>
-<td align="right">17</td>
-<td align="right">144</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">41</td>
-<td align="right">11</td>
-<td align="right">145</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">42</td>
-<td align="right">5</td>
-<td align="right">146</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">43</td>
-<td align="right">2</td>
-<td align="right">147</td>
-<td align="right">2</td>
-<td align="right">104</td>
-</tr>
-<tr class="odd">
-<td align="right">2024</td>
-<td align="right">23</td>
-<td align="right">2</td>
-<td align="right">179</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="even">
-<td align="right">2024</td>
-<td align="right">24</td>
-<td align="right">3</td>
-<td align="right">180</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="odd">
-<td align="right">2024</td>
-<td align="right">25</td>
-<td align="right">9</td>
-<td align="right">181</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="even">
-<td align="right">2024</td>
-<td align="right">26</td>
-<td align="right">22</td>
-<td align="right">182</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="odd">
-<td align="right">2024</td>
-<td align="right">27</td>
-<td align="right">50</td>
-<td align="right">183</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="even">
-<td align="right">2024</td>
-<td align="right">28</td>
-<td align="right">64</td>
-<td align="right">184</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="odd">
-<td align="right">2024</td>
-<td align="right">29</td>
-<td align="right">100</td>
-<td align="right">185</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="even">
-<td align="right">2024</td>
-<td align="right">30</td>
-<td align="right">101</td>
-<td align="right">186</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="odd">
-<td align="right">2024</td>
-<td align="right">31</td>
-<td align="right">88</td>
-<td align="right">187</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="even">
-<td align="right">2024</td>
-<td align="right">32</td>
-<td align="right">74</td>
-<td align="right">188</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="odd">
-<td align="right">2024</td>
-<td align="right">33</td>
-<td align="right">66</td>
-<td align="right">189</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="even">
-<td align="right">2024</td>
-<td align="right">34</td>
-<td align="right">49</td>
-<td align="right">190</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="odd">
-<td align="right">2024</td>
-<td align="right">35</td>
-<td align="right">36</td>
-<td align="right">191</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="even">
-<td align="right">2024</td>
-<td align="right">36</td>
-<td align="right">17</td>
-<td align="right">192</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="odd">
-<td align="right">2024</td>
-<td align="right">37</td>
-<td align="right">4</td>
-<td align="right">193</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="even">
-<td align="right">2024</td>
-<td align="right">38</td>
-<td align="right">5</td>
-<td align="right">194</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="odd">
-<td align="right">2024</td>
-<td align="right">39</td>
-<td align="right">1</td>
-<td align="right">195</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-<tr class="even">
-<td align="right">2024</td>
-<td align="right">40</td>
-<td align="right">1</td>
-<td align="right">196</td>
-<td align="right">3</td>
-<td align="right">156</td>
-</tr>
-</tbody>
-</table>
 <pre class="r"><code>weekly_weather &lt;- 
   day_weather |&gt;
   mutate(
@@ -1611,7 +1118,1276 @@ combinations of year and week.</p>
       .default = lag_count
     )
   ) |&gt;
-  na.omit()</code></pre>
+  na.omit()
+
+mosq_cases_temp |&gt; 
+  knitr::kable()</code></pre>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="3%" />
+<col width="4%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+<col width="7%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+<col width="7%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">year</th>
+<th align="right">week</th>
+<th align="right">count</th>
+<th align="right">weekyear</th>
+<th align="right">avg_temp</th>
+<th align="right">avg_prcp</th>
+<th align="right">avg_dewp</th>
+<th align="right">avg_max</th>
+<th align="right">avg_min</th>
+<th align="right">lag_temp</th>
+<th align="right">lag_prcp</th>
+<th align="right">lag_dewp</th>
+<th align="right">lag_max</th>
+<th align="right">lag_min</th>
+<th align="right">lag_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">25</td>
+<td align="right">4</td>
+<td align="right">25</td>
+<td align="right">72.57714</td>
+<td align="right">0.0378515</td>
+<td align="right">14.307143</td>
+<td align="right">84.16143</td>
+<td align="right">61.71286</td>
+<td align="right">68.23143</td>
+<td align="right">0.0214286</td>
+<td align="right">11.728571</td>
+<td align="right">77.91286</td>
+<td align="right">61.63571</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">27</td>
+<td align="right">24</td>
+<td align="right">27</td>
+<td align="right">73.85000</td>
+<td align="right">0.3135547</td>
+<td align="right">18.435714</td>
+<td align="right">84.97143</td>
+<td align="right">65.64714</td>
+<td align="right">78.68429</td>
+<td align="right">0.0435602</td>
+<td align="right">19.450000</td>
+<td align="right">89.03429</td>
+<td align="right">69.35000</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">28</td>
+<td align="right">31</td>
+<td align="right">28</td>
+<td align="right">75.84286</td>
+<td align="right">0.3442353</td>
+<td align="right">20.514286</td>
+<td align="right">85.82000</td>
+<td align="right">70.28857</td>
+<td align="right">73.85000</td>
+<td align="right">0.3135547</td>
+<td align="right">18.435714</td>
+<td align="right">84.97143</td>
+<td align="right">65.64714</td>
+<td align="right">24</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">30</td>
+<td align="right">47</td>
+<td align="right">30</td>
+<td align="right">76.98714</td>
+<td align="right">0.3235660</td>
+<td align="right">16.814286</td>
+<td align="right">86.06429</td>
+<td align="right">68.57857</td>
+<td align="right">79.04429</td>
+<td align="right">0.1421261</td>
+<td align="right">19.342857</td>
+<td align="right">87.86429</td>
+<td align="right">71.44571</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">31</td>
+<td align="right">60</td>
+<td align="right">31</td>
+<td align="right">72.73143</td>
+<td align="right">0.0128796</td>
+<td align="right">14.178571</td>
+<td align="right">81.77000</td>
+<td align="right">64.95286</td>
+<td align="right">76.98714</td>
+<td align="right">0.3235660</td>
+<td align="right">16.814286</td>
+<td align="right">86.06429</td>
+<td align="right">68.57857</td>
+<td align="right">47</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">32</td>
+<td align="right">152</td>
+<td align="right">32</td>
+<td align="right">76.84571</td>
+<td align="right">0.1528685</td>
+<td align="right">19.585714</td>
+<td align="right">86.15429</td>
+<td align="right">69.41429</td>
+<td align="right">72.73143</td>
+<td align="right">0.0128796</td>
+<td align="right">14.178571</td>
+<td align="right">81.77000</td>
+<td align="right">64.95286</td>
+<td align="right">60</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">33</td>
+<td align="right">77</td>
+<td align="right">33</td>
+<td align="right">79.73857</td>
+<td align="right">0.0228628</td>
+<td align="right">18.885714</td>
+<td align="right">88.23714</td>
+<td align="right">72.93714</td>
+<td align="right">76.84571</td>
+<td align="right">0.1528685</td>
+<td align="right">19.585714</td>
+<td align="right">86.15429</td>
+<td align="right">69.41429</td>
+<td align="right">152</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">35</td>
+<td align="right">144</td>
+<td align="right">35</td>
+<td align="right">75.88143</td>
+<td align="right">0.8514347</td>
+<td align="right">19.135714</td>
+<td align="right">86.46286</td>
+<td align="right">68.47571</td>
+<td align="right">79.48143</td>
+<td align="right">0.6785999</td>
+<td align="right">20.571429</td>
+<td align="right">87.91571</td>
+<td align="right">72.98857</td>
+<td align="right">77</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">37</td>
+<td align="right">95</td>
+<td align="right">37</td>
+<td align="right">74.19714</td>
+<td align="right">0.0328459</td>
+<td align="right">16.242857</td>
+<td align="right">83.27429</td>
+<td align="right">66.04571</td>
+<td align="right">72.43571</td>
+<td align="right">0.0542745</td>
+<td align="right">16.014286</td>
+<td align="right">81.73143</td>
+<td align="right">64.13000</td>
+<td align="right">144</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">38</td>
+<td align="right">35</td>
+<td align="right">38</td>
+<td align="right">73.01429</td>
+<td align="right">0.0028403</td>
+<td align="right">17.364286</td>
+<td align="right">81.28143</td>
+<td align="right">65.73714</td>
+<td align="right">74.19714</td>
+<td align="right">0.0328459</td>
+<td align="right">16.242857</td>
+<td align="right">83.27429</td>
+<td align="right">66.04571</td>
+<td align="right">95</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">40</td>
+<td align="right">47</td>
+<td align="right">40</td>
+<td align="right">65.99429</td>
+<td align="right">0.0092801</td>
+<td align="right">13.121429</td>
+<td align="right">75.07143</td>
+<td align="right">57.57286</td>
+<td align="right">67.42143</td>
+<td align="right">0.2428573</td>
+<td align="right">10.285714</td>
+<td align="right">77.63000</td>
+<td align="right">58.98714</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">41</td>
+<td align="right">13</td>
+<td align="right">41</td>
+<td align="right">66.76571</td>
+<td align="right">0.0149888</td>
+<td align="right">14.985714</td>
+<td align="right">74.86571</td>
+<td align="right">60.74857</td>
+<td align="right">65.99429</td>
+<td align="right">0.0092801</td>
+<td align="right">13.121429</td>
+<td align="right">75.07143</td>
+<td align="right">57.57286</td>
+<td align="right">47</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">42</td>
+<td align="right">3</td>
+<td align="right">42</td>
+<td align="right">64.01429</td>
+<td align="right">0.0235377</td>
+<td align="right">9.450000</td>
+<td align="right">75.71429</td>
+<td align="right">55.79857</td>
+<td align="right">66.76571</td>
+<td align="right">0.0149888</td>
+<td align="right">14.985714</td>
+<td align="right">74.86571</td>
+<td align="right">60.74857</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">26</td>
+<td align="right">8</td>
+<td align="right">78</td>
+<td align="right">75.79143</td>
+<td align="right">0.0592801</td>
+<td align="right">16.021429</td>
+<td align="right">86.56571</td>
+<td align="right">66.38000</td>
+<td align="right">68.29571</td>
+<td align="right">0.0349831</td>
+<td align="right">10.800000</td>
+<td align="right">80.42000</td>
+<td align="right">59.37286</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">27</td>
+<td align="right">11</td>
+<td align="right">79</td>
+<td align="right">77.51429</td>
+<td align="right">0.0064117</td>
+<td align="right">16.035714</td>
+<td align="right">87.86429</td>
+<td align="right">69.64571</td>
+<td align="right">75.79143</td>
+<td align="right">0.0592801</td>
+<td align="right">16.021429</td>
+<td align="right">86.56571</td>
+<td align="right">66.38000</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">28</td>
+<td align="right">17</td>
+<td align="right">80</td>
+<td align="right">77.37286</td>
+<td align="right">0.0392857</td>
+<td align="right">15.785714</td>
+<td align="right">87.83857</td>
+<td align="right">68.70714</td>
+<td align="right">77.51429</td>
+<td align="right">0.0064117</td>
+<td align="right">16.035714</td>
+<td align="right">87.86429</td>
+<td align="right">69.64571</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">29</td>
+<td align="right">28</td>
+<td align="right">81</td>
+<td align="right">81.80857</td>
+<td align="right">0.1357425</td>
+<td align="right">19.671429</td>
+<td align="right">90.92429</td>
+<td align="right">72.93714</td>
+<td align="right">77.37286</td>
+<td align="right">0.0392857</td>
+<td align="right">15.785714</td>
+<td align="right">87.83857</td>
+<td align="right">68.70714</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">30</td>
+<td align="right">53</td>
+<td align="right">82</td>
+<td align="right">81.43571</td>
+<td align="right">0.0892576</td>
+<td align="right">18.657143</td>
+<td align="right">90.93714</td>
+<td align="right">73.55429</td>
+<td align="right">81.80857</td>
+<td align="right">0.1357425</td>
+<td align="right">19.671429</td>
+<td align="right">90.92429</td>
+<td align="right">72.93714</td>
+<td align="right">28</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">31</td>
+<td align="right">79</td>
+<td align="right">83</td>
+<td align="right">79.77714</td>
+<td align="right">0.0485940</td>
+<td align="right">18.042857</td>
+<td align="right">90.29429</td>
+<td align="right">71.35571</td>
+<td align="right">81.43571</td>
+<td align="right">0.0892576</td>
+<td align="right">18.657143</td>
+<td align="right">90.93714</td>
+<td align="right">73.55429</td>
+<td align="right">53</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">32</td>
+<td align="right">92</td>
+<td align="right">84</td>
+<td align="right">81.95000</td>
+<td align="right">0.0821148</td>
+<td align="right">19.664286</td>
+<td align="right">92.01714</td>
+<td align="right">75.20000</td>
+<td align="right">79.77714</td>
+<td align="right">0.0485940</td>
+<td align="right">18.042857</td>
+<td align="right">90.29429</td>
+<td align="right">71.35571</td>
+<td align="right">79</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">33</td>
+<td align="right">95</td>
+<td align="right">85</td>
+<td align="right">74.68571</td>
+<td align="right">0.0314117</td>
+<td align="right">12.764286</td>
+<td align="right">84.93286</td>
+<td align="right">65.76286</td>
+<td align="right">81.95000</td>
+<td align="right">0.0821148</td>
+<td align="right">19.664286</td>
+<td align="right">92.01714</td>
+<td align="right">75.20000</td>
+<td align="right">92</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">34</td>
+<td align="right">92</td>
+<td align="right">86</td>
+<td align="right">78.72286</td>
+<td align="right">0.0200225</td>
+<td align="right">18.585714</td>
+<td align="right">88.77714</td>
+<td align="right">71.89571</td>
+<td align="right">74.68571</td>
+<td align="right">0.0314117</td>
+<td align="right">12.764286</td>
+<td align="right">84.93286</td>
+<td align="right">65.76286</td>
+<td align="right">95</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">35</td>
+<td align="right">82</td>
+<td align="right">87</td>
+<td align="right">77.59143</td>
+<td align="right">0.0285714</td>
+<td align="right">16.771429</td>
+<td align="right">88.01857</td>
+<td align="right">71.35571</td>
+<td align="right">78.72286</td>
+<td align="right">0.0200225</td>
+<td align="right">18.585714</td>
+<td align="right">88.77714</td>
+<td align="right">71.89571</td>
+<td align="right">92</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">36</td>
+<td align="right">70</td>
+<td align="right">88</td>
+<td align="right">72.92429</td>
+<td align="right">0.1478628</td>
+<td align="right">16.957143</td>
+<td align="right">82.31000</td>
+<td align="right">66.00714</td>
+<td align="right">77.59143</td>
+<td align="right">0.0285714</td>
+<td align="right">16.771429</td>
+<td align="right">88.01857</td>
+<td align="right">71.35571</td>
+<td align="right">82</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">37</td>
+<td align="right">61</td>
+<td align="right">89</td>
+<td align="right">72.50000</td>
+<td align="right">0.3464288</td>
+<td align="right">14.042857</td>
+<td align="right">82.92714</td>
+<td align="right">64.40000</td>
+<td align="right">72.92429</td>
+<td align="right">0.1478628</td>
+<td align="right">16.957143</td>
+<td align="right">82.31000</td>
+<td align="right">66.00714</td>
+<td align="right">70</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">38</td>
+<td align="right">50</td>
+<td align="right">90</td>
+<td align="right">70.77714</td>
+<td align="right">0.0435883</td>
+<td align="right">13.335714</td>
+<td align="right">82.19429</td>
+<td align="right">62.42000</td>
+<td align="right">72.50000</td>
+<td align="right">0.3464288</td>
+<td align="right">14.042857</td>
+<td align="right">82.92714</td>
+<td align="right">64.40000</td>
+<td align="right">61</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">39</td>
+<td align="right">30</td>
+<td align="right">91</td>
+<td align="right">63.08857</td>
+<td align="right">0.0778403</td>
+<td align="right">7.871429</td>
+<td align="right">73.22000</td>
+<td align="right">54.51286</td>
+<td align="right">70.77714</td>
+<td align="right">0.0435883</td>
+<td align="right">13.335714</td>
+<td align="right">82.19429</td>
+<td align="right">62.42000</td>
+<td align="right">50</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">40</td>
+<td align="right">14</td>
+<td align="right">92</td>
+<td align="right">57.81714</td>
+<td align="right">0.5114176</td>
+<td align="right">9.328571</td>
+<td align="right">65.08143</td>
+<td align="right">50.86143</td>
+<td align="right">63.08857</td>
+<td align="right">0.0778403</td>
+<td align="right">7.871429</td>
+<td align="right">73.22000</td>
+<td align="right">54.51286</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">41</td>
+<td align="right">7</td>
+<td align="right">93</td>
+<td align="right">59.90000</td>
+<td align="right">0.1614455</td>
+<td align="right">7.107143</td>
+<td align="right">70.45571</td>
+<td align="right">50.43714</td>
+<td align="right">57.81714</td>
+<td align="right">0.5114176</td>
+<td align="right">9.328571</td>
+<td align="right">65.08143</td>
+<td align="right">50.86143</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">27</td>
+<td align="right">5</td>
+<td align="right">131</td>
+<td align="right">78.51714</td>
+<td align="right">0.1457256</td>
+<td align="right">21.328571</td>
+<td align="right">88.23714</td>
+<td align="right">71.44571</td>
+<td align="right">73.46429</td>
+<td align="right">0.0285996</td>
+<td align="right">18.335714</td>
+<td align="right">83.32571</td>
+<td align="right">66.50857</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">28</td>
+<td align="right">11</td>
+<td align="right">132</td>
+<td align="right">79.40429</td>
+<td align="right">0.1471598</td>
+<td align="right">20.014286</td>
+<td align="right">88.30143</td>
+<td align="right">71.93429</td>
+<td align="right">78.51714</td>
+<td align="right">0.1457256</td>
+<td align="right">21.328571</td>
+<td align="right">88.23714</td>
+<td align="right">71.44571</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">29</td>
+<td align="right">23</td>
+<td align="right">133</td>
+<td align="right">77.82286</td>
+<td align="right">0.2814119</td>
+<td align="right">20.464286</td>
+<td align="right">86.07714</td>
+<td align="right">71.83143</td>
+<td align="right">79.40429</td>
+<td align="right">0.1471598</td>
+<td align="right">20.014286</td>
+<td align="right">88.30143</td>
+<td align="right">71.93429</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">30</td>
+<td align="right">33</td>
+<td align="right">134</td>
+<td align="right">79.82857</td>
+<td align="right">0.0771373</td>
+<td align="right">19.514286</td>
+<td align="right">89.42000</td>
+<td align="right">71.15000</td>
+<td align="right">77.82286</td>
+<td align="right">0.2814119</td>
+<td align="right">20.464286</td>
+<td align="right">86.07714</td>
+<td align="right">71.83143</td>
+<td align="right">23</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">31</td>
+<td align="right">41</td>
+<td align="right">135</td>
+<td align="right">73.70857</td>
+<td align="right">0.0492970</td>
+<td align="right">13.850000</td>
+<td align="right">83.06857</td>
+<td align="right">66.08429</td>
+<td align="right">79.82857</td>
+<td align="right">0.0771373</td>
+<td align="right">19.514286</td>
+<td align="right">89.42000</td>
+<td align="right">71.15000</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">32</td>
+<td align="right">57</td>
+<td align="right">136</td>
+<td align="right">75.90714</td>
+<td align="right">0.1978629</td>
+<td align="right">17.550000</td>
+<td align="right">85.52429</td>
+<td align="right">68.79714</td>
+<td align="right">73.70857</td>
+<td align="right">0.0492970</td>
+<td align="right">13.850000</td>
+<td align="right">83.06857</td>
+<td align="right">66.08429</td>
+<td align="right">41</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">33</td>
+<td align="right">73</td>
+<td align="right">137</td>
+<td align="right">75.47000</td>
+<td align="right">0.5949947</td>
+<td align="right">18.485714</td>
+<td align="right">84.20000</td>
+<td align="right">68.37286</td>
+<td align="right">75.90714</td>
+<td align="right">0.1978629</td>
+<td align="right">17.550000</td>
+<td align="right">85.52429</td>
+<td align="right">68.79714</td>
+<td align="right">57</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">34</td>
+<td align="right">86</td>
+<td align="right">138</td>
+<td align="right">74.58286</td>
+<td align="right">0.1121485</td>
+<td align="right">16.492857</td>
+<td align="right">82.94000</td>
+<td align="right">65.84000</td>
+<td align="right">75.47000</td>
+<td align="right">0.5949947</td>
+<td align="right">18.485714</td>
+<td align="right">84.20000</td>
+<td align="right">68.37286</td>
+<td align="right">73</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">35</td>
+<td align="right">85</td>
+<td align="right">139</td>
+<td align="right">71.88286</td>
+<td align="right">0.0300056</td>
+<td align="right">15.457143</td>
+<td align="right">81.74429</td>
+<td align="right">65.49286</td>
+<td align="right">74.58286</td>
+<td align="right">0.1121485</td>
+<td align="right">16.492857</td>
+<td align="right">82.94000</td>
+<td align="right">65.84000</td>
+<td align="right">86</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">36</td>
+<td align="right">79</td>
+<td align="right">140</td>
+<td align="right">80.49714</td>
+<td align="right">0.0057087</td>
+<td align="right">20.728571</td>
+<td align="right">91.56714</td>
+<td align="right">71.62571</td>
+<td align="right">71.88286</td>
+<td align="right">0.0300056</td>
+<td align="right">15.457143</td>
+<td align="right">81.74429</td>
+<td align="right">65.49286</td>
+<td align="right">85</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">37</td>
+<td align="right">72</td>
+<td align="right">141</td>
+<td align="right">71.96000</td>
+<td align="right">0.3978630</td>
+<td align="right">16.642857</td>
+<td align="right">81.15286</td>
+<td align="right">65.50571</td>
+<td align="right">80.49714</td>
+<td align="right">0.0057087</td>
+<td align="right">20.728571</td>
+<td align="right">91.56714</td>
+<td align="right">71.62571</td>
+<td align="right">79</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">38</td>
+<td align="right">68</td>
+<td align="right">142</td>
+<td align="right">66.14857</td>
+<td align="right">0.1550057</td>
+<td align="right">12.071429</td>
+<td align="right">75.26429</td>
+<td align="right">58.79429</td>
+<td align="right">71.96000</td>
+<td align="right">0.3978630</td>
+<td align="right">16.642857</td>
+<td align="right">81.15286</td>
+<td align="right">65.50571</td>
+<td align="right">72</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">39</td>
+<td align="right">43</td>
+<td align="right">143</td>
+<td align="right">60.59429</td>
+<td align="right">1.2664236</td>
+<td align="right">13.307143</td>
+<td align="right">65.90429</td>
+<td align="right">55.78571</td>
+<td align="right">66.14857</td>
+<td align="right">0.1550057</td>
+<td align="right">12.071429</td>
+<td align="right">75.26429</td>
+<td align="right">58.79429</td>
+<td align="right">68</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">40</td>
+<td align="right">17</td>
+<td align="right">144</td>
+<td align="right">68.21857</td>
+<td align="right">0.0293026</td>
+<td align="right">16.128571</td>
+<td align="right">76.94857</td>
+<td align="right">59.25714</td>
+<td align="right">60.59429</td>
+<td align="right">1.2664236</td>
+<td align="right">13.307143</td>
+<td align="right">65.90429</td>
+<td align="right">55.78571</td>
+<td align="right">43</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">41</td>
+<td align="right">11</td>
+<td align="right">145</td>
+<td align="right">58.10000</td>
+<td align="right">0.1921261</td>
+<td align="right">7.100000</td>
+<td align="right">67.08714</td>
+<td align="right">51.20857</td>
+<td align="right">68.21857</td>
+<td align="right">0.0293026</td>
+<td align="right">16.128571</td>
+<td align="right">76.94857</td>
+<td align="right">59.25714</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">42</td>
+<td align="right">5</td>
+<td align="right">146</td>
+<td align="right">58.07429</td>
+<td align="right">0.2378235</td>
+<td align="right">9.242857</td>
+<td align="right">64.70857</td>
+<td align="right">51.05429</td>
+<td align="right">58.10000</td>
+<td align="right">0.1921261</td>
+<td align="right">7.100000</td>
+<td align="right">67.08714</td>
+<td align="right">51.20857</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">43</td>
+<td align="right">2</td>
+<td align="right">147</td>
+<td align="right">60.72286</td>
+<td align="right">0.0392857</td>
+<td align="right">8.614286</td>
+<td align="right">71.35571</td>
+<td align="right">50.93857</td>
+<td align="right">58.07429</td>
+<td align="right">0.2378235</td>
+<td align="right">9.242857</td>
+<td align="right">64.70857</td>
+<td align="right">51.05429</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<p>The first model is just the week as a linear and a second order term
+as well as year to predict mosquito counts, using a negative binomial
+model this time.</p>
+<pre class="r"><code>null_fit &lt;- MASS::glm.nb(count ~ week + I(week^2) + year, mosq_cases_temp)
+
+null_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">376.6600</td>
+<td align="right">106.1410</td>
+<td align="right">3.5487</td>
+<td align="right">4e-04</td>
+</tr>
+<tr class="even">
+<td align="left">week</td>
+<td align="right">3.0002</td>
+<td align="right">0.1619</td>
+<td align="right">18.5307</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="odd">
+<td align="left">I(week^2)</td>
+<td align="right">-0.0440</td>
+<td align="right">0.0024</td>
+<td align="right">-18.5946</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="right">-0.2093</td>
+<td align="right">0.0526</td>
+<td align="right">-3.9812</td>
+<td align="right">1e-04</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>null_fit |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">461.1903</td>
+<td align="right">45</td>
+<td align="right">-169.3198</td>
+<td align="right">348.6396</td>
+<td align="right">357.7829</td>
+<td align="right">45.8789</td>
+<td align="right">42</td>
+<td align="right">46</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(pred = predict(null_fit, type = &quot;response&quot;)) |&gt; 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred), color = &quot;#472D7BFF&quot;, size = 0.6)</code></pre>
+<p><img src="regression_models_files/figure-html/week%20year%20model-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(null_fit)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#472D7BFF&quot;) # null model works well</code></pre>
+<p><img src="regression_models_files/figure-html/week%20year%20model-2.png" width="672" /></p>
+<p>All predictors in the model are significant, with p values for first
+order week and second order week of 0 and 0, respectively. Year has a p
+value of 10^{-4}.</p>
+<p>When fitting the model to the data, we see that it also fits
+well.</p>
+<pre class="r"><code>ar_fit &lt;- MASS::glm.nb(count ~ lag_count, mosq_cases_temp)
+
+ar_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">2.6807</td>
+<td align="right">0.1546</td>
+<td align="right">17.3418</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0206</td>
+<td align="right">0.0025</td>
+<td align="right">8.3024</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ar_fit |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">98.4597</td>
+<td align="right">45</td>
+<td align="right">-206.6273</td>
+<td align="right">419.2545</td>
+<td align="right">424.7405</td>
+<td align="right">49.0993</td>
+<td align="right">44</td>
+<td align="right">46</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(pred = predict(ar_fit, type = &quot;response&quot;)) |&gt; 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred), color = &quot;#31688EFF&quot;, size = 0.6)</code></pre>
+<p><img src="regression_models_files/figure-html/lag%20count%20model-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(ar_fit)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#31688EFF&quot;) </code></pre>
+<p><img src="regression_models_files/figure-html/lag%20count%20model-2.png" width="672" /></p>
+<pre class="r"><code>ar_temp_fit &lt;- MASS::glm.nb(count ~ lag_count + lag_temp, mosq_cases_temp)
+
+ar_temp_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.1404</td>
+<td align="right">0.9371</td>
+<td align="right">-2.2840</td>
+<td align="right">0.0224</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0182</td>
+<td align="right">0.0021</td>
+<td align="right">8.6333</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">lag_temp</td>
+<td align="right">0.0665</td>
+<td align="right">0.0129</td>
+<td align="right">5.1451</td>
+<td align="right">0.0000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ar_temp_fit |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">145.0718</td>
+<td align="right">45</td>
+<td align="right">-196.4871</td>
+<td align="right">400.9742</td>
+<td align="right">408.2888</td>
+<td align="right">47.1966</td>
+<td align="right">43</td>
+<td align="right">46</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(
+    pred_ar = predict(ar_fit, type = &quot;response&quot;),
+    pred_ar_temp = predict(ar_temp_fit, type = &quot;response&quot;)
+  ) |&gt; 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred_ar, color = &quot;AR&quot;), linetype = &quot;dashed&quot;, size = 0.6) +
+  geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;), linetype = &quot;solid&quot;, size = 0.6) +
+  scale_color_manual(name = &quot;models&quot;, values = c(&quot;AR&quot; = &quot;#31688EFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;))</code></pre>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(ar_temp_fit)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#1F9A8AFF&quot;) </code></pre>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<pre class="r"><code>ar_temp_rain_fit &lt;- MASS::glm.nb(count ~ lag_count + lag_temp + lag_prcp, mosq_cases_temp)
+
+ar_temp_rain_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.6065</td>
+<td align="right">0.9698</td>
+<td align="right">-2.6878</td>
+<td align="right">0.0072</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0179</td>
+<td align="right">0.0021</td>
+<td align="right">8.6810</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">lag_temp</td>
+<td align="right">0.0717</td>
+<td align="right">0.0131</td>
+<td align="right">5.4620</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">lag_prcp</td>
+<td align="right">0.5452</td>
+<td align="right">0.3399</td>
+<td align="right">1.6038</td>
+<td align="right">0.1088</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ar_temp_rain_fit |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">152.2455</td>
+<td align="right">45</td>
+<td align="right">-195.2517</td>
+<td align="right">400.5035</td>
+<td align="right">409.6467</td>
+<td align="right">46.9848</td>
+<td align="right">42</td>
+<td align="right">46</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(
+    pred_null = predict(null_fit, type = &quot;response&quot;),
+    pred_ar_temp = predict(ar_temp_fit, type = &quot;response&quot;),
+    pred_ar_temp_rain = predict(ar_temp_rain_fit, type = &quot;response&quot;)
+  ) |&gt; 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 3) + 
+  geom_line(aes(y = pred_null, color = &quot;null&quot;), linetype = &quot;dotted&quot;, size = 1.9) +
+  geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;), linetype = &quot;solid&quot;, size = 0.6) +
+  geom_line(aes(y = pred_ar_temp_rain, color = &quot;AR+temp+rain&quot;), linetype = &quot;dashed&quot;, size = 0.6) +
+  scale_color_manual(name = &quot;models&quot;, values = c(&quot;null&quot; = &quot;#472D7BFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;, &quot;AR+temp+rain&quot; = &quot;#5DC863FF&quot;))</code></pre>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(ar_temp_rain_fit)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#5DC863FF&quot;) </code></pre>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code># rain doesnt significantly contribute, but makes fit visually better
+# especially for 2023
+
+final_fit &lt;- ar_temp_fit
+car::influencePlot(final_fit) |&gt; 
+  knitr::kable(col.names = c(&quot;Studentized residuals&quot;, &quot;Hat values (influence)&quot;, &quot;Cook&#39;s distance&quot;))</code></pre>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Studentized residuals</th>
+<th align="right">Hat values (influence)</th>
+<th align="right">Cook’s distance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">6</td>
+<td align="right">3.461981</td>
+<td align="right">0.0253540</td>
+<td align="right">0.2133250</td>
+</tr>
+<tr class="even">
+<td align="left">7</td>
+<td align="right">-2.517598</td>
+<td align="right">0.2074798</td>
+<td align="right">0.2680531</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="right">-1.409527</td>
+<td align="right">0.1954560</td>
+<td align="right">0.1176286</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
