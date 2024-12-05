@@ -1,0 +1,2925 @@
+zip_code,borough,date,neighborhood
+10019,Manhattan,2024-07-18,Chelsea and Clinton
+10019,Manhattan,2024-07-25,Chelsea and Clinton
+10019,Manhattan,2024-08-01,Chelsea and Clinton
+10019,Manhattan,2024-08-08,Chelsea and Clinton
+10019,Manhattan,2024-08-16,Chelsea and Clinton
+10002,Manhattan,2024-07-12,Lower East Side
+10002,Manhattan,2024-07-18,Lower East Side
+10002,Manhattan,2024-07-25,Lower East Side
+10002,Manhattan,2024-08-01,Lower East Side
+10002,Manhattan,2024-08-08,Lower East Side
+10002,Manhattan,2024-08-16,Lower East Side
+10002,Manhattan,2024-08-23,Lower East Side
+10006,Manhattan,2024-07-18,Lower Manhattan
+10006,Manhattan,2024-07-25,Lower Manhattan
+10006,Manhattan,2024-08-01,Lower Manhattan
+10006,Manhattan,2024-08-08,Lower Manhattan
+10006,Manhattan,2024-08-15,Lower Manhattan
+10010,Manhattan,2024-07-18,Gramercy Park and Murray Hill
+10010,Manhattan,2024-07-25,Gramercy Park and Murray Hill
+10010,Manhattan,2024-08-01,Gramercy Park and Murray Hill
+10010,Manhattan,2024-08-08,Gramercy Park and Murray Hill
+10010,Manhattan,2024-08-15,Gramercy Park and Murray Hill
+10011,Manhattan,2024-07-18,Chelsea and Clinton
+10011,Manhattan,2024-07-25,Chelsea and Clinton
+10011,Manhattan,2024-08-01,Chelsea and Clinton
+10011,Manhattan,2024-08-08,Chelsea and Clinton
+10011,Manhattan,2024-08-16,Chelsea and Clinton
+10013,Manhattan,2024-08-25,Greenwich Village and Soho
+10013,Manhattan,2024-09-05,Greenwich Village and Soho
+10025,Manhattan,2024-07-03,Upper West Side
+10025,Manhattan,2024-07-11,Upper West Side
+10025,Manhattan,2024-07-18,Upper West Side
+10025,Manhattan,2024-07-25,Upper West Side
+10025,Manhattan,2024-08-01,Upper West Side
+10025,Manhattan,2024-08-08,Upper West Side
+10025,Manhattan,2024-08-15,Upper West Side
+10025,Manhattan,2024-08-25,Upper West Side
+10025,Manhattan,2024-08-29,Upper West Side
+10026,Manhattan,2024-08-26,Central Harlem
+10027,Manhattan,2024-07-11,Central Harlem
+10027,Manhattan,2024-07-18,Central Harlem
+10027,Manhattan,2024-07-25,Central Harlem
+10027,Manhattan,2024-08-01,Central Harlem
+10027,Manhattan,2024-08-08,Central Harlem
+10027,Manhattan,2024-08-15,Central Harlem
+10031,Manhattan,2024-07-11,Inwood and Washington Heights
+10031,Manhattan,2024-07-18,Inwood and Washington Heights
+10031,Manhattan,2024-07-25,Inwood and Washington Heights
+10031,Manhattan,2024-08-01,Inwood and Washington Heights
+10031,Manhattan,2024-08-08,Inwood and Washington Heights
+10031,Manhattan,2024-08-15,Inwood and Washington Heights
+10032,Manhattan,2024-07-03,Inwood and Washington Heights
+10032,Manhattan,2024-07-11,Inwood and Washington Heights
+10032,Manhattan,2024-07-18,Inwood and Washington Heights
+10032,Manhattan,2024-07-25,Inwood and Washington Heights
+10032,Manhattan,2024-08-01,Inwood and Washington Heights
+10032,Manhattan,2024-08-08,Inwood and Washington Heights
+10032,Manhattan,2024-08-15,Inwood and Washington Heights
+10032,Manhattan,2024-08-28,Inwood and Washington Heights
+10034,Manhattan,2024-08-16,Inwood and Washington Heights
+10301,Staten Island,2024-06-27,Stapleton and St. George
+10301,Staten Island,2024-07-03,Stapleton and St. George
+10301,Staten Island,2024-07-11,Stapleton and St. George
+10301,Staten Island,2024-07-18,Stapleton and St. George
+10301,Staten Island,2024-08-02,Stapleton and St. George
+10301,Staten Island,2024-08-08,Stapleton and St. George
+10301,Staten Island,2024-08-09,Stapleton and St. George
+10301,Staten Island,2024-08-15,Stapleton and St. George
+10301,Staten Island,2024-08-22,Stapleton and St. George
+10301,Staten Island,2024-08-29,Stapleton and St. George
+10302,Staten Island,2024-07-25,Port Richmond
+10302,Staten Island,2024-08-01,Port Richmond
+10302,Staten Island,2024-08-08,Port Richmond
+10303,Staten Island,2024-07-03,Port Richmond
+10303,Staten Island,2024-07-11,Port Richmond
+10303,Staten Island,2024-07-18,Port Richmond
+10303,Staten Island,2024-07-25,Port Richmond
+10303,Staten Island,2024-08-01,Port Richmond
+10303,Staten Island,2024-08-08,Port Richmond
+10303,Staten Island,2024-08-09,Port Richmond
+10303,Staten Island,2024-08-15,Port Richmond
+10304,Staten Island,2024-07-22,Stapleton and St. George
+10305,Staten Island,2024-07-02,Stapleton and St. George
+10305,Staten Island,2024-07-15,Stapleton and St. George
+10305,Staten Island,2024-07-16,Stapleton and St. George
+10305,Staten Island,2024-07-22,Stapleton and St. George
+10305,Staten Island,2024-07-29,Stapleton and St. George
+10305,Staten Island,2024-08-05,Stapleton and St. George
+10305,Staten Island,2024-08-07,Stapleton and St. George
+10305,Staten Island,2024-08-12,Stapleton and St. George
+10305,Staten Island,2024-08-19,Stapleton and St. George
+10305,Staten Island,2024-08-26,Stapleton and St. George
+10306,Staten Island,2024-06-25,South Shore
+10306,Staten Island,2024-07-22,South Shore
+10306,Staten Island,2024-07-26,South Shore
+10306,Staten Island,2024-07-02,South Shore
+10306,Staten Island,2024-07-08,South Shore
+10306,Staten Island,2024-07-09,South Shore
+10306,Staten Island,2024-07-15,South Shore
+10306,Staten Island,2024-07-16,South Shore
+10306,Staten Island,2024-07-17,South Shore
+10306,Staten Island,2024-07-18,South Shore
+10307,Staten Island,2024-06-25,South Shore
+10307,Staten Island,2024-08-20,South Shore
+10307,Staten Island,2024-08-27,South Shore
+10307,Staten Island,2024-07-02,South Shore
+10307,Staten Island,2024-07-08,South Shore
+10307,Staten Island,2024-07-15,South Shore
+10307,Staten Island,2024-07-23,South Shore
+10307,Staten Island,2024-07-24,South Shore
+10307,Staten Island,2024-07-30,South Shore
+10307,Staten Island,2024-08-13,South Shore
+10308,Staten Island,2024-07-08,South Shore
+10308,Staten Island,2024-07-15,South Shore
+10308,Staten Island,2024-07-16,South Shore
+10308,Staten Island,2024-07-22,South Shore
+10308,Staten Island,2024-07-30,South Shore
+10308,Staten Island,2024-08-05,South Shore
+10309,Staten Island,2024-06-21,South Shore
+10309,Staten Island,2024-06-27,South Shore
+10309,Staten Island,2024-07-02,South Shore
+10309,Staten Island,2024-07-03,South Shore
+10309,Staten Island,2024-07-06,South Shore
+10309,Staten Island,2024-07-08,South Shore
+10309,Staten Island,2024-07-12,South Shore
+10309,Staten Island,2024-07-15,South Shore
+10309,Staten Island,2024-07-18,South Shore
+10309,Staten Island,2024-07-24,South Shore
+10310,Staten Island,2024-07-03,Port Richmond
+10310,Staten Island,2024-07-11,Port Richmond
+10310,Staten Island,2024-07-18,Port Richmond
+10310,Staten Island,2024-07-22,Port Richmond
+10310,Staten Island,2024-07-24,Port Richmond
+10310,Staten Island,2024-07-25,Port Richmond
+10310,Staten Island,2024-08-01,Port Richmond
+10310,Staten Island,2024-08-08,Port Richmond
+10310,Staten Island,2024-08-16,Port Richmond
+10310,Staten Island,2024-08-22,Port Richmond
+10312,Staten Island,2024-06-25,South Shore
+10312,Staten Island,2024-06-27,South Shore
+10312,Staten Island,2024-07-02,South Shore
+10312,Staten Island,2024-07-03,South Shore
+10312,Staten Island,2024-07-08,South Shore
+10312,Staten Island,2024-07-12,South Shore
+10312,Staten Island,2024-07-15,South Shore
+10312,Staten Island,2024-07-23,South Shore
+10312,Staten Island,2024-07-24,South Shore
+10312,Staten Island,2024-07-30,South Shore
+10314,Staten Island,2024-06-04,Mid-Island
+10314,Staten Island,2024-07-16,Mid-Island
+10314,Staten Island,2024-07-18,Mid-Island
+10314,Staten Island,2024-06-21,Mid-Island
+10314,Staten Island,2024-06-25,Mid-Island
+10314,Staten Island,2024-06-27,Mid-Island
+10314,Staten Island,2024-07-02,Mid-Island
+10314,Staten Island,2024-07-03,Mid-Island
+10314,Staten Island,2024-07-11,Mid-Island
+10314,Staten Island,2024-07-15,Mid-Island
+10314,Staten Island,2024-08-01,Mid-Island
+10314,Staten Island,2024-08-02,Mid-Island
+10314,Staten Island,2024-08-05,Mid-Island
+10314,Staten Island,2024-08-06,Mid-Island
+10314,Staten Island,2024-08-08,Mid-Island
+10314,Staten Island,2024-08-09,Mid-Island
+10314,Staten Island,2024-08-12,Mid-Island
+10314,Staten Island,2024-08-13,Mid-Island
+10314,Staten Island,2024-08-16,Mid-Island
+10314,Staten Island,2024-08-19,Mid-Island
+10314,Staten Island,2024-08-23,Mid-Island
+10314,Staten Island,2024-08-29,Mid-Island
+10314,Staten Island,2024-09-19,Mid-Island
+10452,Bronx,2024-08-26,High Bridge and Morrisania
+10452,Bronx,2024-09-10,High Bridge and Morrisania
+10454,Bronx,2024-07-18,Hunts Point and Mott Haven
+10454,Bronx,2024-07-25,Hunts Point and Mott Haven
+10454,Bronx,2024-08-01,Hunts Point and Mott Haven
+10454,Bronx,2024-08-08,Hunts Point and Mott Haven
+10456,Bronx,2024-07-09,High Bridge and Morrisania
+10456,Bronx,2024-07-16,High Bridge and Morrisania
+10456,Bronx,2024-07-23,High Bridge and Morrisania
+10456,Bronx,2024-07-30,High Bridge and Morrisania
+10456,Bronx,2024-08-05,High Bridge and Morrisania
+10456,Bronx,2024-08-21,High Bridge and Morrisania
+10457,Bronx,2024-07-16,Central Bronx
+10457,Bronx,2024-07-23,Central Bronx
+10457,Bronx,2024-07-30,Central Bronx
+10457,Bronx,2024-08-05,Central Bronx
+10457,Bronx,2024-08-13,Central Bronx
+10457,Bronx,2024-08-19,Central Bronx
+10458,Bronx,2024-08-22,Bronx Park and Fordham
+10458,Bronx,2024-09-05,Bronx Park and Fordham
+10459,Bronx,2024-07-18,Hunts Point and Mott Haven
+10459,Bronx,2024-07-25,Hunts Point and Mott Haven
+10459,Bronx,2024-08-01,Hunts Point and Mott Haven
+10460,Bronx,2024-07-09,Central Bronx
+10460,Bronx,2024-07-16,Central Bronx
+10460,Bronx,2024-07-30,Central Bronx
+10460,Bronx,2024-08-06,Central Bronx
+10460,Bronx,2024-08-13,Central Bronx
+10461,Bronx,2024-06-24,Southeast Bronx
+10461,Bronx,2024-07-01,Southeast Bronx
+10461,Bronx,2024-07-08,Southeast Bronx
+10461,Bronx,2024-07-15,Southeast Bronx
+10461,Bronx,2024-07-17,Southeast Bronx
+10461,Bronx,2024-07-22,Southeast Bronx
+10461,Bronx,2024-07-23,Southeast Bronx
+10461,Bronx,2024-07-29,Southeast Bronx
+10463,Bronx,2024-07-01,Kingsbridge and Riverdale
+10463,Bronx,2024-07-15,Kingsbridge and Riverdale
+10463,Bronx,2024-07-23,Kingsbridge and Riverdale
+10463,Bronx,2024-07-29,Kingsbridge and Riverdale
+10463,Bronx,2024-08-05,Kingsbridge and Riverdale
+10463,Bronx,2024-08-13,Kingsbridge and Riverdale
+10464,Bronx,2024-07-01,Southeast Bronx
+10464,Bronx,2024-07-08,Southeast Bronx
+10464,Bronx,2024-07-15,Southeast Bronx
+10464,Bronx,2024-07-24,Southeast Bronx
+10464,Bronx,2024-07-29,Southeast Bronx
+10464,Bronx,2024-08-05,Southeast Bronx
+10464,Bronx,2024-08-13,Southeast Bronx
+10464,Bronx,2024-08-19,Southeast Bronx
+10465,Bronx,2024-06-11,Southeast Bronx
+10465,Bronx,2024-07-22,Southeast Bronx
+10465,Bronx,2024-07-23,Southeast Bronx
+10465,Bronx,2024-06-18,Southeast Bronx
+10465,Bronx,2024-06-24,Southeast Bronx
+10465,Bronx,2024-07-01,Southeast Bronx
+10465,Bronx,2024-07-08,Southeast Bronx
+10465,Bronx,2024-07-09,Southeast Bronx
+10465,Bronx,2024-07-16,Southeast Bronx
+10465,Bronx,2024-07-17,Southeast Bronx
+10465,Bronx,2024-08-27,Southeast Bronx
+10465,Bronx,2024-09-04,Southeast Bronx
+10465,Bronx,2024-09-18,Southeast Bronx
+10466,Bronx,2024-08-29,Northeast Bronx
+10466,Bronx,2024-09-17,Northeast Bronx
+10467,Bronx,2024-07-01,Bronx Park and Fordham
+10467,Bronx,2024-07-23,Bronx Park and Fordham
+10467,Bronx,2024-07-29,Bronx Park and Fordham
+10467,Bronx,2024-08-05,Bronx Park and Fordham
+10467,Bronx,2024-08-12,Bronx Park and Fordham
+10467,Bronx,2024-08-26,Bronx Park and Fordham
+10469,Bronx,2024-07-15,Northeast Bronx
+10469,Bronx,2024-07-22,Northeast Bronx
+10471,Bronx,2024-06-18,Kingsbridge and Riverdale
+10471,Bronx,2024-06-24,Kingsbridge and Riverdale
+10471,Bronx,2024-07-01,Kingsbridge and Riverdale
+10471,Bronx,2024-07-08,Kingsbridge and Riverdale
+10471,Bronx,2024-07-15,Kingsbridge and Riverdale
+10471,Bronx,2024-07-23,Kingsbridge and Riverdale
+10471,Bronx,2024-07-29,Kingsbridge and Riverdale
+10471,Bronx,2024-08-05,Kingsbridge and Riverdale
+10471,Bronx,2024-08-13,Kingsbridge and Riverdale
+10471,Bronx,2024-08-20,Kingsbridge and Riverdale
+10473,Bronx,2024-07-01,Southeast Bronx
+10473,Bronx,2024-07-09,Southeast Bronx
+10473,Bronx,2024-07-16,Southeast Bronx
+10473,Bronx,2024-07-23,Southeast Bronx
+10473,Bronx,2024-07-24,Southeast Bronx
+10473,Bronx,2024-07-29,Southeast Bronx
+10473,Bronx,2024-07-31,Southeast Bronx
+10473,Bronx,2024-08-19,Southeast Bronx
+10473,Bronx,2024-08-27,Southeast Bronx
+10474,Bronx,2024-07-11,Hunts Point and Mott Haven
+10474,Bronx,2024-07-18,Hunts Point and Mott Haven
+10474,Bronx,2024-07-25,Hunts Point and Mott Haven
+10474,Bronx,2024-08-01,Hunts Point and Mott Haven
+10474,Bronx,2024-08-08,Hunts Point and Mott Haven
+10474,Bronx,2024-08-16,Hunts Point and Mott Haven
+10474,Bronx,2024-08-21,Hunts Point and Mott Haven
+10474,Bronx,2024-09-19,Hunts Point and Mott Haven
+10475,Bronx,2024-07-08,Northeast Bronx
+10475,Bronx,2024-07-15,Northeast Bronx
+10475,Bronx,2024-07-22,Northeast Bronx
+11004,Queens,2024-07-16,Southeast Queens
+11004,Queens,2024-07-22,Southeast Queens
+11005,Queens,2024-07-16,Southeast Queens
+11005,Queens,2024-07-22,Southeast Queens
+11101,Queens,2024-07-03,Northwest Queens
+11101,Queens,2024-07-11,Northwest Queens
+11101,Queens,2024-07-18,Northwest Queens
+11101,Queens,2024-07-25,Northwest Queens
+11101,Queens,2024-08-01,Northwest Queens
+11101,Queens,2024-08-30,Northwest Queens
+11101,Queens,2024-09-06,Northwest Queens
+11105,Queens,2024-07-11,Northwest Queens
+11105,Queens,2024-07-19,Northwest Queens
+11105,Queens,2024-07-26,Northwest Queens
+11105,Queens,2024-08-02,Northwest Queens
+11105,Queens,2024-08-08,Northwest Queens
+11105,Queens,2024-08-15,Northwest Queens
+11105,Queens,2024-08-22,Northwest Queens
+11105,Queens,2024-08-30,Northwest Queens
+11105,Queens,2024-09-11,Northwest Queens
+11203,Brooklyn,2024-07-11,Flatbush
+11203,Brooklyn,2024-07-18,Flatbush
+11203,Brooklyn,2024-07-25,Flatbush
+11203,Brooklyn,2024-08-01,Flatbush
+11204,Brooklyn,2024-07-18,Borough Park
+11204,Brooklyn,2024-07-25,Borough Park
+11204,Brooklyn,2024-08-01,Borough Park
+11204,Brooklyn,2024-08-08,Borough Park
+11204,Brooklyn,2024-08-15,Borough Park
+11206,Brooklyn,2024-07-01,Bushwick and Williamsburg
+11206,Brooklyn,2024-07-16,Bushwick and Williamsburg
+11206,Brooklyn,2024-07-23,Bushwick and Williamsburg
+11206,Brooklyn,2024-07-30,Bushwick and Williamsburg
+11206,Brooklyn,2024-08-06,Bushwick and Williamsburg
+11206,Brooklyn,2024-08-13,Bushwick and Williamsburg
+11206,Brooklyn,2024-08-20,Bushwick and Williamsburg
+11206,Brooklyn,2024-08-27,Bushwick and Williamsburg
+11206,Brooklyn,2024-09-04,Bushwick and Williamsburg
+11207,Brooklyn,2024-07-01,East New York and New Lots
+11207,Brooklyn,2024-07-10,East New York and New Lots
+11207,Brooklyn,2024-07-24,East New York and New Lots
+11207,Brooklyn,2024-07-25,East New York and New Lots
+11207,Brooklyn,2024-07-30,East New York and New Lots
+11207,Brooklyn,2024-08-02,East New York and New Lots
+11207,Brooklyn,2024-08-06,East New York and New Lots
+11207,Brooklyn,2024-08-14,East New York and New Lots
+11207,Brooklyn,2024-08-20,East New York and New Lots
+11207,Brooklyn,2024-08-26,East New York and New Lots
+11208,Brooklyn,2024-07-10,East New York and New Lots
+11208,Brooklyn,2024-07-16,East New York and New Lots
+11208,Brooklyn,2024-07-18,East New York and New Lots
+11208,Brooklyn,2024-07-30,East New York and New Lots
+11208,Brooklyn,2024-08-01,East New York and New Lots
+11208,Brooklyn,2024-08-06,East New York and New Lots
+11208,Brooklyn,2024-08-13,East New York and New Lots
+11208,Brooklyn,2024-08-15,East New York and New Lots
+11208,Brooklyn,2024-08-20,East New York and New Lots
+11208,Brooklyn,2024-08-22,East New York and New Lots
+11209,Brooklyn,2024-07-26,Southwest Brooklyn
+11209,Brooklyn,2024-08-02,Southwest Brooklyn
+11209,Brooklyn,2024-08-08,Southwest Brooklyn
+11209,Brooklyn,2024-08-15,Southwest Brooklyn
+11210,Brooklyn,2024-08-30,Flatbush
+11211,Brooklyn,2024-08-22,Greenpoint
+11212,Brooklyn,2024-07-16,Central Brooklyn
+11212,Brooklyn,2024-07-30,Central Brooklyn
+11212,Brooklyn,2024-08-06,Central Brooklyn
+11212,Brooklyn,2024-08-13,Central Brooklyn
+11212,Brooklyn,2024-08-20,Central Brooklyn
+11212,Brooklyn,2024-08-26,Central Brooklyn
+11212,Brooklyn,2024-09-04,Central Brooklyn
+11214,Brooklyn,2024-07-12,Southwest Brooklyn
+11214,Brooklyn,2024-08-23,Southwest Brooklyn
+11214,Brooklyn,2024-08-28,Southwest Brooklyn
+11214,Brooklyn,2024-07-18,Southwest Brooklyn
+11214,Brooklyn,2024-07-25,Southwest Brooklyn
+11214,Brooklyn,2024-07-26,Southwest Brooklyn
+11214,Brooklyn,2024-08-01,Southwest Brooklyn
+11214,Brooklyn,2024-08-02,Southwest Brooklyn
+11214,Brooklyn,2024-08-08,Southwest Brooklyn
+11214,Brooklyn,2024-08-15,Southwest Brooklyn
+11215,Brooklyn,2024-06-21,Northwest Brooklyn
+11215,Brooklyn,2024-07-01,Northwest Brooklyn
+11215,Brooklyn,2024-07-03,Northwest Brooklyn
+11215,Brooklyn,2024-07-11,Northwest Brooklyn
+11215,Brooklyn,2024-07-18,Northwest Brooklyn
+11215,Brooklyn,2024-07-25,Northwest Brooklyn
+11215,Brooklyn,2024-08-01,Northwest Brooklyn
+11215,Brooklyn,2024-08-09,Northwest Brooklyn
+11218,Brooklyn,2024-07-03,Borough Park
+11218,Brooklyn,2024-07-18,Borough Park
+11218,Brooklyn,2024-07-26,Borough Park
+11218,Brooklyn,2024-08-01,Borough Park
+11220,Brooklyn,2024-07-18,Sunset Park
+11220,Brooklyn,2024-07-25,Sunset Park
+11220,Brooklyn,2024-08-01,Sunset Park
+11221,Brooklyn,2024-07-30,Bushwick and Williamsburg
+11221,Brooklyn,2024-08-06,Bushwick and Williamsburg
+11221,Brooklyn,2024-08-20,Bushwick and Williamsburg
+11222,Brooklyn,2024-07-11,Greenpoint
+11222,Brooklyn,2024-07-18,Greenpoint
+11222,Brooklyn,2024-07-25,Greenpoint
+11223,Brooklyn,2024-07-18,Southern Brooklyn
+11223,Brooklyn,2024-07-26,Southern Brooklyn
+11223,Brooklyn,2024-08-01,Southern Brooklyn
+11223,Brooklyn,2024-08-08,Southern Brooklyn
+11223,Brooklyn,2024-08-15,Southern Brooklyn
+11228,Brooklyn,2024-07-03,Southwest Brooklyn
+11228,Brooklyn,2024-08-30,Southwest Brooklyn
+11228,Brooklyn,2024-09-06,Southwest Brooklyn
+11228,Brooklyn,2024-07-19,Southwest Brooklyn
+11228,Brooklyn,2024-07-26,Southwest Brooklyn
+11228,Brooklyn,2024-08-02,Southwest Brooklyn
+11228,Brooklyn,2024-08-09,Southwest Brooklyn
+11228,Brooklyn,2024-08-15,Southwest Brooklyn
+11228,Brooklyn,2024-08-23,Southwest Brooklyn
+11228,Brooklyn,2024-08-28,Southwest Brooklyn
+11229,Brooklyn,2024-07-12,Southern Brooklyn
+11229,Brooklyn,2024-08-14,Southern Brooklyn
+11229,Brooklyn,2024-08-16,Southern Brooklyn
+11229,Brooklyn,2024-07-18,Southern Brooklyn
+11229,Brooklyn,2024-07-19,Southern Brooklyn
+11229,Brooklyn,2024-07-25,Southern Brooklyn
+11229,Brooklyn,2024-07-26,Southern Brooklyn
+11229,Brooklyn,2024-08-01,Southern Brooklyn
+11229,Brooklyn,2024-08-02,Southern Brooklyn
+11229,Brooklyn,2024-08-08,Southern Brooklyn
+11232,Brooklyn,2024-07-12,Sunset Park
+11232,Brooklyn,2024-07-18,Sunset Park
+11232,Brooklyn,2024-07-25,Sunset Park
+11232,Brooklyn,2024-08-01,Sunset Park
+11232,Brooklyn,2024-08-09,Sunset Park
+11232,Brooklyn,2024-08-14,Sunset Park
+11232,Brooklyn,2024-08-15,Sunset Park
+11232,Brooklyn,2024-08-29,Sunset Park
+11234,Brooklyn,2024-06-27,Canarsie and Flatlands
+11234,Brooklyn,2024-08-02,Canarsie and Flatlands
+11234,Brooklyn,2024-08-09,Canarsie and Flatlands
+11234,Brooklyn,2024-07-03,Canarsie and Flatlands
+11234,Brooklyn,2024-07-11,Canarsie and Flatlands
+11234,Brooklyn,2024-07-12,Canarsie and Flatlands
+11234,Brooklyn,2024-07-19,Canarsie and Flatlands
+11234,Brooklyn,2024-07-25,Canarsie and Flatlands
+11234,Brooklyn,2024-07-26,Canarsie and Flatlands
+11234,Brooklyn,2024-08-01,Canarsie and Flatlands
+11235,Brooklyn,2024-07-18,Southern Brooklyn
+11235,Brooklyn,2024-07-25,Southern Brooklyn
+11236,Brooklyn,2024-07-03,Canarsie and Flatlands
+11236,Brooklyn,2024-07-19,Canarsie and Flatlands
+11236,Brooklyn,2024-07-26,Canarsie and Flatlands
+11236,Brooklyn,2024-08-01,Canarsie and Flatlands
+11236,Brooklyn,2024-08-02,Canarsie and Flatlands
+11236,Brooklyn,2024-08-09,Canarsie and Flatlands
+11236,Brooklyn,2024-08-14,Canarsie and Flatlands
+11236,Brooklyn,2024-08-16,Canarsie and Flatlands
+11236,Brooklyn,2024-09-05,Canarsie and Flatlands
+11236,Brooklyn,2024-09-19,Canarsie and Flatlands
+11237,Brooklyn,2024-07-23,Bushwick and Williamsburg
+11237,Brooklyn,2024-07-29,Bushwick and Williamsburg
+11237,Brooklyn,2024-08-06,Bushwick and Williamsburg
+11237,Brooklyn,2024-08-20,Bushwick and Williamsburg
+11237,Brooklyn,2024-09-04,Bushwick and Williamsburg
+11238,Brooklyn,2024-07-03,Central Brooklyn
+11238,Brooklyn,2024-07-18,Central Brooklyn
+11238,Brooklyn,2024-07-25,Central Brooklyn
+11238,Brooklyn,2024-08-01,Central Brooklyn
+11238,Brooklyn,2024-08-14,Central Brooklyn
+11354,Queens,2024-07-01,North Queens
+11354,Queens,2024-07-08,North Queens
+11355,Queens,2024-06-24,North Queens
+11355,Queens,2024-07-01,North Queens
+11355,Queens,2024-07-08,North Queens
+11355,Queens,2024-07-15,North Queens
+11356,Queens,2024-07-01,North Queens
+11356,Queens,2024-08-02,North Queens
+11356,Queens,2024-08-13,North Queens
+11356,Queens,2024-07-03,North Queens
+11356,Queens,2024-07-08,North Queens
+11356,Queens,2024-07-12,North Queens
+11356,Queens,2024-07-15,North Queens
+11356,Queens,2024-07-17,North Queens
+11356,Queens,2024-07-20,North Queens
+11356,Queens,2024-07-23,North Queens
+11357,Queens,2024-06-24,North Queens
+11357,Queens,2024-07-01,North Queens
+11357,Queens,2024-07-08,North Queens
+11357,Queens,2024-07-09,North Queens
+11357,Queens,2024-07-12,North Queens
+11357,Queens,2024-07-17,North Queens
+11358,Queens,2024-06-18,North Queens
+11358,Queens,2024-06-24,North Queens
+11358,Queens,2024-06-25,North Queens
+11358,Queens,2024-07-01,North Queens
+11358,Queens,2024-07-08,North Queens
+11358,Queens,2024-07-09,North Queens
+11358,Queens,2024-07-15,North Queens
+11358,Queens,2024-07-17,North Queens
+11360,Queens,2024-06-04,North Queens
+11360,Queens,2024-07-29,North Queens
+11360,Queens,2024-08-05,North Queens
+11360,Queens,2024-06-11,North Queens
+11360,Queens,2024-06-18,North Queens
+11360,Queens,2024-06-25,North Queens
+11360,Queens,2024-07-01,North Queens
+11360,Queens,2024-07-09,North Queens
+11360,Queens,2024-07-16,North Queens
+11360,Queens,2024-07-23,North Queens
+11361,Queens,2024-06-25,Northeast Queens
+11361,Queens,2024-08-26,Northeast Queens
+11361,Queens,2024-07-01,Northeast Queens
+11361,Queens,2024-07-09,Northeast Queens
+11361,Queens,2024-07-22,Northeast Queens
+11361,Queens,2024-07-29,Northeast Queens
+11361,Queens,2024-08-05,Northeast Queens
+11361,Queens,2024-08-12,Northeast Queens
+11361,Queens,2024-08-19,Northeast Queens
+11362,Queens,2024-07-16,Northeast Queens
+11362,Queens,2024-08-19,Northeast Queens
+11362,Queens,2024-09-04,Northeast Queens
+11362,Queens,2024-07-22,Northeast Queens
+11362,Queens,2024-07-23,Northeast Queens
+11362,Queens,2024-07-29,Northeast Queens
+11362,Queens,2024-07-31,Northeast Queens
+11362,Queens,2024-08-02,Northeast Queens
+11362,Queens,2024-08-05,Northeast Queens
+11362,Queens,2024-08-12,Northeast Queens
+11363,Queens,2024-07-22,Northeast Queens
+11364,Queens,2024-07-19,Northeast Queens
+11364,Queens,2024-08-02,Northeast Queens
+11365,Queens,2024-06-11,Central Queens
+11365,Queens,2024-07-19,Central Queens
+11365,Queens,2024-07-23,Central Queens
+11365,Queens,2024-06-18,Central Queens
+11365,Queens,2024-06-25,Central Queens
+11365,Queens,2024-07-01,Central Queens
+11365,Queens,2024-07-03,Central Queens
+11365,Queens,2024-07-08,Central Queens
+11365,Queens,2024-07-12,Central Queens
+11365,Queens,2024-07-15,Central Queens
+11367,Queens,2024-07-01,Central Queens
+11367,Queens,2024-07-15,Central Queens
+11368,Queens,2024-06-25,West Queens
+11368,Queens,2024-09-04,West Queens
+11368,Queens,2024-07-01,West Queens
+11368,Queens,2024-07-08,West Queens
+11368,Queens,2024-07-15,West Queens
+11368,Queens,2024-07-23,West Queens
+11368,Queens,2024-08-06,West Queens
+11368,Queens,2024-08-13,West Queens
+11368,Queens,2024-08-20,West Queens
+11370,Queens,2024-07-11,West Queens
+11370,Queens,2024-07-19,West Queens
+11370,Queens,2024-07-26,West Queens
+11370,Queens,2024-08-02,West Queens
+11370,Queens,2024-08-08,West Queens
+11370,Queens,2024-08-15,West Queens
+11370,Queens,2024-08-22,West Queens
+11370,Queens,2024-08-30,West Queens
+11374,Queens,2024-07-18,West Central Queens
+11374,Queens,2024-07-25,West Central Queens
+11375,Queens,2024-07-18,West Central Queens
+11375,Queens,2024-07-25,West Central Queens
+11377,Queens,2024-07-03,West Queens
+11377,Queens,2024-08-15,West Queens
+11377,Queens,2024-08-22,West Queens
+11377,Queens,2024-07-11,West Queens
+11377,Queens,2024-07-18,West Queens
+11377,Queens,2024-07-19,West Queens
+11377,Queens,2024-07-25,West Queens
+11377,Queens,2024-07-26,West Queens
+11377,Queens,2024-08-02,West Queens
+11377,Queens,2024-08-09,West Queens
+11378,Queens,2024-07-18,West Queens
+11378,Queens,2024-07-25,West Queens
+11378,Queens,2024-08-07,West Queens
+11378,Queens,2024-08-09,West Queens
+11379,Queens,2024-07-11,West Central Queens
+11379,Queens,2024-07-18,West Central Queens
+11379,Queens,2024-07-25,West Central Queens
+11379,Queens,2024-08-01,West Central Queens
+11379,Queens,2024-08-07,West Central Queens
+11379,Queens,2024-08-09,West Central Queens
+11379,Queens,2024-08-16,West Central Queens
+11385,Queens,2024-07-18,West Central Queens
+11385,Queens,2024-07-25,West Central Queens
+11385,Queens,2024-08-01,West Central Queens
+11385,Queens,2024-08-08,West Central Queens
+11385,Queens,2024-08-15,West Central Queens
+11413,Queens,2024-07-30,Southeast Queens
+11413,Queens,2024-08-05,Southeast Queens
+11413,Queens,2024-08-13,Southeast Queens
+11413,Queens,2024-08-21,Southeast Queens
+11413,Queens,2024-08-28,Southeast Queens
+11414,Queens,2024-07-11,Southwest Queens
+11414,Queens,2024-09-05,Southwest Queens
+11414,Queens,2024-07-19,Southwest Queens
+11414,Queens,2024-07-26,Southwest Queens
+11414,Queens,2024-08-01,Southwest Queens
+11414,Queens,2024-08-09,Southwest Queens
+11414,Queens,2024-08-16,Southwest Queens
+11414,Queens,2024-08-23,Southwest Queens
+11414,Queens,2024-08-30,Southwest Queens
+11415,Queens,2024-06-27,Southwest Queens
+11415,Queens,2024-08-23,Southwest Queens
+11415,Queens,2024-08-30,Southwest Queens
+11415,Queens,2024-07-11,Southwest Queens
+11415,Queens,2024-07-18,Southwest Queens
+11415,Queens,2024-07-26,Southwest Queens
+11415,Queens,2024-08-02,Southwest Queens
+11415,Queens,2024-08-07,Southwest Queens
+11415,Queens,2024-08-09,Southwest Queens
+11415,Queens,2024-08-16,Southwest Queens
+11417,Queens,2024-07-18,Southwest Queens
+11417,Queens,2024-07-25,Southwest Queens
+11417,Queens,2024-08-01,Southwest Queens
+11417,Queens,2024-08-08,Southwest Queens
+11417,Queens,2024-08-15,Southwest Queens
+11417,Queens,2024-08-23,Southwest Queens
+11417,Queens,2024-09-05,Southwest Queens
+11418,Queens,2024-07-18,Southwest Queens
+11418,Queens,2024-07-26,Southwest Queens
+11420,Queens,2024-08-01,Southwest Queens
+11420,Queens,2024-08-08,Southwest Queens
+11420,Queens,2024-08-15,Southwest Queens
+11420,Queens,2024-08-22,Southwest Queens
+11420,Queens,2024-08-30,Southwest Queens
+11421,Queens,2024-07-11,Southwest Queens
+11421,Queens,2024-07-18,Southwest Queens
+11421,Queens,2024-07-25,Southwest Queens
+11421,Queens,2024-07-26,Southwest Queens
+11421,Queens,2024-08-02,Southwest Queens
+11421,Queens,2024-08-22,Southwest Queens
+11421,Queens,2024-09-06,Southwest Queens
+11421,Queens,2024-09-26,Southwest Queens
+11422,Queens,2024-07-01,Southeast Queens
+11422,Queens,2024-08-28,Southeast Queens
+11422,Queens,2024-09-03,Southeast Queens
+11422,Queens,2024-07-23,Southeast Queens
+11422,Queens,2024-07-30,Southeast Queens
+11422,Queens,2024-07-31,Southeast Queens
+11422,Queens,2024-08-05,Southeast Queens
+11422,Queens,2024-08-13,Southeast Queens
+11422,Queens,2024-08-20,Southeast Queens
+11422,Queens,2024-08-21,Southeast Queens
+11423,Queens,2024-06-27,Jamaica
+11423,Queens,2024-08-23,Jamaica
+11423,Queens,2024-08-30,Jamaica
+11423,Queens,2024-07-03,Jamaica
+11423,Queens,2024-07-12,Jamaica
+11423,Queens,2024-07-19,Jamaica
+11423,Queens,2024-07-25,Jamaica
+11423,Queens,2024-08-02,Jamaica
+11423,Queens,2024-08-08,Jamaica
+11423,Queens,2024-08-16,Jamaica
+11426,Queens,2024-06-18,Southeast Queens
+11426,Queens,2024-08-19,Southeast Queens
+11426,Queens,2024-08-26,Southeast Queens
+11426,Queens,2024-07-08,Southeast Queens
+11426,Queens,2024-07-16,Southeast Queens
+11426,Queens,2024-07-22,Southeast Queens
+11426,Queens,2024-07-29,Southeast Queens
+11426,Queens,2024-08-02,Southeast Queens
+11426,Queens,2024-08-05,Southeast Queens
+11426,Queens,2024-08-12,Southeast Queens
+11432,Queens,2024-07-03,Jamaica
+11432,Queens,2024-07-11,Jamaica
+11432,Queens,2024-07-18,Jamaica
+11432,Queens,2024-07-26,Jamaica
+11433,Queens,2024-07-24,Jamaica
+11433,Queens,2024-07-29,Jamaica
+11433,Queens,2024-08-05,Jamaica
+11433,Queens,2024-08-13,Jamaica
+11433,Queens,2024-08-19,Jamaica
+11433,Queens,2024-08-28,Jamaica
+11434,Queens,2024-07-16,Jamaica
+11434,Queens,2024-07-23,Jamaica
+11434,Queens,2024-07-24,Jamaica
+11434,Queens,2024-07-29,Jamaica
+11434,Queens,2024-08-05,Jamaica
+11434,Queens,2024-08-12,Jamaica
+11434,Queens,2024-08-19,Jamaica
+11434,Queens,2024-08-20,Jamaica
+11435,Queens,2024-07-03,Jamaica
+11435,Queens,2024-07-11,Jamaica
+11435,Queens,2024-07-18,Jamaica
+11435,Queens,2024-07-26,Jamaica
+11436,Queens,2024-07-23,Jamaica
+11436,Queens,2024-07-29,Jamaica
+11436,Queens,2024-08-05,Jamaica
+11436,Queens,2024-09-05,Jamaica
+11436,Queens,2024-09-11,Jamaica
+11691,Queens,2024-07-01,Rockaways
+11691,Queens,2024-08-13,Rockaways
+11691,Queens,2024-08-19,Rockaways
+11691,Queens,2024-07-08,Rockaways
+11691,Queens,2024-07-16,Rockaways
+11691,Queens,2024-07-23,Rockaways
+11691,Queens,2024-07-30,Rockaways
+11691,Queens,2024-07-31,Rockaways
+11691,Queens,2024-08-05,Rockaways
+11691,Queens,2024-08-12,Rockaways
+11692,Queens,2024-07-23,Rockaways
+11692,Queens,2024-08-06,Rockaways
+11692,Queens,2024-08-12,Rockaways
+11692,Queens,2024-08-19,Rockaways
+11692,Queens,2024-08-26,Rockaways
+11692,Queens,2024-08-27,Rockaways
+11692,Queens,2024-09-10,Rockaways
+11692,Queens,2024-10-01,Rockaways
+11693,Queens,2024-07-30,Rockaways
+11693,Queens,2024-08-05,Rockaways
+11693,Queens,2024-08-12,Rockaways
+11693,Queens,2024-08-20,Rockaways
+11693,Queens,2024-08-27,Rockaways
+11694,Queens,2024-08-12,Rockaways
+11694,Queens,2024-08-19,Rockaways
+11694,Queens,2024-08-26,Rockaways
+11694,Queens,2024-09-04,Rockaways
+11232,Brooklyn,2023-10-26,Sunset Park
+11421,Queens,2023-10-26,Southwest Queens
+10474,Bronx,2023-10-18,Hunts Point and Mott Haven
+11232,Brooklyn,2023-10-18,Sunset Park
+11421,Queens,2023-10-18,Southwest Queens
+10312,Staten Island,2023-10-18,South Shore
+10314,Staten Island,2023-10-18,Mid-Island
+10456,Bronx,2023-10-13,High Bridge and Morrisania
+10471,Bronx,2023-10-13,Kingsbridge and Riverdale
+10474,Bronx,2023-10-13,Hunts Point and Mott Haven
+10025,Manhattan,2023-10-13,Upper West Side
+11379,Queens,2023-10-13,West Central Queens
+11421,Queens,2023-10-13,Southwest Queens
+11422,Queens,2023-10-13,Southeast Queens
+11434,Queens,2023-10-13,Jamaica
+10307,Staten Island,2023-10-13,South Shore
+10312,Staten Island,2023-10-13,South Shore
+10314,Staten Island,2023-10-13,Mid-Island
+10456,Bronx,2023-10-05,High Bridge and Morrisania
+10457,Bronx,2023-10-05,Central Bronx
+10465,Bronx,2023-10-05,Southeast Bronx
+10471,Bronx,2023-10-05,Kingsbridge and Riverdale
+10474,Bronx,2023-10-05,Hunts Point and Mott Haven
+11207,Brooklyn,2023-10-05,East New York and New Lots
+11234,Brooklyn,2023-10-05,Canarsie and Flatlands
+10002,Manhattan,2023-10-05,Lower East Side
+10025,Manhattan,2023-10-05,Upper West Side
+11362,Queens,2023-10-05,Northeast Queens
+11365,Queens,2023-10-05,Central Queens
+11422,Queens,2023-10-05,Southeast Queens
+11423,Queens,2023-10-05,Jamaica
+11434,Queens,2023-10-05,Jamaica
+10303,Staten Island,2023-10-05,Port Richmond
+10307,Staten Island,2023-10-05,South Shore
+10312,Staten Island,2023-10-05,South Shore
+10454,Bronx,2023-09-28,Hunts Point and Mott Haven
+10456,Bronx,2023-09-28,High Bridge and Morrisania
+10457,Bronx,2023-09-28,Central Bronx
+10461,Bronx,2023-09-28,Southeast Bronx
+10464,Bronx,2023-09-28,Southeast Bronx
+10465,Bronx,2023-09-28,Southeast Bronx
+10467,Bronx,2023-09-28,Bronx Park and Fordham
+10471,Bronx,2023-09-28,Kingsbridge and Riverdale
+10473,Bronx,2023-09-28,Southeast Bronx
+10474,Bronx,2023-09-28,Hunts Point and Mott Haven
+11205,Brooklyn,2023-09-28,Northwest Brooklyn
+11206,Brooklyn,2023-09-28,Bushwick and Williamsburg
+11207,Brooklyn,2023-09-28,East New York and New Lots
+11208,Brooklyn,2023-09-28,East New York and New Lots
+11211,Brooklyn,2023-09-28,Greenpoint
+11214,Brooklyn,2023-09-28,Southwest Brooklyn
+11215,Brooklyn,2023-09-28,Northwest Brooklyn
+11221,Brooklyn,2023-09-28,Bushwick and Williamsburg
+11228,Brooklyn,2023-09-28,Southwest Brooklyn
+11229,Brooklyn,2023-09-28,Southern Brooklyn
+11232,Brooklyn,2023-09-28,Sunset Park
+11234,Brooklyn,2023-09-28,Canarsie and Flatlands
+10002,Manhattan,2023-09-28,Lower East Side
+10025,Manhattan,2023-09-28,Upper West Side
+10026,Manhattan,2023-09-28,Central Harlem
+11356,Queens,2023-09-28,North Queens
+11362,Queens,2023-09-28,Northeast Queens
+11365,Queens,2023-09-28,Central Queens
+11370,Queens,2023-09-28,West Queens
+11377,Queens,2023-09-28,West Queens
+11379,Queens,2023-09-28,West Central Queens
+11414,Queens,2023-09-28,Southwest Queens
+11422,Queens,2023-09-28,Southeast Queens
+11423,Queens,2023-09-28,Jamaica
+11426,Queens,2023-09-28,Southeast Queens
+11434,Queens,2023-09-28,Jamaica
+11691,Queens,2023-09-28,Rockaways
+10301,Staten Island,2023-09-28,Stapleton and St. George
+10303,Staten Island,2023-09-28,Port Richmond
+10307,Staten Island,2023-09-28,South Shore
+10309,Staten Island,2023-09-28,South Shore
+10312,Staten Island,2023-09-28,South Shore
+10314,Staten Island,2023-09-28,Mid-Island
+10454,Bronx,2023-09-21,Hunts Point and Mott Haven
+10457,Bronx,2023-09-21,Central Bronx
+10459,Bronx,2023-09-21,Hunts Point and Mott Haven
+10461,Bronx,2023-09-21,Southeast Bronx
+10464,Bronx,2023-09-21,Southeast Bronx
+10465,Bronx,2023-09-21,Southeast Bronx
+10467,Bronx,2023-09-21,Bronx Park and Fordham
+10471,Bronx,2023-09-21,Kingsbridge and Riverdale
+10473,Bronx,2023-09-21,Southeast Bronx
+10474,Bronx,2023-09-21,Hunts Point and Mott Haven
+11203,Brooklyn,2023-09-21,Flatbush
+11205,Brooklyn,2023-09-21,Northwest Brooklyn
+11206,Brooklyn,2023-09-21,Bushwick and Williamsburg
+11207,Brooklyn,2023-09-21,East New York and New Lots
+11208,Brooklyn,2023-09-21,East New York and New Lots
+11211,Brooklyn,2023-09-21,Greenpoint
+11212,Brooklyn,2023-09-21,Central Brooklyn
+11214,Brooklyn,2023-09-21,Southwest Brooklyn
+11215,Brooklyn,2023-09-21,Northwest Brooklyn
+11218,Brooklyn,2023-09-21,Borough Park
+11219,Brooklyn,2023-09-21,Borough Park
+11220,Brooklyn,2023-09-21,Sunset Park
+11221,Brooklyn,2023-09-21,Bushwick and Williamsburg
+11226,Brooklyn,2023-09-21,Flatbush
+11228,Brooklyn,2023-09-21,Southwest Brooklyn
+11229,Brooklyn,2023-09-21,Southern Brooklyn
+11232,Brooklyn,2023-09-21,Sunset Park
+11234,Brooklyn,2023-09-21,Canarsie and Flatlands
+11236,Brooklyn,2023-09-21,Canarsie and Flatlands
+10000,Manhattan,2023-09-21,NA
+10002,Manhattan,2023-09-21,Lower East Side
+10011,Manhattan,2023-09-21,Chelsea and Clinton
+10025,Manhattan,2023-09-21,Upper West Side
+10026,Manhattan,2023-09-21,Central Harlem
+10029,Manhattan,2023-09-21,East Harlem
+10031,Manhattan,2023-09-21,Inwood and Washington Heights
+10032,Manhattan,2023-09-21,Inwood and Washington Heights
+10033,Manhattan,2023-09-21,Inwood and Washington Heights
+10034,Manhattan,2023-09-21,Inwood and Washington Heights
+11101,Queens,2023-09-21,Northwest Queens
+11356,Queens,2023-09-21,North Queens
+11360,Queens,2023-09-21,North Queens
+11362,Queens,2023-09-21,Northeast Queens
+11364,Queens,2023-09-21,Northeast Queens
+11365,Queens,2023-09-21,Central Queens
+11366,Queens,2023-09-21,Central Queens
+11368,Queens,2023-09-21,West Queens
+11370,Queens,2023-09-21,West Queens
+11377,Queens,2023-09-21,West Queens
+11379,Queens,2023-09-21,West Central Queens
+11413,Queens,2023-09-21,Southeast Queens
+11414,Queens,2023-09-21,Southwest Queens
+11415,Queens,2023-09-21,Southwest Queens
+11421,Queens,2023-09-21,Southwest Queens
+11426,Queens,2023-09-21,Southeast Queens
+11432,Queens,2023-09-21,Jamaica
+11434,Queens,2023-09-21,Jamaica
+11691,Queens,2023-09-21,Rockaways
+11692,Queens,2023-09-21,Rockaways
+10301,Staten Island,2023-09-21,Stapleton and St. George
+10303,Staten Island,2023-09-21,Port Richmond
+10305,Staten Island,2023-09-21,Stapleton and St. George
+10306,Staten Island,2023-09-21,South Shore
+10307,Staten Island,2023-09-21,South Shore
+10309,Staten Island,2023-09-21,South Shore
+10310,Staten Island,2023-09-21,Port Richmond
+10312,Staten Island,2023-09-21,South Shore
+10314,Staten Island,2023-09-21,Mid-Island
+10454,Bronx,2023-09-14,Hunts Point and Mott Haven
+10457,Bronx,2023-09-14,Central Bronx
+10459,Bronx,2023-09-14,Hunts Point and Mott Haven
+10461,Bronx,2023-09-14,Southeast Bronx
+10464,Bronx,2023-09-14,Southeast Bronx
+10465,Bronx,2023-09-14,Southeast Bronx
+10467,Bronx,2023-09-14,Bronx Park and Fordham
+10471,Bronx,2023-09-14,Kingsbridge and Riverdale
+10473,Bronx,2023-09-14,Southeast Bronx
+10474,Bronx,2023-09-14,Hunts Point and Mott Haven
+11203,Brooklyn,2023-09-14,Flatbush
+11205,Brooklyn,2023-09-14,Northwest Brooklyn
+11206,Brooklyn,2023-09-14,Bushwick and Williamsburg
+11207,Brooklyn,2023-09-14,East New York and New Lots
+11208,Brooklyn,2023-09-14,East New York and New Lots
+11211,Brooklyn,2023-09-14,Greenpoint
+11212,Brooklyn,2023-09-14,Central Brooklyn
+11214,Brooklyn,2023-09-14,Southwest Brooklyn
+11215,Brooklyn,2023-09-14,Northwest Brooklyn
+11218,Brooklyn,2023-09-14,Borough Park
+11219,Brooklyn,2023-09-14,Borough Park
+11220,Brooklyn,2023-09-14,Sunset Park
+11221,Brooklyn,2023-09-14,Bushwick and Williamsburg
+11222,Brooklyn,2023-09-14,Greenpoint
+11226,Brooklyn,2023-09-14,Flatbush
+11228,Brooklyn,2023-09-14,Southwest Brooklyn
+11229,Brooklyn,2023-09-14,Southern Brooklyn
+11232,Brooklyn,2023-09-14,Sunset Park
+11234,Brooklyn,2023-09-14,Canarsie and Flatlands
+11236,Brooklyn,2023-09-14,Canarsie and Flatlands
+10000,Manhattan,2023-09-14,NA
+10002,Manhattan,2023-09-14,Lower East Side
+10011,Manhattan,2023-09-14,Chelsea and Clinton
+10013,Manhattan,2023-09-14,Greenwich Village and Soho
+10025,Manhattan,2023-09-14,Upper West Side
+10029,Manhattan,2023-09-14,East Harlem
+10031,Manhattan,2023-09-14,Inwood and Washington Heights
+10032,Manhattan,2023-09-14,Inwood and Washington Heights
+10033,Manhattan,2023-09-14,Inwood and Washington Heights
+10034,Manhattan,2023-09-14,Inwood and Washington Heights
+11101,Queens,2023-09-14,Northwest Queens
+11105,Queens,2023-09-14,Northwest Queens
+11356,Queens,2023-09-14,North Queens
+11360,Queens,2023-09-14,North Queens
+11362,Queens,2023-09-14,Northeast Queens
+11364,Queens,2023-09-14,Northeast Queens
+11365,Queens,2023-09-14,Central Queens
+11366,Queens,2023-09-14,Central Queens
+11368,Queens,2023-09-14,West Queens
+11370,Queens,2023-09-14,West Queens
+11377,Queens,2023-09-14,West Queens
+11378,Queens,2023-09-14,West Queens
+11379,Queens,2023-09-14,West Central Queens
+11413,Queens,2023-09-14,Southeast Queens
+11415,Queens,2023-09-14,Southwest Queens
+11421,Queens,2023-09-14,Southwest Queens
+11422,Queens,2023-09-14,Southeast Queens
+11423,Queens,2023-09-14,Jamaica
+11426,Queens,2023-09-14,Southeast Queens
+11432,Queens,2023-09-14,Jamaica
+11434,Queens,2023-09-14,Jamaica
+11691,Queens,2023-09-14,Rockaways
+11692,Queens,2023-09-14,Rockaways
+10301,Staten Island,2023-09-14,Stapleton and St. George
+10303,Staten Island,2023-09-14,Port Richmond
+10305,Staten Island,2023-09-14,Stapleton and St. George
+10306,Staten Island,2023-09-14,South Shore
+10307,Staten Island,2023-09-14,South Shore
+10309,Staten Island,2023-09-14,South Shore
+10310,Staten Island,2023-09-14,Port Richmond
+10312,Staten Island,2023-09-14,South Shore
+10314,Staten Island,2023-09-14,Mid-Island
+10451,Bronx,2023-09-08,High Bridge and Morrisania
+10454,Bronx,2023-09-08,Hunts Point and Mott Haven
+10457,Bronx,2023-09-08,Central Bronx
+10458,Bronx,2023-09-08,Bronx Park and Fordham
+10459,Bronx,2023-09-08,Hunts Point and Mott Haven
+10461,Bronx,2023-09-08,Southeast Bronx
+10463,Bronx,2023-09-08,Kingsbridge and Riverdale
+10465,Bronx,2023-09-08,Southeast Bronx
+10467,Bronx,2023-09-08,Bronx Park and Fordham
+10471,Bronx,2023-09-08,Kingsbridge and Riverdale
+10473,Bronx,2023-09-08,Southeast Bronx
+10474,Bronx,2023-09-08,Hunts Point and Mott Haven
+11203,Brooklyn,2023-09-08,Flatbush
+11204,Brooklyn,2023-09-08,Borough Park
+11205,Brooklyn,2023-09-08,Northwest Brooklyn
+11206,Brooklyn,2023-09-08,Bushwick and Williamsburg
+11207,Brooklyn,2023-09-08,East New York and New Lots
+11208,Brooklyn,2023-09-08,East New York and New Lots
+11209,Brooklyn,2023-09-08,Southwest Brooklyn
+11211,Brooklyn,2023-09-08,Greenpoint
+11212,Brooklyn,2023-09-08,Central Brooklyn
+11214,Brooklyn,2023-09-08,Southwest Brooklyn
+11215,Brooklyn,2023-09-08,Northwest Brooklyn
+11218,Brooklyn,2023-09-08,Borough Park
+11219,Brooklyn,2023-09-08,Borough Park
+11220,Brooklyn,2023-09-08,Sunset Park
+11221,Brooklyn,2023-09-08,Bushwick and Williamsburg
+11222,Brooklyn,2023-09-08,Greenpoint
+11223,Brooklyn,2023-09-08,Southern Brooklyn
+11226,Brooklyn,2023-09-08,Flatbush
+11228,Brooklyn,2023-09-08,Southwest Brooklyn
+11229,Brooklyn,2023-09-08,Southern Brooklyn
+11232,Brooklyn,2023-09-08,Sunset Park
+11234,Brooklyn,2023-09-08,Canarsie and Flatlands
+11235,Brooklyn,2023-09-08,Southern Brooklyn
+11236,Brooklyn,2023-09-08,Canarsie and Flatlands
+10000,Manhattan,2023-09-08,NA
+10002,Manhattan,2023-09-08,Lower East Side
+10011,Manhattan,2023-09-08,Chelsea and Clinton
+10013,Manhattan,2023-09-08,Greenwich Village and Soho
+10025,Manhattan,2023-09-08,Upper West Side
+10026,Manhattan,2023-09-08,Central Harlem
+10029,Manhattan,2023-09-08,East Harlem
+10031,Manhattan,2023-09-08,Inwood and Washington Heights
+10032,Manhattan,2023-09-08,Inwood and Washington Heights
+10034,Manhattan,2023-09-08,Inwood and Washington Heights
+11101,Queens,2023-09-08,Northwest Queens
+11105,Queens,2023-09-08,Northwest Queens
+11356,Queens,2023-09-08,North Queens
+11360,Queens,2023-09-08,North Queens
+11362,Queens,2023-09-08,Northeast Queens
+11364,Queens,2023-09-08,Northeast Queens
+11365,Queens,2023-09-08,Central Queens
+11368,Queens,2023-09-08,West Queens
+11370,Queens,2023-09-08,West Queens
+11375,Queens,2023-09-08,West Central Queens
+11377,Queens,2023-09-08,West Queens
+11378,Queens,2023-09-08,West Queens
+11379,Queens,2023-09-08,West Central Queens
+11413,Queens,2023-09-08,Southeast Queens
+11414,Queens,2023-09-08,Southwest Queens
+11415,Queens,2023-09-08,Southwest Queens
+11421,Queens,2023-09-08,Southwest Queens
+11422,Queens,2023-09-08,Southeast Queens
+11423,Queens,2023-09-08,Jamaica
+11426,Queens,2023-09-08,Southeast Queens
+11432,Queens,2023-09-08,Jamaica
+11434,Queens,2023-09-08,Jamaica
+11691,Queens,2023-09-08,Rockaways
+11692,Queens,2023-09-08,Rockaways
+11694,Queens,2023-09-08,Rockaways
+10301,Staten Island,2023-09-08,Stapleton and St. George
+10303,Staten Island,2023-09-08,Port Richmond
+10305,Staten Island,2023-09-08,Stapleton and St. George
+10306,Staten Island,2023-09-08,South Shore
+10307,Staten Island,2023-09-08,South Shore
+10309,Staten Island,2023-09-08,South Shore
+10312,Staten Island,2023-09-08,South Shore
+10314,Staten Island,2023-09-08,Mid-Island
+10451,Bronx,2023-08-31,High Bridge and Morrisania
+10457,Bronx,2023-08-31,Central Bronx
+10458,Bronx,2023-08-31,Bronx Park and Fordham
+10459,Bronx,2023-08-31,Hunts Point and Mott Haven
+10461,Bronx,2023-08-31,Southeast Bronx
+10463,Bronx,2023-08-31,Kingsbridge and Riverdale
+10465,Bronx,2023-08-31,Southeast Bronx
+10467,Bronx,2023-08-31,Bronx Park and Fordham
+10471,Bronx,2023-08-31,Kingsbridge and Riverdale
+10472,Bronx,2023-08-31,Southeast Bronx
+10473,Bronx,2023-08-31,Southeast Bronx
+10474,Bronx,2023-08-31,Hunts Point and Mott Haven
+10475,Bronx,2023-08-31,Northeast Bronx
+11203,Brooklyn,2023-08-31,Flatbush
+11204,Brooklyn,2023-08-31,Borough Park
+11205,Brooklyn,2023-08-31,Northwest Brooklyn
+11206,Brooklyn,2023-08-31,Bushwick and Williamsburg
+11207,Brooklyn,2023-08-31,East New York and New Lots
+11208,Brooklyn,2023-08-31,East New York and New Lots
+11209,Brooklyn,2023-08-31,Southwest Brooklyn
+11211,Brooklyn,2023-08-31,Greenpoint
+11212,Brooklyn,2023-08-31,Central Brooklyn
+11214,Brooklyn,2023-08-31,Southwest Brooklyn
+11215,Brooklyn,2023-08-31,Northwest Brooklyn
+11218,Brooklyn,2023-08-31,Borough Park
+11219,Brooklyn,2023-08-31,Borough Park
+11220,Brooklyn,2023-08-31,Sunset Park
+11221,Brooklyn,2023-08-31,Bushwick and Williamsburg
+11222,Brooklyn,2023-08-31,Greenpoint
+11223,Brooklyn,2023-08-31,Southern Brooklyn
+11226,Brooklyn,2023-08-31,Flatbush
+11228,Brooklyn,2023-08-31,Southwest Brooklyn
+11229,Brooklyn,2023-08-31,Southern Brooklyn
+11232,Brooklyn,2023-08-31,Sunset Park
+11234,Brooklyn,2023-08-31,Canarsie and Flatlands
+11235,Brooklyn,2023-08-31,Southern Brooklyn
+11236,Brooklyn,2023-08-31,Canarsie and Flatlands
+10002,Manhattan,2023-08-31,Lower East Side
+10011,Manhattan,2023-08-31,Chelsea and Clinton
+10013,Manhattan,2023-08-31,Greenwich Village and Soho
+10025,Manhattan,2023-08-31,Upper West Side
+10026,Manhattan,2023-08-31,Central Harlem
+10031,Manhattan,2023-08-31,Inwood and Washington Heights
+10032,Manhattan,2023-08-31,Inwood and Washington Heights
+10033,Manhattan,2023-08-31,Inwood and Washington Heights
+10034,Manhattan,2023-08-31,Inwood and Washington Heights
+11004,Queens,2023-08-31,Southeast Queens
+11101,Queens,2023-08-31,Northwest Queens
+11105,Queens,2023-08-31,Northwest Queens
+11356,Queens,2023-08-31,North Queens
+11357,Queens,2023-08-31,North Queens
+11360,Queens,2023-08-31,North Queens
+11361,Queens,2023-08-31,Northeast Queens
+11362,Queens,2023-08-31,Northeast Queens
+11363,Queens,2023-08-31,Northeast Queens
+11364,Queens,2023-08-31,Northeast Queens
+11365,Queens,2023-08-31,Central Queens
+11368,Queens,2023-08-31,West Queens
+11370,Queens,2023-08-31,West Queens
+11375,Queens,2023-08-31,West Central Queens
+11377,Queens,2023-08-31,West Queens
+11378,Queens,2023-08-31,West Queens
+11379,Queens,2023-08-31,West Central Queens
+11413,Queens,2023-08-31,Southeast Queens
+11414,Queens,2023-08-31,Southwest Queens
+11415,Queens,2023-08-31,Southwest Queens
+11421,Queens,2023-08-31,Southwest Queens
+11422,Queens,2023-08-31,Southeast Queens
+11423,Queens,2023-08-31,Jamaica
+11426,Queens,2023-08-31,Southeast Queens
+11432,Queens,2023-08-31,Jamaica
+11434,Queens,2023-08-31,Jamaica
+11691,Queens,2023-08-31,Rockaways
+11692,Queens,2023-08-31,Rockaways
+11693,Queens,2023-08-31,Rockaways
+11694,Queens,2023-08-31,Rockaways
+10301,Staten Island,2023-08-31,Stapleton and St. George
+10303,Staten Island,2023-08-31,Port Richmond
+10305,Staten Island,2023-08-31,Stapleton and St. George
+10306,Staten Island,2023-08-31,South Shore
+10307,Staten Island,2023-08-31,South Shore
+10309,Staten Island,2023-08-31,South Shore
+10310,Staten Island,2023-08-31,Port Richmond
+10312,Staten Island,2023-08-31,South Shore
+10314,Staten Island,2023-08-31,Mid-Island
+10451,Bronx,2023-08-25,High Bridge and Morrisania
+10457,Bronx,2023-08-25,Central Bronx
+10458,Bronx,2023-08-25,Bronx Park and Fordham
+10459,Bronx,2023-08-25,Hunts Point and Mott Haven
+10461,Bronx,2023-08-25,Southeast Bronx
+10463,Bronx,2023-08-25,Kingsbridge and Riverdale
+10464,Bronx,2023-08-25,Southeast Bronx
+10465,Bronx,2023-08-25,Southeast Bronx
+10467,Bronx,2023-08-25,Bronx Park and Fordham
+10471,Bronx,2023-08-25,Kingsbridge and Riverdale
+10472,Bronx,2023-08-25,Southeast Bronx
+10473,Bronx,2023-08-25,Southeast Bronx
+10474,Bronx,2023-08-25,Hunts Point and Mott Haven
+10475,Bronx,2023-08-25,Northeast Bronx
+11203,Brooklyn,2023-08-25,Flatbush
+11205,Brooklyn,2023-08-25,Northwest Brooklyn
+11206,Brooklyn,2023-08-25,Bushwick and Williamsburg
+11207,Brooklyn,2023-08-25,East New York and New Lots
+11208,Brooklyn,2023-08-25,East New York and New Lots
+11209,Brooklyn,2023-08-25,Southwest Brooklyn
+11211,Brooklyn,2023-08-25,Greenpoint
+11212,Brooklyn,2023-08-25,Central Brooklyn
+11214,Brooklyn,2023-08-25,Southwest Brooklyn
+11215,Brooklyn,2023-08-25,Northwest Brooklyn
+11218,Brooklyn,2023-08-25,Borough Park
+11219,Brooklyn,2023-08-25,Borough Park
+11221,Brooklyn,2023-08-25,Bushwick and Williamsburg
+11222,Brooklyn,2023-08-25,Greenpoint
+11223,Brooklyn,2023-08-25,Southern Brooklyn
+11228,Brooklyn,2023-08-25,Southwest Brooklyn
+11229,Brooklyn,2023-08-25,Southern Brooklyn
+11232,Brooklyn,2023-08-25,Sunset Park
+11234,Brooklyn,2023-08-25,Canarsie and Flatlands
+11235,Brooklyn,2023-08-25,Southern Brooklyn
+11236,Brooklyn,2023-08-25,Canarsie and Flatlands
+10002,Manhattan,2023-08-25,Lower East Side
+10011,Manhattan,2023-08-25,Chelsea and Clinton
+10013,Manhattan,2023-08-25,Greenwich Village and Soho
+10026,Manhattan,2023-08-25,Central Harlem
+10032,Manhattan,2023-08-25,Inwood and Washington Heights
+10033,Manhattan,2023-08-25,Inwood and Washington Heights
+10034,Manhattan,2023-08-25,Inwood and Washington Heights
+11004,Queens,2023-08-25,Southeast Queens
+11101,Queens,2023-08-25,Northwest Queens
+11105,Queens,2023-08-25,Northwest Queens
+11356,Queens,2023-08-25,North Queens
+11357,Queens,2023-08-25,North Queens
+11358,Queens,2023-08-25,North Queens
+11360,Queens,2023-08-25,North Queens
+11361,Queens,2023-08-25,Northeast Queens
+11362,Queens,2023-08-25,Northeast Queens
+11363,Queens,2023-08-25,Northeast Queens
+11364,Queens,2023-08-25,Northeast Queens
+11365,Queens,2023-08-25,Central Queens
+11367,Queens,2023-08-25,Central Queens
+11368,Queens,2023-08-25,West Queens
+11370,Queens,2023-08-25,West Queens
+11377,Queens,2023-08-25,West Queens
+11378,Queens,2023-08-25,West Queens
+11379,Queens,2023-08-25,West Central Queens
+11413,Queens,2023-08-25,Southeast Queens
+11414,Queens,2023-08-25,Southwest Queens
+11415,Queens,2023-08-25,Southwest Queens
+11418,Queens,2023-08-25,Southwest Queens
+11419,Queens,2023-08-25,Southwest Queens
+11421,Queens,2023-08-25,Southwest Queens
+11422,Queens,2023-08-25,Southeast Queens
+11423,Queens,2023-08-25,Jamaica
+11426,Queens,2023-08-25,Southeast Queens
+11432,Queens,2023-08-25,Jamaica
+11434,Queens,2023-08-25,Jamaica
+11691,Queens,2023-08-25,Rockaways
+11692,Queens,2023-08-25,Rockaways
+11693,Queens,2023-08-25,Rockaways
+11694,Queens,2023-08-25,Rockaways
+10301,Staten Island,2023-08-25,Stapleton and St. George
+10303,Staten Island,2023-08-25,Port Richmond
+10304,Staten Island,2023-08-25,Stapleton and St. George
+10305,Staten Island,2023-08-25,Stapleton and St. George
+10306,Staten Island,2023-08-25,South Shore
+10307,Staten Island,2023-08-25,South Shore
+10308,Staten Island,2023-08-25,South Shore
+10309,Staten Island,2023-08-25,South Shore
+10310,Staten Island,2023-08-25,Port Richmond
+10312,Staten Island,2023-08-25,South Shore
+10314,Staten Island,2023-08-25,Mid-Island
+10451,Bronx,2023-08-18,High Bridge and Morrisania
+10457,Bronx,2023-08-18,Central Bronx
+10458,Bronx,2023-08-18,Bronx Park and Fordham
+10459,Bronx,2023-08-18,Hunts Point and Mott Haven
+10461,Bronx,2023-08-18,Southeast Bronx
+10464,Bronx,2023-08-18,Southeast Bronx
+10465,Bronx,2023-08-18,Southeast Bronx
+10471,Bronx,2023-08-18,Kingsbridge and Riverdale
+10472,Bronx,2023-08-18,Southeast Bronx
+10473,Bronx,2023-08-18,Southeast Bronx
+10474,Bronx,2023-08-18,Hunts Point and Mott Haven
+10475,Bronx,2023-08-18,Northeast Bronx
+11205,Brooklyn,2023-08-18,Northwest Brooklyn
+11206,Brooklyn,2023-08-18,Bushwick and Williamsburg
+11207,Brooklyn,2023-08-18,East New York and New Lots
+11209,Brooklyn,2023-08-18,Southwest Brooklyn
+11211,Brooklyn,2023-08-18,Greenpoint
+11214,Brooklyn,2023-08-18,Southwest Brooklyn
+11215,Brooklyn,2023-08-18,Northwest Brooklyn
+11221,Brooklyn,2023-08-18,Bushwick and Williamsburg
+11228,Brooklyn,2023-08-18,Southwest Brooklyn
+11229,Brooklyn,2023-08-18,Southern Brooklyn
+11234,Brooklyn,2023-08-18,Canarsie and Flatlands
+11236,Brooklyn,2023-08-18,Canarsie and Flatlands
+10002,Manhattan,2023-08-18,Lower East Side
+10025,Manhattan,2023-08-18,Upper West Side
+10026,Manhattan,2023-08-18,Central Harlem
+10032,Manhattan,2023-08-18,Inwood and Washington Heights
+11004,Queens,2023-08-18,Southeast Queens
+11005,Queens,2023-08-18,Southeast Queens
+11101,Queens,2023-08-18,Northwest Queens
+11105,Queens,2023-08-18,Northwest Queens
+11355,Queens,2023-08-18,North Queens
+11356,Queens,2023-08-18,North Queens
+11357,Queens,2023-08-18,North Queens
+11358,Queens,2023-08-18,North Queens
+11360,Queens,2023-08-18,North Queens
+11361,Queens,2023-08-18,Northeast Queens
+11362,Queens,2023-08-18,Northeast Queens
+11363,Queens,2023-08-18,Northeast Queens
+11364,Queens,2023-08-18,Northeast Queens
+11365,Queens,2023-08-18,Central Queens
+11367,Queens,2023-08-18,Central Queens
+11368,Queens,2023-08-18,West Queens
+11375,Queens,2023-08-18,West Central Queens
+11377,Queens,2023-08-18,West Queens
+11378,Queens,2023-08-18,West Queens
+11379,Queens,2023-08-18,West Central Queens
+11414,Queens,2023-08-18,Southwest Queens
+11415,Queens,2023-08-18,Southwest Queens
+11418,Queens,2023-08-18,Southwest Queens
+11419,Queens,2023-08-18,Southwest Queens
+11421,Queens,2023-08-18,Southwest Queens
+11422,Queens,2023-08-18,Southeast Queens
+11423,Queens,2023-08-18,Jamaica
+11426,Queens,2023-08-18,Southeast Queens
+11432,Queens,2023-08-18,Jamaica
+11434,Queens,2023-08-18,Jamaica
+11691,Queens,2023-08-18,Rockaways
+11692,Queens,2023-08-18,Rockaways
+11693,Queens,2023-08-18,Rockaways
+11694,Queens,2023-08-18,Rockaways
+10301,Staten Island,2023-08-18,Stapleton and St. George
+10303,Staten Island,2023-08-18,Port Richmond
+10304,Staten Island,2023-08-18,Stapleton and St. George
+10305,Staten Island,2023-08-18,Stapleton and St. George
+10306,Staten Island,2023-08-18,South Shore
+10307,Staten Island,2023-08-18,South Shore
+10308,Staten Island,2023-08-18,South Shore
+10309,Staten Island,2023-08-18,South Shore
+10310,Staten Island,2023-08-18,Port Richmond
+10312,Staten Island,2023-08-18,South Shore
+10314,Staten Island,2023-08-18,Mid-Island
+10451,Bronx,2023-08-11,High Bridge and Morrisania
+10457,Bronx,2023-08-11,Central Bronx
+10458,Bronx,2023-08-11,Bronx Park and Fordham
+10459,Bronx,2023-08-11,Hunts Point and Mott Haven
+10461,Bronx,2023-08-11,Southeast Bronx
+10464,Bronx,2023-08-11,Southeast Bronx
+10465,Bronx,2023-08-11,Southeast Bronx
+10472,Bronx,2023-08-11,Southeast Bronx
+10473,Bronx,2023-08-11,Southeast Bronx
+11205,Brooklyn,2023-08-11,Northwest Brooklyn
+11206,Brooklyn,2023-08-11,Bushwick and Williamsburg
+11211,Brooklyn,2023-08-11,Greenpoint
+11228,Brooklyn,2023-08-11,Southwest Brooklyn
+11234,Brooklyn,2023-08-11,Canarsie and Flatlands
+11236,Brooklyn,2023-08-11,Canarsie and Flatlands
+10025,Manhattan,2023-08-11,Upper West Side
+11004,Queens,2023-08-11,Southeast Queens
+11005,Queens,2023-08-11,Southeast Queens
+11355,Queens,2023-08-11,North Queens
+11356,Queens,2023-08-11,North Queens
+11357,Queens,2023-08-11,North Queens
+11358,Queens,2023-08-11,North Queens
+11360,Queens,2023-08-11,North Queens
+11361,Queens,2023-08-11,Northeast Queens
+11362,Queens,2023-08-11,Northeast Queens
+11363,Queens,2023-08-11,Northeast Queens
+11365,Queens,2023-08-11,Central Queens
+11367,Queens,2023-08-11,Central Queens
+11368,Queens,2023-08-11,West Queens
+11375,Queens,2023-08-11,West Central Queens
+11377,Queens,2023-08-11,West Queens
+11379,Queens,2023-08-11,West Central Queens
+11413,Queens,2023-08-11,Southeast Queens
+11414,Queens,2023-08-11,Southwest Queens
+11415,Queens,2023-08-11,Southwest Queens
+11418,Queens,2023-08-11,Southwest Queens
+11419,Queens,2023-08-11,Southwest Queens
+11421,Queens,2023-08-11,Southwest Queens
+11422,Queens,2023-08-11,Southeast Queens
+11423,Queens,2023-08-11,Jamaica
+11426,Queens,2023-08-11,Southeast Queens
+11434,Queens,2023-08-11,Jamaica
+11691,Queens,2023-08-11,Rockaways
+11692,Queens,2023-08-11,Rockaways
+11694,Queens,2023-08-11,Rockaways
+10301,Staten Island,2023-08-11,Stapleton and St. George
+10302,Staten Island,2023-08-11,Port Richmond
+10303,Staten Island,2023-08-11,Port Richmond
+10304,Staten Island,2023-08-11,Stapleton and St. George
+10305,Staten Island,2023-08-11,Stapleton and St. George
+10306,Staten Island,2023-08-11,South Shore
+10307,Staten Island,2023-08-11,South Shore
+10308,Staten Island,2023-08-11,South Shore
+10309,Staten Island,2023-08-11,South Shore
+10310,Staten Island,2023-08-11,Port Richmond
+10312,Staten Island,2023-08-11,South Shore
+10314,Staten Island,2023-08-11,Mid-Island
+10457,Bronx,2023-08-04,Central Bronx
+10461,Bronx,2023-08-04,Southeast Bronx
+10464,Bronx,2023-08-04,Southeast Bronx
+10465,Bronx,2023-08-04,Southeast Bronx
+10473,Bronx,2023-08-04,Southeast Bronx
+11206,Brooklyn,2023-08-04,Bushwick and Williamsburg
+11004,Queens,2023-08-04,Southeast Queens
+11005,Queens,2023-08-04,Southeast Queens
+11355,Queens,2023-08-04,North Queens
+11356,Queens,2023-08-04,North Queens
+11357,Queens,2023-08-04,North Queens
+11358,Queens,2023-08-04,North Queens
+11360,Queens,2023-08-04,North Queens
+11361,Queens,2023-08-04,Northeast Queens
+11362,Queens,2023-08-04,Northeast Queens
+11365,Queens,2023-08-04,Central Queens
+11367,Queens,2023-08-04,Central Queens
+11368,Queens,2023-08-04,West Queens
+11375,Queens,2023-08-04,West Central Queens
+11413,Queens,2023-08-04,Southeast Queens
+11415,Queens,2023-08-04,Southwest Queens
+11419,Queens,2023-08-04,Southwest Queens
+11421,Queens,2023-08-04,Southwest Queens
+11422,Queens,2023-08-04,Southeast Queens
+11426,Queens,2023-08-04,Southeast Queens
+11434,Queens,2023-08-04,Jamaica
+11691,Queens,2023-08-04,Rockaways
+11692,Queens,2023-08-04,Rockaways
+11694,Queens,2023-08-04,Rockaways
+10301,Staten Island,2023-08-04,Stapleton and St. George
+10302,Staten Island,2023-08-04,Port Richmond
+10303,Staten Island,2023-08-04,Port Richmond
+10304,Staten Island,2023-08-04,Stapleton and St. George
+10305,Staten Island,2023-08-04,Stapleton and St. George
+10306,Staten Island,2023-08-04,South Shore
+10307,Staten Island,2023-08-04,South Shore
+10308,Staten Island,2023-08-04,South Shore
+10309,Staten Island,2023-08-04,South Shore
+10310,Staten Island,2023-08-04,Port Richmond
+10312,Staten Island,2023-08-04,South Shore
+10314,Staten Island,2023-08-04,Mid-Island
+10464,Bronx,2023-07-27,Southeast Bronx
+10465,Bronx,2023-07-27,Southeast Bronx
+10473,Bronx,2023-07-27,Southeast Bronx
+11236,Brooklyn,2023-07-27,Canarsie and Flatlands
+11004,Queens,2023-07-27,Southeast Queens
+11005,Queens,2023-07-27,Southeast Queens
+11355,Queens,2023-07-27,North Queens
+11356,Queens,2023-07-27,North Queens
+11357,Queens,2023-07-27,North Queens
+11358,Queens,2023-07-27,North Queens
+11360,Queens,2023-07-27,North Queens
+11361,Queens,2023-07-27,Northeast Queens
+11365,Queens,2023-07-27,Central Queens
+11367,Queens,2023-07-27,Central Queens
+11368,Queens,2023-07-27,West Queens
+11375,Queens,2023-07-27,West Central Queens
+11413,Queens,2023-07-27,Southeast Queens
+11415,Queens,2023-07-27,Southwest Queens
+11422,Queens,2023-07-27,Southeast Queens
+11426,Queens,2023-07-27,Southeast Queens
+11434,Queens,2023-07-27,Jamaica
+11692,Queens,2023-07-27,Rockaways
+10301,Staten Island,2023-07-27,Stapleton and St. George
+10302,Staten Island,2023-07-27,Port Richmond
+10303,Staten Island,2023-07-27,Port Richmond
+10304,Staten Island,2023-07-27,Stapleton and St. George
+10305,Staten Island,2023-07-27,Stapleton and St. George
+10306,Staten Island,2023-07-27,South Shore
+10307,Staten Island,2023-07-27,South Shore
+10309,Staten Island,2023-07-27,South Shore
+10310,Staten Island,2023-07-27,Port Richmond
+10312,Staten Island,2023-07-27,South Shore
+10314,Staten Island,2023-07-27,Mid-Island
+10464,Bronx,2023-07-20,Southeast Bronx
+10465,Bronx,2023-07-20,Southeast Bronx
+11234,Brooklyn,2023-07-20,Canarsie and Flatlands
+11236,Brooklyn,2023-07-20,Canarsie and Flatlands
+11355,Queens,2023-07-20,North Queens
+11356,Queens,2023-07-20,North Queens
+11360,Queens,2023-07-20,North Queens
+11365,Queens,2023-07-20,Central Queens
+11367,Queens,2023-07-20,Central Queens
+11368,Queens,2023-07-20,West Queens
+11413,Queens,2023-07-20,Southeast Queens
+11422,Queens,2023-07-20,Southeast Queens
+11423,Queens,2023-07-20,Jamaica
+11426,Queens,2023-07-20,Southeast Queens
+10301,Staten Island,2023-07-20,Stapleton and St. George
+10303,Staten Island,2023-07-20,Port Richmond
+10305,Staten Island,2023-07-20,Stapleton and St. George
+10306,Staten Island,2023-07-20,South Shore
+10307,Staten Island,2023-07-20,South Shore
+10309,Staten Island,2023-07-20,South Shore
+10310,Staten Island,2023-07-20,Port Richmond
+10312,Staten Island,2023-07-20,South Shore
+10314,Staten Island,2023-07-20,Mid-Island
+10465,Bronx,2023-07-13,Southeast Bronx
+11234,Brooklyn,2023-07-13,Canarsie and Flatlands
+11356,Queens,2023-07-13,North Queens
+11368,Queens,2023-07-13,West Queens
+11413,Queens,2023-07-13,Southeast Queens
+11422,Queens,2023-07-13,Southeast Queens
+11423,Queens,2023-07-13,Jamaica
+10301,Staten Island,2023-07-13,Stapleton and St. George
+10303,Staten Island,2023-07-13,Port Richmond
+10306,Staten Island,2023-07-13,South Shore
+10307,Staten Island,2023-07-13,South Shore
+10465,Bronx,2023-07-06,Southeast Bronx
+11356,Queens,2023-07-06,North Queens
+11422,Queens,2023-07-06,Southeast Queens
+10301,Staten Island,2023-07-06,Stapleton and St. George
+10306,Staten Island,2023-07-06,South Shore
+10457,Bronx,2022-10-13,Central Bronx
+10011,Manhattan,2022-10-13,Chelsea and Clinton
+11356,Queens,2022-10-13,North Queens
+11414,Queens,2022-10-13,Southwest Queens
+11423,Queens,2022-10-13,Jamaica
+11691,Queens,2022-10-13,Rockaways
+10314,Staten Island,2022-10-13,Mid-Island
+10457,Bronx,2022-10-06,Central Bronx
+10002,Manhattan,2022-10-06,Lower East Side
+10011,Manhattan,2022-10-06,Chelsea and Clinton
+10013,Manhattan,2022-10-06,Greenwich Village and Soho
+11356,Queens,2022-10-06,North Queens
+11377,Queens,2022-10-06,West Queens
+11414,Queens,2022-10-06,Southwest Queens
+11422,Queens,2022-10-06,Southeast Queens
+11423,Queens,2022-10-06,Jamaica
+11691,Queens,2022-10-06,Rockaways
+10301,Staten Island,2022-10-06,Stapleton and St. George
+10303,Staten Island,2022-10-06,Port Richmond
+10306,Staten Island,2022-10-06,South Shore
+10314,Staten Island,2022-10-06,Mid-Island
+10457,Bronx,2022-09-29,Central Bronx
+10464,Bronx,2022-09-29,Southeast Bronx
+10471,Bronx,2022-09-29,Kingsbridge and Riverdale
+11201,Brooklyn,2022-09-29,Northwest Brooklyn
+11206,Brooklyn,2022-09-29,Bushwick and Williamsburg
+11207,Brooklyn,2022-09-29,East New York and New Lots
+11222,Brooklyn,2022-09-29,Greenpoint
+11228,Brooklyn,2022-09-29,Southwest Brooklyn
+11234,Brooklyn,2022-09-29,Canarsie and Flatlands
+10002,Manhattan,2022-09-29,Lower East Side
+10006,Manhattan,2022-09-29,Lower Manhattan
+10011,Manhattan,2022-09-29,Chelsea and Clinton
+10013,Manhattan,2022-09-29,Greenwich Village and Soho
+11356,Queens,2022-09-29,North Queens
+11377,Queens,2022-09-29,West Queens
+11414,Queens,2022-09-29,Southwest Queens
+11422,Queens,2022-09-29,Southeast Queens
+11423,Queens,2022-09-29,Jamaica
+11426,Queens,2022-09-29,Southeast Queens
+11429,Queens,2022-09-29,Southeast Queens
+11691,Queens,2022-09-29,Rockaways
+11692,Queens,2022-09-29,Rockaways
+10301,Staten Island,2022-09-29,Stapleton and St. George
+10303,Staten Island,2022-09-29,Port Richmond
+10305,Staten Island,2022-09-29,Stapleton and St. George
+10306,Staten Island,2022-09-29,South Shore
+10307,Staten Island,2022-09-29,South Shore
+10309,Staten Island,2022-09-29,South Shore
+10312,Staten Island,2022-09-29,South Shore
+10314,Staten Island,2022-09-29,Mid-Island
+10456,Bronx,2022-09-22,High Bridge and Morrisania
+10457,Bronx,2022-09-22,Central Bronx
+10461,Bronx,2022-09-22,Southeast Bronx
+10464,Bronx,2022-09-22,Southeast Bronx
+10465,Bronx,2022-09-22,Southeast Bronx
+10471,Bronx,2022-09-22,Kingsbridge and Riverdale
+10472,Bronx,2022-09-22,Southeast Bronx
+10473,Bronx,2022-09-22,Southeast Bronx
+10474,Bronx,2022-09-22,Hunts Point and Mott Haven
+11201,Brooklyn,2022-09-22,Northwest Brooklyn
+11203,Brooklyn,2022-09-22,Flatbush
+11206,Brooklyn,2022-09-22,Bushwick and Williamsburg
+11207,Brooklyn,2022-09-22,East New York and New Lots
+11222,Brooklyn,2022-09-22,Greenpoint
+11228,Brooklyn,2022-09-22,Southwest Brooklyn
+11229,Brooklyn,2022-09-22,Southern Brooklyn
+11232,Brooklyn,2022-09-22,Sunset Park
+11234,Brooklyn,2022-09-22,Canarsie and Flatlands
+10002,Manhattan,2022-09-22,Lower East Side
+10006,Manhattan,2022-09-22,Lower Manhattan
+10011,Manhattan,2022-09-22,Chelsea and Clinton
+10013,Manhattan,2022-09-22,Greenwich Village and Soho
+10032,Manhattan,2022-09-22,Inwood and Washington Heights
+11101,Queens,2022-09-22,Northwest Queens
+11105,Queens,2022-09-22,Northwest Queens
+11356,Queens,2022-09-22,North Queens
+11360,Queens,2022-09-22,North Queens
+11365,Queens,2022-09-22,Central Queens
+11377,Queens,2022-09-22,West Queens
+11413,Queens,2022-09-22,Southeast Queens
+11414,Queens,2022-09-22,Southwest Queens
+11421,Queens,2022-09-22,Southwest Queens
+11422,Queens,2022-09-22,Southeast Queens
+11423,Queens,2022-09-22,Jamaica
+11426,Queens,2022-09-22,Southeast Queens
+11429,Queens,2022-09-22,Southeast Queens
+11434,Queens,2022-09-22,Jamaica
+11691,Queens,2022-09-22,Rockaways
+11692,Queens,2022-09-22,Rockaways
+11694,Queens,2022-09-22,Rockaways
+11697,Queens,2022-09-22,Rockaways
+10301,Staten Island,2022-09-22,Stapleton and St. George
+10303,Staten Island,2022-09-22,Port Richmond
+10305,Staten Island,2022-09-22,Stapleton and St. George
+10306,Staten Island,2022-09-22,South Shore
+10307,Staten Island,2022-09-22,South Shore
+10309,Staten Island,2022-09-22,South Shore
+10310,Staten Island,2022-09-22,Port Richmond
+10312,Staten Island,2022-09-22,South Shore
+10314,Staten Island,2022-09-22,Mid-Island
+10456,Bronx,2022-09-15,High Bridge and Morrisania
+10457,Bronx,2022-09-15,Central Bronx
+10458,Bronx,2022-09-15,Bronx Park and Fordham
+10459,Bronx,2022-09-15,Hunts Point and Mott Haven
+10461,Bronx,2022-09-15,Southeast Bronx
+10463,Bronx,2022-09-15,Kingsbridge and Riverdale
+10464,Bronx,2022-09-15,Southeast Bronx
+10465,Bronx,2022-09-15,Southeast Bronx
+10466,Bronx,2022-09-15,Northeast Bronx
+10467,Bronx,2022-09-15,Bronx Park and Fordham
+10469,Bronx,2022-09-15,Northeast Bronx
+10471,Bronx,2022-09-15,Kingsbridge and Riverdale
+10472,Bronx,2022-09-15,Southeast Bronx
+10473,Bronx,2022-09-15,Southeast Bronx
+10474,Bronx,2022-09-15,Hunts Point and Mott Haven
+11203,Brooklyn,2022-09-15,Flatbush
+11205,Brooklyn,2022-09-15,Northwest Brooklyn
+11206,Brooklyn,2022-09-15,Bushwick and Williamsburg
+11207,Brooklyn,2022-09-15,East New York and New Lots
+11208,Brooklyn,2022-09-15,East New York and New Lots
+11214,Brooklyn,2022-09-15,Southwest Brooklyn
+11215,Brooklyn,2022-09-15,Northwest Brooklyn
+11220,Brooklyn,2022-09-15,Sunset Park
+11221,Brooklyn,2022-09-15,Bushwick and Williamsburg
+11222,Brooklyn,2022-09-15,Greenpoint
+11228,Brooklyn,2022-09-15,Southwest Brooklyn
+11229,Brooklyn,2022-09-15,Southern Brooklyn
+11232,Brooklyn,2022-09-15,Sunset Park
+10002,Manhattan,2022-09-15,Lower East Side
+10011,Manhattan,2022-09-15,Chelsea and Clinton
+10013,Manhattan,2022-09-15,Greenwich Village and Soho
+10026,Manhattan,2022-09-15,Central Harlem
+10032,Manhattan,2022-09-15,Inwood and Washington Heights
+11101,Queens,2022-09-15,Northwest Queens
+11105,Queens,2022-09-15,Northwest Queens
+11356,Queens,2022-09-15,North Queens
+11360,Queens,2022-09-15,North Queens
+11365,Queens,2022-09-15,Central Queens
+11377,Queens,2022-09-15,West Queens
+11379,Queens,2022-09-15,West Central Queens
+11413,Queens,2022-09-15,Southeast Queens
+11414,Queens,2022-09-15,Southwest Queens
+11415,Queens,2022-09-15,Southwest Queens
+11421,Queens,2022-09-15,Southwest Queens
+11422,Queens,2022-09-15,Southeast Queens
+11426,Queens,2022-09-15,Southeast Queens
+11434,Queens,2022-09-15,Jamaica
+11691,Queens,2022-09-15,Rockaways
+11692,Queens,2022-09-15,Rockaways
+11693,Queens,2022-09-15,Rockaways
+11694,Queens,2022-09-15,Rockaways
+11697,Queens,2022-09-15,Rockaways
+10301,Staten Island,2022-09-15,Stapleton and St. George
+10303,Staten Island,2022-09-15,Port Richmond
+10305,Staten Island,2022-09-15,Stapleton and St. George
+10306,Staten Island,2022-09-15,South Shore
+10307,Staten Island,2022-09-15,South Shore
+10309,Staten Island,2022-09-15,South Shore
+10310,Staten Island,2022-09-15,Port Richmond
+10312,Staten Island,2022-09-15,South Shore
+10314,Staten Island,2022-09-15,Mid-Island
+10456,Bronx,2022-09-08,High Bridge and Morrisania
+10457,Bronx,2022-09-08,Central Bronx
+10458,Bronx,2022-09-08,Bronx Park and Fordham
+10459,Bronx,2022-09-08,Hunts Point and Mott Haven
+10461,Bronx,2022-09-08,Southeast Bronx
+10463,Bronx,2022-09-08,Kingsbridge and Riverdale
+10464,Bronx,2022-09-08,Southeast Bronx
+10465,Bronx,2022-09-08,Southeast Bronx
+10466,Bronx,2022-09-08,Northeast Bronx
+10467,Bronx,2022-09-08,Bronx Park and Fordham
+10469,Bronx,2022-09-08,Northeast Bronx
+10471,Bronx,2022-09-08,Kingsbridge and Riverdale
+10472,Bronx,2022-09-08,Southeast Bronx
+10473,Bronx,2022-09-08,Southeast Bronx
+10474,Bronx,2022-09-08,Hunts Point and Mott Haven
+11203,Brooklyn,2022-09-08,Flatbush
+11205,Brooklyn,2022-09-08,Northwest Brooklyn
+11206,Brooklyn,2022-09-08,Bushwick and Williamsburg
+11207,Brooklyn,2022-09-08,East New York and New Lots
+11208,Brooklyn,2022-09-08,East New York and New Lots
+11213,Brooklyn,2022-09-08,Central Brooklyn
+11214,Brooklyn,2022-09-08,Southwest Brooklyn
+11215,Brooklyn,2022-09-08,Northwest Brooklyn
+11218,Brooklyn,2022-09-08,Borough Park
+11219,Brooklyn,2022-09-08,Borough Park
+11220,Brooklyn,2022-09-08,Sunset Park
+11221,Brooklyn,2022-09-08,Bushwick and Williamsburg
+11222,Brooklyn,2022-09-08,Greenpoint
+11228,Brooklyn,2022-09-08,Southwest Brooklyn
+11232,Brooklyn,2022-09-08,Sunset Park
+11234,Brooklyn,2022-09-08,Canarsie and Flatlands
+11235,Brooklyn,2022-09-08,Southern Brooklyn
+10010,Manhattan,2022-09-08,Gramercy Park and Murray Hill
+10013,Manhattan,2022-09-08,Greenwich Village and Soho
+10023,Manhattan,2022-09-08,Upper West Side
+10025,Manhattan,2022-09-08,Upper West Side
+10026,Manhattan,2022-09-08,Central Harlem
+10029,Manhattan,2022-09-08,East Harlem
+10031,Manhattan,2022-09-08,Inwood and Washington Heights
+10032,Manhattan,2022-09-08,Inwood and Washington Heights
+11105,Queens,2022-09-08,Northwest Queens
+11356,Queens,2022-09-08,North Queens
+11360,Queens,2022-09-08,North Queens
+11362,Queens,2022-09-08,Northeast Queens
+11365,Queens,2022-09-08,Central Queens
+11377,Queens,2022-09-08,West Queens
+11379,Queens,2022-09-08,West Central Queens
+11413,Queens,2022-09-08,Southeast Queens
+11414,Queens,2022-09-08,Southwest Queens
+11417,Queens,2022-09-08,Southwest Queens
+11420,Queens,2022-09-08,Southwest Queens
+11421,Queens,2022-09-08,Southwest Queens
+11422,Queens,2022-09-08,Southeast Queens
+11423,Queens,2022-09-08,Jamaica
+11426,Queens,2022-09-08,Southeast Queens
+11434,Queens,2022-09-08,Jamaica
+11436,Queens,2022-09-08,Jamaica
+11691,Queens,2022-09-08,Rockaways
+11692,Queens,2022-09-08,Rockaways
+11693,Queens,2022-09-08,Rockaways
+11694,Queens,2022-09-08,Rockaways
+10301,Staten Island,2022-09-08,Stapleton and St. George
+10303,Staten Island,2022-09-08,Port Richmond
+10305,Staten Island,2022-09-08,Stapleton and St. George
+10306,Staten Island,2022-09-08,South Shore
+10307,Staten Island,2022-09-08,South Shore
+10309,Staten Island,2022-09-08,South Shore
+10310,Staten Island,2022-09-08,Port Richmond
+10312,Staten Island,2022-09-08,South Shore
+10314,Staten Island,2022-09-08,Mid-Island
+10456,Bronx,2022-09-01,High Bridge and Morrisania
+10457,Bronx,2022-09-01,Central Bronx
+10458,Bronx,2022-09-01,Bronx Park and Fordham
+10459,Bronx,2022-09-01,Hunts Point and Mott Haven
+10461,Bronx,2022-09-01,Southeast Bronx
+10463,Bronx,2022-09-01,Kingsbridge and Riverdale
+10464,Bronx,2022-09-01,Southeast Bronx
+10465,Bronx,2022-09-01,Southeast Bronx
+10466,Bronx,2022-09-01,Northeast Bronx
+10467,Bronx,2022-09-01,Bronx Park and Fordham
+10469,Bronx,2022-09-01,Northeast Bronx
+10471,Bronx,2022-09-01,Kingsbridge and Riverdale
+10472,Bronx,2022-09-01,Southeast Bronx
+10473,Bronx,2022-09-01,Southeast Bronx
+10474,Bronx,2022-09-01,Hunts Point and Mott Haven
+11203,Brooklyn,2022-09-01,Flatbush
+11205,Brooklyn,2022-09-01,Northwest Brooklyn
+11206,Brooklyn,2022-09-01,Bushwick and Williamsburg
+11207,Brooklyn,2022-09-01,East New York and New Lots
+11208,Brooklyn,2022-09-01,East New York and New Lots
+11211,Brooklyn,2022-09-01,Greenpoint
+11213,Brooklyn,2022-09-01,Central Brooklyn
+11214,Brooklyn,2022-09-01,Southwest Brooklyn
+11215,Brooklyn,2022-09-01,Northwest Brooklyn
+11218,Brooklyn,2022-09-01,Borough Park
+11219,Brooklyn,2022-09-01,Borough Park
+11220,Brooklyn,2022-09-01,Sunset Park
+11221,Brooklyn,2022-09-01,Bushwick and Williamsburg
+11222,Brooklyn,2022-09-01,Greenpoint
+11228,Brooklyn,2022-09-01,Southwest Brooklyn
+11229,Brooklyn,2022-09-01,Southern Brooklyn
+11232,Brooklyn,2022-09-01,Sunset Park
+11234,Brooklyn,2022-09-01,Canarsie and Flatlands
+11235,Brooklyn,2022-09-01,Southern Brooklyn
+11236,Brooklyn,2022-09-01,Canarsie and Flatlands
+10000,Manhattan,2022-09-01,NA
+10002,Manhattan,2022-09-01,Lower East Side
+10006,Manhattan,2022-09-01,Lower Manhattan
+10010,Manhattan,2022-09-01,Gramercy Park and Murray Hill
+10011,Manhattan,2022-09-01,Chelsea and Clinton
+10023,Manhattan,2022-09-01,Upper West Side
+10025,Manhattan,2022-09-01,Upper West Side
+10026,Manhattan,2022-09-01,Central Harlem
+10029,Manhattan,2022-09-01,East Harlem
+10031,Manhattan,2022-09-01,Inwood and Washington Heights
+10032,Manhattan,2022-09-01,Inwood and Washington Heights
+10033,Manhattan,2022-09-01,Inwood and Washington Heights
+11004,Queens,2022-09-01,Southeast Queens
+11101,Queens,2022-09-01,Northwest Queens
+11105,Queens,2022-09-01,Northwest Queens
+11354,Queens,2022-09-01,North Queens
+11355,Queens,2022-09-01,North Queens
+11356,Queens,2022-09-01,North Queens
+11358,Queens,2022-09-01,North Queens
+11360,Queens,2022-09-01,North Queens
+11361,Queens,2022-09-01,Northeast Queens
+11362,Queens,2022-09-01,Northeast Queens
+11365,Queens,2022-09-01,Central Queens
+11368,Queens,2022-09-01,West Queens
+11377,Queens,2022-09-01,West Queens
+11413,Queens,2022-09-01,Southeast Queens
+11414,Queens,2022-09-01,Southwest Queens
+11417,Queens,2022-09-01,Southwest Queens
+11420,Queens,2022-09-01,Southwest Queens
+11421,Queens,2022-09-01,Southwest Queens
+11422,Queens,2022-09-01,Southeast Queens
+11423,Queens,2022-09-01,Jamaica
+11426,Queens,2022-09-01,Southeast Queens
+11436,Queens,2022-09-01,Jamaica
+11691,Queens,2022-09-01,Rockaways
+11692,Queens,2022-09-01,Rockaways
+11694,Queens,2022-09-01,Rockaways
+11697,Queens,2022-09-01,Rockaways
+10301,Staten Island,2022-09-01,Stapleton and St. George
+10303,Staten Island,2022-09-01,Port Richmond
+10305,Staten Island,2022-09-01,Stapleton and St. George
+10306,Staten Island,2022-09-01,South Shore
+10307,Staten Island,2022-09-01,South Shore
+10309,Staten Island,2022-09-01,South Shore
+10310,Staten Island,2022-09-01,Port Richmond
+10312,Staten Island,2022-09-01,South Shore
+10314,Staten Island,2022-09-01,Mid-Island
+10456,Bronx,2022-08-25,High Bridge and Morrisania
+10457,Bronx,2022-08-25,Central Bronx
+10458,Bronx,2022-08-25,Bronx Park and Fordham
+10459,Bronx,2022-08-25,Hunts Point and Mott Haven
+10461,Bronx,2022-08-25,Southeast Bronx
+10463,Bronx,2022-08-25,Kingsbridge and Riverdale
+10464,Bronx,2022-08-25,Southeast Bronx
+10465,Bronx,2022-08-25,Southeast Bronx
+10466,Bronx,2022-08-25,Northeast Bronx
+10467,Bronx,2022-08-25,Bronx Park and Fordham
+10469,Bronx,2022-08-25,Northeast Bronx
+10471,Bronx,2022-08-25,Kingsbridge and Riverdale
+10472,Bronx,2022-08-25,Southeast Bronx
+10473,Bronx,2022-08-25,Southeast Bronx
+10474,Bronx,2022-08-25,Hunts Point and Mott Haven
+11203,Brooklyn,2022-08-25,Flatbush
+11204,Brooklyn,2022-08-25,Borough Park
+11205,Brooklyn,2022-08-25,Northwest Brooklyn
+11206,Brooklyn,2022-08-25,Bushwick and Williamsburg
+11207,Brooklyn,2022-08-25,East New York and New Lots
+11208,Brooklyn,2022-08-25,East New York and New Lots
+11209,Brooklyn,2022-08-25,Southwest Brooklyn
+11211,Brooklyn,2022-08-25,Greenpoint
+11213,Brooklyn,2022-08-25,Central Brooklyn
+11214,Brooklyn,2022-08-25,Southwest Brooklyn
+11215,Brooklyn,2022-08-25,Northwest Brooklyn
+11218,Brooklyn,2022-08-25,Borough Park
+11219,Brooklyn,2022-08-25,Borough Park
+11220,Brooklyn,2022-08-25,Sunset Park
+11221,Brooklyn,2022-08-25,Bushwick and Williamsburg
+11222,Brooklyn,2022-08-25,Greenpoint
+11223,Brooklyn,2022-08-25,Southern Brooklyn
+11226,Brooklyn,2022-08-25,Flatbush
+11228,Brooklyn,2022-08-25,Southwest Brooklyn
+11229,Brooklyn,2022-08-25,Southern Brooklyn
+11232,Brooklyn,2022-08-25,Sunset Park
+11234,Brooklyn,2022-08-25,Canarsie and Flatlands
+11235,Brooklyn,2022-08-25,Southern Brooklyn
+11236,Brooklyn,2022-08-25,Canarsie and Flatlands
+10000,Manhattan,2022-08-25,NA
+10002,Manhattan,2022-08-25,Lower East Side
+10010,Manhattan,2022-08-25,Gramercy Park and Murray Hill
+10011,Manhattan,2022-08-25,Chelsea and Clinton
+10013,Manhattan,2022-08-25,Greenwich Village and Soho
+10023,Manhattan,2022-08-25,Upper West Side
+10025,Manhattan,2022-08-25,Upper West Side
+10026,Manhattan,2022-08-25,Central Harlem
+10029,Manhattan,2022-08-25,East Harlem
+10031,Manhattan,2022-08-25,Inwood and Washington Heights
+10032,Manhattan,2022-08-25,Inwood and Washington Heights
+10033,Manhattan,2022-08-25,Inwood and Washington Heights
+11004,Queens,2022-08-25,Southeast Queens
+11101,Queens,2022-08-25,Northwest Queens
+11105,Queens,2022-08-25,Northwest Queens
+11354,Queens,2022-08-25,North Queens
+11355,Queens,2022-08-25,North Queens
+11356,Queens,2022-08-25,North Queens
+11357,Queens,2022-08-25,North Queens
+11358,Queens,2022-08-25,North Queens
+11360,Queens,2022-08-25,North Queens
+11361,Queens,2022-08-25,Northeast Queens
+11362,Queens,2022-08-25,Northeast Queens
+11363,Queens,2022-08-25,Northeast Queens
+11364,Queens,2022-08-25,Northeast Queens
+11365,Queens,2022-08-25,Central Queens
+11368,Queens,2022-08-25,West Queens
+11377,Queens,2022-08-25,West Queens
+11379,Queens,2022-08-25,West Central Queens
+11413,Queens,2022-08-25,Southeast Queens
+11414,Queens,2022-08-25,Southwest Queens
+11415,Queens,2022-08-25,Southwest Queens
+11417,Queens,2022-08-25,Southwest Queens
+11420,Queens,2022-08-25,Southwest Queens
+11421,Queens,2022-08-25,Southwest Queens
+11422,Queens,2022-08-25,Southeast Queens
+11423,Queens,2022-08-25,Jamaica
+11426,Queens,2022-08-25,Southeast Queens
+11434,Queens,2022-08-25,Jamaica
+11436,Queens,2022-08-25,Jamaica
+11691,Queens,2022-08-25,Rockaways
+11692,Queens,2022-08-25,Rockaways
+11694,Queens,2022-08-25,Rockaways
+11697,Queens,2022-08-25,Rockaways
+10301,Staten Island,2022-08-25,Stapleton and St. George
+10303,Staten Island,2022-08-25,Port Richmond
+10305,Staten Island,2022-08-25,Stapleton and St. George
+10306,Staten Island,2022-08-25,South Shore
+10307,Staten Island,2022-08-25,South Shore
+10309,Staten Island,2022-08-25,South Shore
+10310,Staten Island,2022-08-25,Port Richmond
+10312,Staten Island,2022-08-25,South Shore
+10314,Staten Island,2022-08-25,Mid-Island
+10456,Bronx,2022-08-18,High Bridge and Morrisania
+10457,Bronx,2022-08-18,Central Bronx
+10458,Bronx,2022-08-18,Bronx Park and Fordham
+10459,Bronx,2022-08-18,Hunts Point and Mott Haven
+10461,Bronx,2022-08-18,Southeast Bronx
+10462,Bronx,2022-08-18,Southeast Bronx
+10463,Bronx,2022-08-18,Kingsbridge and Riverdale
+10464,Bronx,2022-08-18,Southeast Bronx
+10465,Bronx,2022-08-18,Southeast Bronx
+10466,Bronx,2022-08-18,Northeast Bronx
+10467,Bronx,2022-08-18,Bronx Park and Fordham
+10469,Bronx,2022-08-18,Northeast Bronx
+10471,Bronx,2022-08-18,Kingsbridge and Riverdale
+10473,Bronx,2022-08-18,Southeast Bronx
+10474,Bronx,2022-08-18,Hunts Point and Mott Haven
+10475,Bronx,2022-08-18,Northeast Bronx
+11203,Brooklyn,2022-08-18,Flatbush
+11204,Brooklyn,2022-08-18,Borough Park
+11205,Brooklyn,2022-08-18,Northwest Brooklyn
+11206,Brooklyn,2022-08-18,Bushwick and Williamsburg
+11207,Brooklyn,2022-08-18,East New York and New Lots
+11208,Brooklyn,2022-08-18,East New York and New Lots
+11209,Brooklyn,2022-08-18,Southwest Brooklyn
+11211,Brooklyn,2022-08-18,Greenpoint
+11213,Brooklyn,2022-08-18,Central Brooklyn
+11214,Brooklyn,2022-08-18,Southwest Brooklyn
+11215,Brooklyn,2022-08-18,Northwest Brooklyn
+11218,Brooklyn,2022-08-18,Borough Park
+11219,Brooklyn,2022-08-18,Borough Park
+11220,Brooklyn,2022-08-18,Sunset Park
+11221,Brooklyn,2022-08-18,Bushwick and Williamsburg
+11222,Brooklyn,2022-08-18,Greenpoint
+11223,Brooklyn,2022-08-18,Southern Brooklyn
+11224,Brooklyn,2022-08-18,Southern Brooklyn
+11226,Brooklyn,2022-08-18,Flatbush
+11228,Brooklyn,2022-08-18,Southwest Brooklyn
+11229,Brooklyn,2022-08-18,Southern Brooklyn
+11232,Brooklyn,2022-08-18,Sunset Park
+11234,Brooklyn,2022-08-18,Canarsie and Flatlands
+11235,Brooklyn,2022-08-18,Southern Brooklyn
+11236,Brooklyn,2022-08-18,Canarsie and Flatlands
+10000,Manhattan,2022-08-18,NA
+10002,Manhattan,2022-08-18,Lower East Side
+10011,Manhattan,2022-08-18,Chelsea and Clinton
+10023,Manhattan,2022-08-18,Upper West Side
+10025,Manhattan,2022-08-18,Upper West Side
+10029,Manhattan,2022-08-18,East Harlem
+10031,Manhattan,2022-08-18,Inwood and Washington Heights
+10032,Manhattan,2022-08-18,Inwood and Washington Heights
+10033,Manhattan,2022-08-18,Inwood and Washington Heights
+10034,Manhattan,2022-08-18,Inwood and Washington Heights
+11004,Queens,2022-08-18,Southeast Queens
+11101,Queens,2022-08-18,Northwest Queens
+11105,Queens,2022-08-18,Northwest Queens
+11354,Queens,2022-08-18,North Queens
+11355,Queens,2022-08-18,North Queens
+11356,Queens,2022-08-18,North Queens
+11357,Queens,2022-08-18,North Queens
+11358,Queens,2022-08-18,North Queens
+11360,Queens,2022-08-18,North Queens
+11361,Queens,2022-08-18,Northeast Queens
+11362,Queens,2022-08-18,Northeast Queens
+11363,Queens,2022-08-18,Northeast Queens
+11364,Queens,2022-08-18,Northeast Queens
+11365,Queens,2022-08-18,Central Queens
+11368,Queens,2022-08-18,West Queens
+11374,Queens,2022-08-18,West Central Queens
+11377,Queens,2022-08-18,West Queens
+11378,Queens,2022-08-18,West Queens
+11379,Queens,2022-08-18,West Central Queens
+11413,Queens,2022-08-18,Southeast Queens
+11414,Queens,2022-08-18,Southwest Queens
+11415,Queens,2022-08-18,Southwest Queens
+11417,Queens,2022-08-18,Southwest Queens
+11418,Queens,2022-08-18,Southwest Queens
+11420,Queens,2022-08-18,Southwest Queens
+11421,Queens,2022-08-18,Southwest Queens
+11422,Queens,2022-08-18,Southeast Queens
+11423,Queens,2022-08-18,Jamaica
+11426,Queens,2022-08-18,Southeast Queens
+11434,Queens,2022-08-18,Jamaica
+11436,Queens,2022-08-18,Jamaica
+11691,Queens,2022-08-18,Rockaways
+11692,Queens,2022-08-18,Rockaways
+11694,Queens,2022-08-18,Rockaways
+11697,Queens,2022-08-18,Rockaways
+10301,Staten Island,2022-08-18,Stapleton and St. George
+10303,Staten Island,2022-08-18,Port Richmond
+10305,Staten Island,2022-08-18,Stapleton and St. George
+10306,Staten Island,2022-08-18,South Shore
+10307,Staten Island,2022-08-18,South Shore
+10309,Staten Island,2022-08-18,South Shore
+10310,Staten Island,2022-08-18,Port Richmond
+10312,Staten Island,2022-08-18,South Shore
+10314,Staten Island,2022-08-18,Mid-Island
+10457,Bronx,2022-08-11,Central Bronx
+10458,Bronx,2022-08-11,Bronx Park and Fordham
+10459,Bronx,2022-08-11,Hunts Point and Mott Haven
+10461,Bronx,2022-08-11,Southeast Bronx
+10462,Bronx,2022-08-11,Southeast Bronx
+10463,Bronx,2022-08-11,Kingsbridge and Riverdale
+10464,Bronx,2022-08-11,Southeast Bronx
+10465,Bronx,2022-08-11,Southeast Bronx
+10466,Bronx,2022-08-11,Northeast Bronx
+10467,Bronx,2022-08-11,Bronx Park and Fordham
+10469,Bronx,2022-08-11,Northeast Bronx
+10471,Bronx,2022-08-11,Kingsbridge and Riverdale
+10473,Bronx,2022-08-11,Southeast Bronx
+10474,Bronx,2022-08-11,Hunts Point and Mott Haven
+10475,Bronx,2022-08-11,Northeast Bronx
+11204,Brooklyn,2022-08-11,Borough Park
+11205,Brooklyn,2022-08-11,Northwest Brooklyn
+11206,Brooklyn,2022-08-11,Bushwick and Williamsburg
+11207,Brooklyn,2022-08-11,East New York and New Lots
+11208,Brooklyn,2022-08-11,East New York and New Lots
+11209,Brooklyn,2022-08-11,Southwest Brooklyn
+11211,Brooklyn,2022-08-11,Greenpoint
+11212,Brooklyn,2022-08-11,Central Brooklyn
+11213,Brooklyn,2022-08-11,Central Brooklyn
+11214,Brooklyn,2022-08-11,Southwest Brooklyn
+11215,Brooklyn,2022-08-11,Northwest Brooklyn
+11218,Brooklyn,2022-08-11,Borough Park
+11219,Brooklyn,2022-08-11,Borough Park
+11220,Brooklyn,2022-08-11,Sunset Park
+11221,Brooklyn,2022-08-11,Bushwick and Williamsburg
+11222,Brooklyn,2022-08-11,Greenpoint
+11223,Brooklyn,2022-08-11,Southern Brooklyn
+11224,Brooklyn,2022-08-11,Southern Brooklyn
+11226,Brooklyn,2022-08-11,Flatbush
+11228,Brooklyn,2022-08-11,Southwest Brooklyn
+11232,Brooklyn,2022-08-11,Sunset Park
+11234,Brooklyn,2022-08-11,Canarsie and Flatlands
+11235,Brooklyn,2022-08-11,Southern Brooklyn
+11236,Brooklyn,2022-08-11,Canarsie and Flatlands
+10000,Manhattan,2022-08-11,NA
+10002,Manhattan,2022-08-11,Lower East Side
+10006,Manhattan,2022-08-11,Lower Manhattan
+10011,Manhattan,2022-08-11,Chelsea and Clinton
+10023,Manhattan,2022-08-11,Upper West Side
+10025,Manhattan,2022-08-11,Upper West Side
+10029,Manhattan,2022-08-11,East Harlem
+10031,Manhattan,2022-08-11,Inwood and Washington Heights
+10032,Manhattan,2022-08-11,Inwood and Washington Heights
+10033,Manhattan,2022-08-11,Inwood and Washington Heights
+10034,Manhattan,2022-08-11,Inwood and Washington Heights
+11004,Queens,2022-08-11,Southeast Queens
+11101,Queens,2022-08-11,Northwest Queens
+11354,Queens,2022-08-11,North Queens
+11355,Queens,2022-08-11,North Queens
+11356,Queens,2022-08-11,North Queens
+11357,Queens,2022-08-11,North Queens
+11358,Queens,2022-08-11,North Queens
+11360,Queens,2022-08-11,North Queens
+11361,Queens,2022-08-11,Northeast Queens
+11362,Queens,2022-08-11,Northeast Queens
+11363,Queens,2022-08-11,Northeast Queens
+11364,Queens,2022-08-11,Northeast Queens
+11365,Queens,2022-08-11,Central Queens
+11368,Queens,2022-08-11,West Queens
+11374,Queens,2022-08-11,West Central Queens
+11377,Queens,2022-08-11,West Queens
+11378,Queens,2022-08-11,West Queens
+11379,Queens,2022-08-11,West Central Queens
+11413,Queens,2022-08-11,Southeast Queens
+11414,Queens,2022-08-11,Southwest Queens
+11415,Queens,2022-08-11,Southwest Queens
+11417,Queens,2022-08-11,Southwest Queens
+11418,Queens,2022-08-11,Southwest Queens
+11420,Queens,2022-08-11,Southwest Queens
+11421,Queens,2022-08-11,Southwest Queens
+11422,Queens,2022-08-11,Southeast Queens
+11423,Queens,2022-08-11,Jamaica
+11426,Queens,2022-08-11,Southeast Queens
+11434,Queens,2022-08-11,Jamaica
+11691,Queens,2022-08-11,Rockaways
+11692,Queens,2022-08-11,Rockaways
+11694,Queens,2022-08-11,Rockaways
+10301,Staten Island,2022-08-11,Stapleton and St. George
+10303,Staten Island,2022-08-11,Port Richmond
+10305,Staten Island,2022-08-11,Stapleton and St. George
+10306,Staten Island,2022-08-11,South Shore
+10307,Staten Island,2022-08-11,South Shore
+10308,Staten Island,2022-08-11,South Shore
+10309,Staten Island,2022-08-11,South Shore
+10310,Staten Island,2022-08-11,Port Richmond
+10312,Staten Island,2022-08-11,South Shore
+10314,Staten Island,2022-08-11,Mid-Island
+10457,Bronx,2022-08-04,Central Bronx
+10458,Bronx,2022-08-04,Bronx Park and Fordham
+10459,Bronx,2022-08-04,Hunts Point and Mott Haven
+10461,Bronx,2022-08-04,Southeast Bronx
+10462,Bronx,2022-08-04,Southeast Bronx
+10463,Bronx,2022-08-04,Kingsbridge and Riverdale
+10464,Bronx,2022-08-04,Southeast Bronx
+10465,Bronx,2022-08-04,Southeast Bronx
+10466,Bronx,2022-08-04,Northeast Bronx
+10467,Bronx,2022-08-04,Bronx Park and Fordham
+10469,Bronx,2022-08-04,Northeast Bronx
+10471,Bronx,2022-08-04,Kingsbridge and Riverdale
+10474,Bronx,2022-08-04,Hunts Point and Mott Haven
+10475,Bronx,2022-08-04,Northeast Bronx
+11204,Brooklyn,2022-08-04,Borough Park
+11206,Brooklyn,2022-08-04,Bushwick and Williamsburg
+11207,Brooklyn,2022-08-04,East New York and New Lots
+11209,Brooklyn,2022-08-04,Southwest Brooklyn
+11212,Brooklyn,2022-08-04,Central Brooklyn
+11214,Brooklyn,2022-08-04,Southwest Brooklyn
+11215,Brooklyn,2022-08-04,Northwest Brooklyn
+11218,Brooklyn,2022-08-04,Borough Park
+11219,Brooklyn,2022-08-04,Borough Park
+11220,Brooklyn,2022-08-04,Sunset Park
+11222,Brooklyn,2022-08-04,Greenpoint
+11223,Brooklyn,2022-08-04,Southern Brooklyn
+11226,Brooklyn,2022-08-04,Flatbush
+11228,Brooklyn,2022-08-04,Southwest Brooklyn
+11229,Brooklyn,2022-08-04,Southern Brooklyn
+11232,Brooklyn,2022-08-04,Sunset Park
+11234,Brooklyn,2022-08-04,Canarsie and Flatlands
+11235,Brooklyn,2022-08-04,Southern Brooklyn
+11236,Brooklyn,2022-08-04,Canarsie and Flatlands
+10000,Manhattan,2022-08-04,NA
+10002,Manhattan,2022-08-04,Lower East Side
+10006,Manhattan,2022-08-04,Lower Manhattan
+10011,Manhattan,2022-08-04,Chelsea and Clinton
+10023,Manhattan,2022-08-04,Upper West Side
+10025,Manhattan,2022-08-04,Upper West Side
+10032,Manhattan,2022-08-04,Inwood and Washington Heights
+11004,Queens,2022-08-04,Southeast Queens
+11101,Queens,2022-08-04,Northwest Queens
+11354,Queens,2022-08-04,North Queens
+11355,Queens,2022-08-04,North Queens
+11356,Queens,2022-08-04,North Queens
+11357,Queens,2022-08-04,North Queens
+11358,Queens,2022-08-04,North Queens
+11360,Queens,2022-08-04,North Queens
+11361,Queens,2022-08-04,Northeast Queens
+11362,Queens,2022-08-04,Northeast Queens
+11363,Queens,2022-08-04,Northeast Queens
+11365,Queens,2022-08-04,Central Queens
+11368,Queens,2022-08-04,West Queens
+11374,Queens,2022-08-04,West Central Queens
+11377,Queens,2022-08-04,West Queens
+11378,Queens,2022-08-04,West Queens
+11379,Queens,2022-08-04,West Central Queens
+11413,Queens,2022-08-04,Southeast Queens
+11414,Queens,2022-08-04,Southwest Queens
+11415,Queens,2022-08-04,Southwest Queens
+11421,Queens,2022-08-04,Southwest Queens
+11422,Queens,2022-08-04,Southeast Queens
+11423,Queens,2022-08-04,Jamaica
+11426,Queens,2022-08-04,Southeast Queens
+11434,Queens,2022-08-04,Jamaica
+11691,Queens,2022-08-04,Rockaways
+11692,Queens,2022-08-04,Rockaways
+10301,Staten Island,2022-08-04,Stapleton and St. George
+10302,Staten Island,2022-08-04,Port Richmond
+10303,Staten Island,2022-08-04,Port Richmond
+10304,Staten Island,2022-08-04,Stapleton and St. George
+10305,Staten Island,2022-08-04,Stapleton and St. George
+10306,Staten Island,2022-08-04,South Shore
+10307,Staten Island,2022-08-04,South Shore
+10308,Staten Island,2022-08-04,South Shore
+10309,Staten Island,2022-08-04,South Shore
+10310,Staten Island,2022-08-04,Port Richmond
+10312,Staten Island,2022-08-04,South Shore
+10314,Staten Island,2022-08-04,Mid-Island
+10457,Bronx,2022-07-28,Central Bronx
+10461,Bronx,2022-07-28,Southeast Bronx
+10464,Bronx,2022-07-28,Southeast Bronx
+10465,Bronx,2022-07-28,Southeast Bronx
+10469,Bronx,2022-07-28,Northeast Bronx
+10471,Bronx,2022-07-28,Kingsbridge and Riverdale
+10475,Bronx,2022-07-28,Northeast Bronx
+11206,Brooklyn,2022-07-28,Bushwick and Williamsburg
+11207,Brooklyn,2022-07-28,East New York and New Lots
+11209,Brooklyn,2022-07-28,Southwest Brooklyn
+11212,Brooklyn,2022-07-28,Central Brooklyn
+11214,Brooklyn,2022-07-28,Southwest Brooklyn
+11215,Brooklyn,2022-07-28,Northwest Brooklyn
+11218,Brooklyn,2022-07-28,Borough Park
+11220,Brooklyn,2022-07-28,Sunset Park
+11228,Brooklyn,2022-07-28,Southwest Brooklyn
+11229,Brooklyn,2022-07-28,Southern Brooklyn
+11232,Brooklyn,2022-07-28,Sunset Park
+11234,Brooklyn,2022-07-28,Canarsie and Flatlands
+11236,Brooklyn,2022-07-28,Canarsie and Flatlands
+10002,Manhattan,2022-07-28,Lower East Side
+10025,Manhattan,2022-07-28,Upper West Side
+10032,Manhattan,2022-07-28,Inwood and Washington Heights
+11101,Queens,2022-07-28,Northwest Queens
+11354,Queens,2022-07-28,North Queens
+11355,Queens,2022-07-28,North Queens
+11356,Queens,2022-07-28,North Queens
+11357,Queens,2022-07-28,North Queens
+11358,Queens,2022-07-28,North Queens
+11360,Queens,2022-07-28,North Queens
+11361,Queens,2022-07-28,Northeast Queens
+11362,Queens,2022-07-28,Northeast Queens
+11365,Queens,2022-07-28,Central Queens
+11368,Queens,2022-07-28,West Queens
+11377,Queens,2022-07-28,West Queens
+11379,Queens,2022-07-28,West Central Queens
+11421,Queens,2022-07-28,Southwest Queens
+11422,Queens,2022-07-28,Southeast Queens
+11426,Queens,2022-07-28,Southeast Queens
+11434,Queens,2022-07-28,Jamaica
+11691,Queens,2022-07-28,Rockaways
+10301,Staten Island,2022-07-28,Stapleton and St. George
+10302,Staten Island,2022-07-28,Port Richmond
+10303,Staten Island,2022-07-28,Port Richmond
+10304,Staten Island,2022-07-28,Stapleton and St. George
+10305,Staten Island,2022-07-28,Stapleton and St. George
+10306,Staten Island,2022-07-28,South Shore
+10307,Staten Island,2022-07-28,South Shore
+10308,Staten Island,2022-07-28,South Shore
+10309,Staten Island,2022-07-28,South Shore
+10310,Staten Island,2022-07-28,Port Richmond
+10312,Staten Island,2022-07-28,South Shore
+10314,Staten Island,2022-07-28,Mid-Island
+10461,Bronx,2022-07-21,Southeast Bronx
+10464,Bronx,2022-07-21,Southeast Bronx
+10465,Bronx,2022-07-21,Southeast Bronx
+11218,Brooklyn,2022-07-21,Borough Park
+11220,Brooklyn,2022-07-21,Sunset Park
+11228,Brooklyn,2022-07-21,Southwest Brooklyn
+11229,Brooklyn,2022-07-21,Southern Brooklyn
+11232,Brooklyn,2022-07-21,Sunset Park
+11234,Brooklyn,2022-07-21,Canarsie and Flatlands
+11236,Brooklyn,2022-07-21,Canarsie and Flatlands
+11101,Queens,2022-07-21,Northwest Queens
+11354,Queens,2022-07-21,North Queens
+11356,Queens,2022-07-21,North Queens
+11357,Queens,2022-07-21,North Queens
+11360,Queens,2022-07-21,North Queens
+11361,Queens,2022-07-21,Northeast Queens
+11365,Queens,2022-07-21,Central Queens
+11377,Queens,2022-07-21,West Queens
+11379,Queens,2022-07-21,West Central Queens
+10301,Staten Island,2022-07-21,Stapleton and St. George
+10304,Staten Island,2022-07-21,Stapleton and St. George
+10305,Staten Island,2022-07-21,Stapleton and St. George
+10306,Staten Island,2022-07-21,South Shore
+10307,Staten Island,2022-07-21,South Shore
+10309,Staten Island,2022-07-21,South Shore
+10310,Staten Island,2022-07-21,Port Richmond
+10312,Staten Island,2022-07-21,South Shore
+10314,Staten Island,2022-07-21,Mid-Island
+11232,Brooklyn,2022-07-15,Sunset Park
+11234,Brooklyn,2022-07-15,Canarsie and Flatlands
+11236,Brooklyn,2022-07-15,Canarsie and Flatlands
+11354,Queens,2022-07-15,North Queens
+11356,Queens,2022-07-15,North Queens
+11357,Queens,2022-07-15,North Queens
+11360,Queens,2022-07-15,North Queens
+11361,Queens,2022-07-15,Northeast Queens
+11377,Queens,2022-07-15,West Queens
+11379,Queens,2022-07-15,West Central Queens
+10301,Staten Island,2022-07-15,Stapleton and St. George
+10304,Staten Island,2022-07-15,Stapleton and St. George
+10305,Staten Island,2022-07-15,Stapleton and St. George
+10306,Staten Island,2022-07-15,South Shore
+10307,Staten Island,2022-07-15,South Shore
+10309,Staten Island,2022-07-15,South Shore
+10314,Staten Island,2022-07-15,Mid-Island
+11234,Brooklyn,2022-07-08,Canarsie and Flatlands
+11356,Queens,2022-07-08,North Queens
+11357,Queens,2022-07-08,North Queens
+11360,Queens,2022-07-08,North Queens
+11361,Queens,2022-07-08,Northeast Queens
+11377,Queens,2022-07-08,West Queens
+11421,Queens,2022-07-08,Southwest Queens
+10305,Staten Island,2022-07-08,Stapleton and St. George
+10306,Staten Island,2022-07-08,South Shore
+10307,Staten Island,2022-07-08,South Shore
+10314,Staten Island,2022-07-08,Mid-Island
+11360,Queens,2022-06-30,North Queens
+11361,Queens,2022-06-30,Northeast Queens
+11421,Queens,2022-06-30,Southwest Queens
+10306,Staten Island,2022-06-30,South Shore
+10307,Staten Island,2022-06-30,South Shore
+11360,Queens,2022-06-28,North Queens
+11421,Queens,2022-06-28,Southwest Queens
+11360,Queens,2022-06-27,North Queens
+11101,Queens,2021-10-20,Northwest Queens
+11379,Queens,2021-10-20,West Central Queens
+10306,Staten Island,2021-10-20,South Shore
+10464,Bronx,2021-10-14,Southeast Bronx
+11234,Brooklyn,2021-10-14,Canarsie and Flatlands
+10024,Manhattan,2021-10-14,Upper West Side
+10032,Manhattan,2021-10-14,Inwood and Washington Heights
+11101,Queens,2021-10-14,Northwest Queens
+11368,Queens,2021-10-14,West Queens
+11379,Queens,2021-10-14,West Central Queens
+11423,Queens,2021-10-14,Jamaica
+11692,Queens,2021-10-14,Rockaways
+10301,Staten Island,2021-10-14,Stapleton and St. George
+10306,Staten Island,2021-10-14,South Shore
+10309,Staten Island,2021-10-14,South Shore
+10314,Staten Island,2021-10-14,Mid-Island
+10457,Bronx,2021-10-07,Central Bronx
+10464,Bronx,2021-10-07,Southeast Bronx
+10465,Bronx,2021-10-07,Southeast Bronx
+10471,Bronx,2021-10-07,Kingsbridge and Riverdale
+11234,Brooklyn,2021-10-07,Canarsie and Flatlands
+10024,Manhattan,2021-10-07,Upper West Side
+10032,Manhattan,2021-10-07,Inwood and Washington Heights
+11368,Queens,2021-10-07,West Queens
+11379,Queens,2021-10-07,West Central Queens
+11422,Queens,2021-10-07,Southeast Queens
+11423,Queens,2021-10-07,Jamaica
+11692,Queens,2021-10-07,Rockaways
+10301,Staten Island,2021-10-07,Stapleton and St. George
+10306,Staten Island,2021-10-07,South Shore
+10309,Staten Island,2021-10-07,South Shore
+10314,Staten Island,2021-10-07,Mid-Island
+10457,Bronx,2021-10-01,Central Bronx
+10461,Bronx,2021-10-01,Southeast Bronx
+10464,Bronx,2021-10-01,Southeast Bronx
+10465,Bronx,2021-10-01,Southeast Bronx
+10471,Bronx,2021-10-01,Kingsbridge and Riverdale
+10473,Bronx,2021-10-01,Southeast Bronx
+11207,Brooklyn,2021-10-01,East New York and New Lots
+11234,Brooklyn,2021-10-01,Canarsie and Flatlands
+10019,Manhattan,2021-10-01,Chelsea and Clinton
+10025,Manhattan,2021-10-01,Upper West Side
+10029,Manhattan,2021-10-01,East Harlem
+10031,Manhattan,2021-10-01,Inwood and Washington Heights
+11101,Queens,2021-10-01,Northwest Queens
+11354,Queens,2021-10-01,North Queens
+11356,Queens,2021-10-01,North Queens
+11357,Queens,2021-10-01,North Queens
+11361,Queens,2021-10-01,Northeast Queens
+11368,Queens,2021-10-01,West Queens
+11379,Queens,2021-10-01,West Central Queens
+11414,Queens,2021-10-01,Southwest Queens
+11422,Queens,2021-10-01,Southeast Queens
+11434,Queens,2021-10-01,Jamaica
+11691,Queens,2021-10-01,Rockaways
+11692,Queens,2021-10-01,Rockaways
+11694,Queens,2021-10-01,Rockaways
+10303,Staten Island,2021-10-01,Port Richmond
+10306,Staten Island,2021-10-01,South Shore
+10307,Staten Island,2021-10-01,South Shore
+10309,Staten Island,2021-10-01,South Shore
+10310,Staten Island,2021-10-01,Port Richmond
+10314,Staten Island,2021-10-01,Mid-Island
+10457,Bronx,2021-09-23,Central Bronx
+10461,Bronx,2021-09-23,Southeast Bronx
+10464,Bronx,2021-09-23,Southeast Bronx
+10465,Bronx,2021-09-23,Southeast Bronx
+10471,Bronx,2021-09-23,Kingsbridge and Riverdale
+10473,Bronx,2021-09-23,Southeast Bronx
+11207,Brooklyn,2021-09-23,East New York and New Lots
+11229,Brooklyn,2021-09-23,Southern Brooklyn
+11234,Brooklyn,2021-09-23,Canarsie and Flatlands
+10019,Manhattan,2021-09-23,Chelsea and Clinton
+10025,Manhattan,2021-09-23,Upper West Side
+10029,Manhattan,2021-09-23,East Harlem
+10031,Manhattan,2021-09-23,Inwood and Washington Heights
+11101,Queens,2021-09-23,Northwest Queens
+11354,Queens,2021-09-23,North Queens
+11356,Queens,2021-09-23,North Queens
+11357,Queens,2021-09-23,North Queens
+11360,Queens,2021-09-23,North Queens
+11361,Queens,2021-09-23,Northeast Queens
+11414,Queens,2021-09-23,Southwest Queens
+11422,Queens,2021-09-23,Southeast Queens
+11426,Queens,2021-09-23,Southeast Queens
+11434,Queens,2021-09-23,Jamaica
+11691,Queens,2021-09-23,Rockaways
+11692,Queens,2021-09-23,Rockaways
+11693,Queens,2021-09-23,Rockaways
+11694,Queens,2021-09-23,Rockaways
+10301,Staten Island,2021-09-23,Stapleton and St. George
+10303,Staten Island,2021-09-23,Port Richmond
+10305,Staten Island,2021-09-23,Stapleton and St. George
+10306,Staten Island,2021-09-23,South Shore
+10307,Staten Island,2021-09-23,South Shore
+10309,Staten Island,2021-09-23,South Shore
+10310,Staten Island,2021-09-23,Port Richmond
+10314,Staten Island,2021-09-23,Mid-Island
+10457,Bronx,2021-09-16,Central Bronx
+10461,Bronx,2021-09-16,Southeast Bronx
+10464,Bronx,2021-09-16,Southeast Bronx
+10465,Bronx,2021-09-16,Southeast Bronx
+10471,Bronx,2021-09-16,Kingsbridge and Riverdale
+10473,Bronx,2021-09-16,Southeast Bronx
+11207,Brooklyn,2021-09-16,East New York and New Lots
+11223,Brooklyn,2021-09-16,Southern Brooklyn
+11228,Brooklyn,2021-09-16,Southwest Brooklyn
+11229,Brooklyn,2021-09-16,Southern Brooklyn
+11232,Brooklyn,2021-09-16,Sunset Park
+11234,Brooklyn,2021-09-16,Canarsie and Flatlands
+10010,Manhattan,2021-09-16,Gramercy Park and Murray Hill
+10019,Manhattan,2021-09-16,Chelsea and Clinton
+10025,Manhattan,2021-09-16,Upper West Side
+10029,Manhattan,2021-09-16,East Harlem
+10031,Manhattan,2021-09-16,Inwood and Washington Heights
+11354,Queens,2021-09-16,North Queens
+11356,Queens,2021-09-16,North Queens
+11357,Queens,2021-09-16,North Queens
+11360,Queens,2021-09-16,North Queens
+11361,Queens,2021-09-16,Northeast Queens
+11362,Queens,2021-09-16,Northeast Queens
+11365,Queens,2021-09-16,Central Queens
+11422,Queens,2021-09-16,Southeast Queens
+11426,Queens,2021-09-16,Southeast Queens
+11434,Queens,2021-09-16,Jamaica
+11691,Queens,2021-09-16,Rockaways
+11692,Queens,2021-09-16,Rockaways
+11693,Queens,2021-09-16,Rockaways
+11694,Queens,2021-09-16,Rockaways
+10301,Staten Island,2021-09-16,Stapleton and St. George
+10303,Staten Island,2021-09-16,Port Richmond
+10305,Staten Island,2021-09-16,Stapleton and St. George
+10306,Staten Island,2021-09-16,South Shore
+10307,Staten Island,2021-09-16,South Shore
+10309,Staten Island,2021-09-16,South Shore
+10312,Staten Island,2021-09-16,South Shore
+10314,Staten Island,2021-09-16,Mid-Island
+10457,Bronx,2021-09-10,Central Bronx
+10461,Bronx,2021-09-10,Southeast Bronx
+10464,Bronx,2021-09-10,Southeast Bronx
+10465,Bronx,2021-09-10,Southeast Bronx
+10467,Bronx,2021-09-10,Bronx Park and Fordham
+10471,Bronx,2021-09-10,Kingsbridge and Riverdale
+10473,Bronx,2021-09-10,Southeast Bronx
+10474,Bronx,2021-09-10,Hunts Point and Mott Haven
+11206,Brooklyn,2021-09-10,Bushwick and Williamsburg
+11207,Brooklyn,2021-09-10,East New York and New Lots
+11208,Brooklyn,2021-09-10,East New York and New Lots
+11214,Brooklyn,2021-09-10,Southwest Brooklyn
+11215,Brooklyn,2021-09-10,Northwest Brooklyn
+11223,Brooklyn,2021-09-10,Southern Brooklyn
+11226,Brooklyn,2021-09-10,Flatbush
+11228,Brooklyn,2021-09-10,Southwest Brooklyn
+11229,Brooklyn,2021-09-10,Southern Brooklyn
+11232,Brooklyn,2021-09-10,Sunset Park
+11234,Brooklyn,2021-09-10,Canarsie and Flatlands
+11236,Brooklyn,2021-09-10,Canarsie and Flatlands
+10002,Manhattan,2021-09-10,Lower East Side
+10010,Manhattan,2021-09-10,Gramercy Park and Murray Hill
+10013,Manhattan,2021-09-10,Greenwich Village and Soho
+10019,Manhattan,2021-09-10,Chelsea and Clinton
+10025,Manhattan,2021-09-10,Upper West Side
+10029,Manhattan,2021-09-10,East Harlem
+10031,Manhattan,2021-09-10,Inwood and Washington Heights
+10032,Manhattan,2021-09-10,Inwood and Washington Heights
+10034,Manhattan,2021-09-10,Inwood and Washington Heights
+11101,Queens,2021-09-10,Northwest Queens
+11356,Queens,2021-09-10,North Queens
+11360,Queens,2021-09-10,North Queens
+11362,Queens,2021-09-10,Northeast Queens
+11365,Queens,2021-09-10,Central Queens
+11368,Queens,2021-09-10,West Queens
+11377,Queens,2021-09-10,West Queens
+11417,Queens,2021-09-10,Southwest Queens
+11421,Queens,2021-09-10,Southwest Queens
+11422,Queens,2021-09-10,Southeast Queens
+11423,Queens,2021-09-10,Jamaica
+11426,Queens,2021-09-10,Southeast Queens
+11434,Queens,2021-09-10,Jamaica
+11691,Queens,2021-09-10,Rockaways
+11692,Queens,2021-09-10,Rockaways
+11693,Queens,2021-09-10,Rockaways
+11694,Queens,2021-09-10,Rockaways
+10301,Staten Island,2021-09-10,Stapleton and St. George
+10303,Staten Island,2021-09-10,Port Richmond
+10304,Staten Island,2021-09-10,Stapleton and St. George
+10305,Staten Island,2021-09-10,Stapleton and St. George
+10306,Staten Island,2021-09-10,South Shore
+10307,Staten Island,2021-09-10,South Shore
+10309,Staten Island,2021-09-10,South Shore
+10310,Staten Island,2021-09-10,Port Richmond
+10312,Staten Island,2021-09-10,South Shore
+10314,Staten Island,2021-09-10,Mid-Island
+10451,Bronx,2021-09-02,High Bridge and Morrisania
+10454,Bronx,2021-09-02,Hunts Point and Mott Haven
+10457,Bronx,2021-09-02,Central Bronx
+10458,Bronx,2021-09-02,Bronx Park and Fordham
+10461,Bronx,2021-09-02,Southeast Bronx
+10464,Bronx,2021-09-02,Southeast Bronx
+10465,Bronx,2021-09-02,Southeast Bronx
+10466,Bronx,2021-09-02,Northeast Bronx
+10467,Bronx,2021-09-02,Bronx Park and Fordham
+10471,Bronx,2021-09-02,Kingsbridge and Riverdale
+10473,Bronx,2021-09-02,Southeast Bronx
+10474,Bronx,2021-09-02,Hunts Point and Mott Haven
+11203,Brooklyn,2021-09-02,Flatbush
+11204,Brooklyn,2021-09-02,Borough Park
+11206,Brooklyn,2021-09-02,Bushwick and Williamsburg
+11207,Brooklyn,2021-09-02,East New York and New Lots
+11208,Brooklyn,2021-09-02,East New York and New Lots
+11209,Brooklyn,2021-09-02,Southwest Brooklyn
+11214,Brooklyn,2021-09-02,Southwest Brooklyn
+11215,Brooklyn,2021-09-02,Northwest Brooklyn
+11219,Brooklyn,2021-09-02,Borough Park
+11223,Brooklyn,2021-09-02,Southern Brooklyn
+11224,Brooklyn,2021-09-02,Southern Brooklyn
+11226,Brooklyn,2021-09-02,Flatbush
+11228,Brooklyn,2021-09-02,Southwest Brooklyn
+11229,Brooklyn,2021-09-02,Southern Brooklyn
+11232,Brooklyn,2021-09-02,Sunset Park
+11234,Brooklyn,2021-09-02,Canarsie and Flatlands
+11236,Brooklyn,2021-09-02,Canarsie and Flatlands
+10002,Manhattan,2021-09-02,Lower East Side
+10006,Manhattan,2021-09-02,Lower Manhattan
+10013,Manhattan,2021-09-02,Greenwich Village and Soho
+10019,Manhattan,2021-09-02,Chelsea and Clinton
+10025,Manhattan,2021-09-02,Upper West Side
+10029,Manhattan,2021-09-02,East Harlem
+10031,Manhattan,2021-09-02,Inwood and Washington Heights
+10032,Manhattan,2021-09-02,Inwood and Washington Heights
+10034,Manhattan,2021-09-02,Inwood and Washington Heights
+11101,Queens,2021-09-02,Northwest Queens
+11105,Queens,2021-09-02,Northwest Queens
+11356,Queens,2021-09-02,North Queens
+11360,Queens,2021-09-02,North Queens
+11362,Queens,2021-09-02,Northeast Queens
+11364,Queens,2021-09-02,Northeast Queens
+11365,Queens,2021-09-02,Central Queens
+11366,Queens,2021-09-02,Central Queens
+11368,Queens,2021-09-02,West Queens
+11377,Queens,2021-09-02,West Queens
+11379,Queens,2021-09-02,West Central Queens
+11414,Queens,2021-09-02,Southwest Queens
+11415,Queens,2021-09-02,Southwest Queens
+11417,Queens,2021-09-02,Southwest Queens
+11421,Queens,2021-09-02,Southwest Queens
+11422,Queens,2021-09-02,Southeast Queens
+11423,Queens,2021-09-02,Jamaica
+11426,Queens,2021-09-02,Southeast Queens
+11434,Queens,2021-09-02,Jamaica
+11691,Queens,2021-09-02,Rockaways
+11692,Queens,2021-09-02,Rockaways
+11694,Queens,2021-09-02,Rockaways
+10301,Staten Island,2021-09-02,Stapleton and St. George
+10303,Staten Island,2021-09-02,Port Richmond
+10304,Staten Island,2021-09-02,Stapleton and St. George
+10305,Staten Island,2021-09-02,Stapleton and St. George
+10306,Staten Island,2021-09-02,South Shore
+10307,Staten Island,2021-09-02,South Shore
+10309,Staten Island,2021-09-02,South Shore
+10310,Staten Island,2021-09-02,Port Richmond
+10312,Staten Island,2021-09-02,South Shore
+10314,Staten Island,2021-09-02,Mid-Island
+10451,Bronx,2021-08-27,High Bridge and Morrisania
+10452,Bronx,2021-08-27,High Bridge and Morrisania
+10454,Bronx,2021-08-27,Hunts Point and Mott Haven
+10456,Bronx,2021-08-27,High Bridge and Morrisania
+10457,Bronx,2021-08-27,Central Bronx
+10458,Bronx,2021-08-27,Bronx Park and Fordham
+10461,Bronx,2021-08-27,Southeast Bronx
+10462,Bronx,2021-08-27,Southeast Bronx
+10464,Bronx,2021-08-27,Southeast Bronx
+10465,Bronx,2021-08-27,Southeast Bronx
+10466,Bronx,2021-08-27,Northeast Bronx
+10467,Bronx,2021-08-27,Bronx Park and Fordham
+10471,Bronx,2021-08-27,Kingsbridge and Riverdale
+10472,Bronx,2021-08-27,Southeast Bronx
+10473,Bronx,2021-08-27,Southeast Bronx
+10474,Bronx,2021-08-27,Hunts Point and Mott Haven
+11203,Brooklyn,2021-08-27,Flatbush
+11204,Brooklyn,2021-08-27,Borough Park
+11206,Brooklyn,2021-08-27,Bushwick and Williamsburg
+11207,Brooklyn,2021-08-27,East New York and New Lots
+11208,Brooklyn,2021-08-27,East New York and New Lots
+11209,Brooklyn,2021-08-27,Southwest Brooklyn
+11211,Brooklyn,2021-08-27,Greenpoint
+11214,Brooklyn,2021-08-27,Southwest Brooklyn
+11215,Brooklyn,2021-08-27,Northwest Brooklyn
+11219,Brooklyn,2021-08-27,Borough Park
+11220,Brooklyn,2021-08-27,Sunset Park
+11223,Brooklyn,2021-08-27,Southern Brooklyn
+11224,Brooklyn,2021-08-27,Southern Brooklyn
+11226,Brooklyn,2021-08-27,Flatbush
+11228,Brooklyn,2021-08-27,Southwest Brooklyn
+11229,Brooklyn,2021-08-27,Southern Brooklyn
+11232,Brooklyn,2021-08-27,Sunset Park
+11234,Brooklyn,2021-08-27,Canarsie and Flatlands
+11236,Brooklyn,2021-08-27,Canarsie and Flatlands
+10002,Manhattan,2021-08-27,Lower East Side
+10006,Manhattan,2021-08-27,Lower Manhattan
+10013,Manhattan,2021-08-27,Greenwich Village and Soho
+10019,Manhattan,2021-08-27,Chelsea and Clinton
+10026,Manhattan,2021-08-27,Central Harlem
+10029,Manhattan,2021-08-27,East Harlem
+10031,Manhattan,2021-08-27,Inwood and Washington Heights
+10032,Manhattan,2021-08-27,Inwood and Washington Heights
+10040,Manhattan,2021-08-27,Inwood and Washington Heights
+11101,Queens,2021-08-27,Northwest Queens
+11105,Queens,2021-08-27,Northwest Queens
+11356,Queens,2021-08-27,North Queens
+11360,Queens,2021-08-27,North Queens
+11362,Queens,2021-08-27,Northeast Queens
+11364,Queens,2021-08-27,Northeast Queens
+11365,Queens,2021-08-27,Central Queens
+11366,Queens,2021-08-27,Central Queens
+11368,Queens,2021-08-27,West Queens
+11377,Queens,2021-08-27,West Queens
+11378,Queens,2021-08-27,West Queens
+11379,Queens,2021-08-27,West Central Queens
+11414,Queens,2021-08-27,Southwest Queens
+11415,Queens,2021-08-27,Southwest Queens
+11417,Queens,2021-08-27,Southwest Queens
+11422,Queens,2021-08-27,Southeast Queens
+11423,Queens,2021-08-27,Jamaica
+11426,Queens,2021-08-27,Southeast Queens
+11434,Queens,2021-08-27,Jamaica
+11692,Queens,2021-08-27,Rockaways
+10301,Staten Island,2021-08-27,Stapleton and St. George
+10303,Staten Island,2021-08-27,Port Richmond
+10304,Staten Island,2021-08-27,Stapleton and St. George
+10305,Staten Island,2021-08-27,Stapleton and St. George
+10306,Staten Island,2021-08-27,South Shore
+10307,Staten Island,2021-08-27,South Shore
+10309,Staten Island,2021-08-27,South Shore
+10310,Staten Island,2021-08-27,Port Richmond
+10312,Staten Island,2021-08-27,South Shore
+10314,Staten Island,2021-08-27,Mid-Island
+10451,Bronx,2021-08-19,High Bridge and Morrisania
+10452,Bronx,2021-08-19,High Bridge and Morrisania
+10454,Bronx,2021-08-19,Hunts Point and Mott Haven
+10456,Bronx,2021-08-19,High Bridge and Morrisania
+10457,Bronx,2021-08-19,Central Bronx
+10458,Bronx,2021-08-19,Bronx Park and Fordham
+10461,Bronx,2021-08-19,Southeast Bronx
+10462,Bronx,2021-08-19,Southeast Bronx
+10463,Bronx,2021-08-19,Kingsbridge and Riverdale
+10464,Bronx,2021-08-19,Southeast Bronx
+10465,Bronx,2021-08-19,Southeast Bronx
+10466,Bronx,2021-08-19,Northeast Bronx
+10467,Bronx,2021-08-19,Bronx Park and Fordham
+10469,Bronx,2021-08-19,Northeast Bronx
+10471,Bronx,2021-08-19,Kingsbridge and Riverdale
+10472,Bronx,2021-08-19,Southeast Bronx
+10473,Bronx,2021-08-19,Southeast Bronx
+10474,Bronx,2021-08-19,Hunts Point and Mott Haven
+10475,Bronx,2021-08-19,Northeast Bronx
+11203,Brooklyn,2021-08-19,Flatbush
+11204,Brooklyn,2021-08-19,Borough Park
+11206,Brooklyn,2021-08-19,Bushwick and Williamsburg
+11207,Brooklyn,2021-08-19,East New York and New Lots
+11208,Brooklyn,2021-08-19,East New York and New Lots
+11211,Brooklyn,2021-08-19,Greenpoint
+11214,Brooklyn,2021-08-19,Southwest Brooklyn
+11215,Brooklyn,2021-08-19,Northwest Brooklyn
+11218,Brooklyn,2021-08-19,Borough Park
+11219,Brooklyn,2021-08-19,Borough Park
+11220,Brooklyn,2021-08-19,Sunset Park
+11223,Brooklyn,2021-08-19,Southern Brooklyn
+11226,Brooklyn,2021-08-19,Flatbush
+11228,Brooklyn,2021-08-19,Southwest Brooklyn
+11229,Brooklyn,2021-08-19,Southern Brooklyn
+11231,Brooklyn,2021-08-19,Northwest Brooklyn
+11232,Brooklyn,2021-08-19,Sunset Park
+11234,Brooklyn,2021-08-19,Canarsie and Flatlands
+1123,Brooklyn,2021-08-19,NA
+10002,Manhattan,2021-08-19,Lower East Side
+10006,Manhattan,2021-08-19,Lower Manhattan
+10013,Manhattan,2021-08-19,Greenwich Village and Soho
+10024,Manhattan,2021-08-19,Upper West Side
+10025,Manhattan,2021-08-19,Upper West Side
+10026,Manhattan,2021-08-19,Central Harlem
+10029,Manhattan,2021-08-19,East Harlem
+10031,Manhattan,2021-08-19,Inwood and Washington Heights
+10032,Manhattan,2021-08-19,Inwood and Washington Heights
+10040,Manhattan,2021-08-19,Inwood and Washington Heights
+11101,Queens,2021-08-19,Northwest Queens
+11105,Queens,2021-08-19,Northwest Queens
+11356,Queens,2021-08-19,North Queens
+11360,Queens,2021-08-19,North Queens
+11361,Queens,2021-08-19,Northeast Queens
+11362,Queens,2021-08-19,Northeast Queens
+11364,Queens,2021-08-19,Northeast Queens
+11365,Queens,2021-08-19,Central Queens
+11368,Queens,2021-08-19,West Queens
+11377,Queens,2021-08-19,West Queens
+11378,Queens,2021-08-19,West Queens
+11379,Queens,2021-08-19,West Central Queens
+11413,Queens,2021-08-19,Southeast Queens
+11414,Queens,2021-08-19,Southwest Queens
+11415,Queens,2021-08-19,Southwest Queens
+11421,Queens,2021-08-19,Southwest Queens
+11423,Queens,2021-08-19,Jamaica
+11426,Queens,2021-08-19,Southeast Queens
+11434,Queens,2021-08-19,Jamaica
+10301,Staten Island,2021-08-19,Stapleton and St. George
+10303,Staten Island,2021-08-19,Port Richmond
+10304,Staten Island,2021-08-19,Stapleton and St. George
+10305,Staten Island,2021-08-19,Stapleton and St. George
+10306,Staten Island,2021-08-19,South Shore
+10307,Staten Island,2021-08-19,South Shore
+10309,Staten Island,2021-08-19,South Shore
+10310,Staten Island,2021-08-19,Port Richmond
+10312,Staten Island,2021-08-19,South Shore
+10314,Staten Island,2021-08-19,Mid-Island
+10452,Bronx,2021-08-12,High Bridge and Morrisania
+10454,Bronx,2021-08-12,Hunts Point and Mott Haven
+10457,Bronx,2021-08-12,Central Bronx
+10458,Bronx,2021-08-12,Bronx Park and Fordham
+10461,Bronx,2021-08-12,Southeast Bronx
+10462,Bronx,2021-08-12,Southeast Bronx
+10463,Bronx,2021-08-12,Kingsbridge and Riverdale
+10464,Bronx,2021-08-12,Southeast Bronx
+10465,Bronx,2021-08-12,Southeast Bronx
+10466,Bronx,2021-08-12,Northeast Bronx
+10467,Bronx,2021-08-12,Bronx Park and Fordham
+10469,Bronx,2021-08-12,Northeast Bronx
+10471,Bronx,2021-08-12,Kingsbridge and Riverdale
+10472,Bronx,2021-08-12,Southeast Bronx
+10473,Bronx,2021-08-12,Southeast Bronx
+10474,Bronx,2021-08-12,Hunts Point and Mott Haven
+10475,Bronx,2021-08-12,Northeast Bronx
+11203,Brooklyn,2021-08-12,Flatbush
+11204,Brooklyn,2021-08-12,Borough Park
+11205,Brooklyn,2021-08-12,Northwest Brooklyn
+11206,Brooklyn,2021-08-12,Bushwick and Williamsburg
+11207,Brooklyn,2021-08-12,East New York and New Lots
+11208,Brooklyn,2021-08-12,East New York and New Lots
+11211,Brooklyn,2021-08-12,Greenpoint
+11212,Brooklyn,2021-08-12,Central Brooklyn
+11214,Brooklyn,2021-08-12,Southwest Brooklyn
+11215,Brooklyn,2021-08-12,Northwest Brooklyn
+11218,Brooklyn,2021-08-12,Borough Park
+11221,Brooklyn,2021-08-12,Bushwick and Williamsburg
+11222,Brooklyn,2021-08-12,Greenpoint
+11231,Brooklyn,2021-08-12,Northwest Brooklyn
+11232,Brooklyn,2021-08-12,Sunset Park
+11234,Brooklyn,2021-08-12,Canarsie and Flatlands
+11236,Brooklyn,2021-08-12,Canarsie and Flatlands
+10002,Manhattan,2021-08-12,Lower East Side
+10024,Manhattan,2021-08-12,Upper West Side
+10025,Manhattan,2021-08-12,Upper West Side
+10026,Manhattan,2021-08-12,Central Harlem
+10028,Manhattan,2021-08-12,Upper East Side
+10029,Manhattan,2021-08-12,East Harlem
+10031,Manhattan,2021-08-12,Inwood and Washington Heights
+10032,Manhattan,2021-08-12,Inwood and Washington Heights
+10034,Manhattan,2021-08-12,Inwood and Washington Heights
+11101,Queens,2021-08-12,Northwest Queens
+11105,Queens,2021-08-12,Northwest Queens
+11356,Queens,2021-08-12,North Queens
+11357,Queens,2021-08-12,North Queens
+11360,Queens,2021-08-12,North Queens
+11361,Queens,2021-08-12,Northeast Queens
+11362,Queens,2021-08-12,Northeast Queens
+11364,Queens,2021-08-12,Northeast Queens
+11365,Queens,2021-08-12,Central Queens
+11368,Queens,2021-08-12,West Queens
+11370,Queens,2021-08-12,West Queens
+11374,Queens,2021-08-12,West Central Queens
+11375,Queens,2021-08-12,West Central Queens
+11377,Queens,2021-08-12,West Queens
+11378,Queens,2021-08-12,West Queens
+11379,Queens,2021-08-12,West Central Queens
+11413,Queens,2021-08-12,Southeast Queens
+11415,Queens,2021-08-12,Southwest Queens
+11416,Queens,2021-08-12,Southwest Queens
+11419,Queens,2021-08-12,Southwest Queens
+11421,Queens,2021-08-12,Southwest Queens
+11422,Queens,2021-08-12,Southeast Queens
+11423,Queens,2021-08-12,Jamaica
+11426,Queens,2021-08-12,Southeast Queens
+11432,Queens,2021-08-12,Jamaica
+11434,Queens,2021-08-12,Jamaica
+10301,Staten Island,2021-08-12,Stapleton and St. George
+10303,Staten Island,2021-08-12,Port Richmond
+10304,Staten Island,2021-08-12,Stapleton and St. George
+10305,Staten Island,2021-08-12,Stapleton and St. George
+10306,Staten Island,2021-08-12,South Shore
+10307,Staten Island,2021-08-12,South Shore
+10309,Staten Island,2021-08-12,South Shore
+10310,Staten Island,2021-08-12,Port Richmond
+10312,Staten Island,2021-08-12,South Shore
+10314,Staten Island,2021-08-12,Mid-Island
+10456,Bronx,2021-08-06,High Bridge and Morrisania
+10457,Bronx,2021-08-06,Central Bronx
+10461,Bronx,2021-08-06,Southeast Bronx
+10463,Bronx,2021-08-06,Kingsbridge and Riverdale
+10464,Bronx,2021-08-06,Southeast Bronx
+10465,Bronx,2021-08-06,Southeast Bronx
+10469,Bronx,2021-08-06,Northeast Bronx
+10471,Bronx,2021-08-06,Kingsbridge and Riverdale
+10472,Bronx,2021-08-06,Southeast Bronx
+10473,Bronx,2021-08-06,Southeast Bronx
+10474,Bronx,2021-08-06,Hunts Point and Mott Haven
+10475,Bronx,2021-08-06,Northeast Bronx
+11203,Brooklyn,2021-08-06,Flatbush
+11204,Brooklyn,2021-08-06,Borough Park
+11205,Brooklyn,2021-08-06,Northwest Brooklyn
+11206,Brooklyn,2021-08-06,Bushwick and Williamsburg
+11207,Brooklyn,2021-08-06,East New York and New Lots
+11208,Brooklyn,2021-08-06,East New York and New Lots
+11211,Brooklyn,2021-08-06,Greenpoint
+11212,Brooklyn,2021-08-06,Central Brooklyn
+11214,Brooklyn,2021-08-06,Southwest Brooklyn
+11215,Brooklyn,2021-08-06,Northwest Brooklyn
+11218,Brooklyn,2021-08-06,Borough Park
+11221,Brooklyn,2021-08-06,Bushwick and Williamsburg
+11222,Brooklyn,2021-08-06,Greenpoint
+11231,Brooklyn,2021-08-06,Northwest Brooklyn
+11234,Brooklyn,2021-08-06,Canarsie and Flatlands
+11236,Brooklyn,2021-08-06,Canarsie and Flatlands
+10024,Manhattan,2021-08-06,Upper West Side
+10025,Manhattan,2021-08-06,Upper West Side
+10026,Manhattan,2021-08-06,Central Harlem
+10028,Manhattan,2021-08-06,Upper East Side
+10029,Manhattan,2021-08-06,East Harlem
+10031,Manhattan,2021-08-06,Inwood and Washington Heights
+10032,Manhattan,2021-08-06,Inwood and Washington Heights
+10034,Manhattan,2021-08-06,Inwood and Washington Heights
+11101,Queens,2021-08-06,Northwest Queens
+11105,Queens,2021-08-06,Northwest Queens
+11356,Queens,2021-08-06,North Queens
+11357,Queens,2021-08-06,North Queens
+11360,Queens,2021-08-06,North Queens
+11361,Queens,2021-08-06,Northeast Queens
+11362,Queens,2021-08-06,Northeast Queens
+11363,Queens,2021-08-06,Northeast Queens
+11364,Queens,2021-08-06,Northeast Queens
+11365,Queens,2021-08-06,Central Queens
+11368,Queens,2021-08-06,West Queens
+11370,Queens,2021-08-06,West Queens
+11374,Queens,2021-08-06,West Central Queens
+11375,Queens,2021-08-06,West Central Queens
+11377,Queens,2021-08-06,West Queens
+11378,Queens,2021-08-06,West Queens
+11379,Queens,2021-08-06,West Central Queens
+11413,Queens,2021-08-06,Southeast Queens
+11415,Queens,2021-08-06,Southwest Queens
+11416,Queens,2021-08-06,Southwest Queens
+11419,Queens,2021-08-06,Southwest Queens
+11421,Queens,2021-08-06,Southwest Queens
+11422,Queens,2021-08-06,Southeast Queens
+11423,Queens,2021-08-06,Jamaica
+11426,Queens,2021-08-06,Southeast Queens
+11432,Queens,2021-08-06,Jamaica
+11434,Queens,2021-08-06,Jamaica
+10301,Staten Island,2021-08-06,Stapleton and St. George
+10303,Staten Island,2021-08-06,Port Richmond
+10304,Staten Island,2021-08-06,Stapleton and St. George
+10305,Staten Island,2021-08-06,Stapleton and St. George
+10306,Staten Island,2021-08-06,South Shore
+10307,Staten Island,2021-08-06,South Shore
+10309,Staten Island,2021-08-06,South Shore
+10310,Staten Island,2021-08-06,Port Richmond
+10312,Staten Island,2021-08-06,South Shore
+10314,Staten Island,2021-08-06,Mid-Island
+10456,Bronx,2021-07-30,High Bridge and Morrisania
+10457,Bronx,2021-07-30,Central Bronx
+10461,Bronx,2021-07-30,Southeast Bronx
+10463,Bronx,2021-07-30,Kingsbridge and Riverdale
+10464,Bronx,2021-07-30,Southeast Bronx
+10465,Bronx,2021-07-30,Southeast Bronx
+10471,Bronx,2021-07-30,Kingsbridge and Riverdale
+10472,Bronx,2021-07-30,Southeast Bronx
+10473,Bronx,2021-07-30,Southeast Bronx
+10474,Bronx,2021-07-30,Hunts Point and Mott Haven
+11205,Brooklyn,2021-07-30,Northwest Brooklyn
+11206,Brooklyn,2021-07-30,Bushwick and Williamsburg
+11207,Brooklyn,2021-07-30,East New York and New Lots
+11208,Brooklyn,2021-07-30,East New York and New Lots
+11211,Brooklyn,2021-07-30,Greenpoint
+11212,Brooklyn,2021-07-30,Central Brooklyn
+11214,Brooklyn,2021-07-30,Southwest Brooklyn
+11215,Brooklyn,2021-07-30,Northwest Brooklyn
+11221,Brooklyn,2021-07-30,Bushwick and Williamsburg
+11226,Brooklyn,2021-07-30,Flatbush
+11236,Brooklyn,2021-07-30,Canarsie and Flatlands
+10025,Manhattan,2021-07-30,Upper West Side
+10028,Manhattan,2021-07-30,Upper East Side
+10032,Manhattan,2021-07-30,Inwood and Washington Heights
+10034,Manhattan,2021-07-30,Inwood and Washington Heights
+11101,Queens,2021-07-30,Northwest Queens
+11105,Queens,2021-07-30,Northwest Queens
+11356,Queens,2021-07-30,North Queens
+11357,Queens,2021-07-30,North Queens
+11358,Queens,2021-07-30,North Queens
+11360,Queens,2021-07-30,North Queens
+11361,Queens,2021-07-30,Northeast Queens
+11362,Queens,2021-07-30,Northeast Queens
+11363,Queens,2021-07-30,Northeast Queens
+11365,Queens,2021-07-30,Central Queens
+11368,Queens,2021-07-30,West Queens
+11370,Queens,2021-07-30,West Queens
+11374,Queens,2021-07-30,West Central Queens
+11375,Queens,2021-07-30,West Central Queens
+11377,Queens,2021-07-30,West Queens
+11378,Queens,2021-07-30,West Queens
+11379,Queens,2021-07-30,West Central Queens
+11413,Queens,2021-07-30,Southeast Queens
+11415,Queens,2021-07-30,Southwest Queens
+11421,Queens,2021-07-30,Southwest Queens
+11422,Queens,2021-07-30,Southeast Queens
+11423,Queens,2021-07-30,Jamaica
+11426,Queens,2021-07-30,Southeast Queens
+11432,Queens,2021-07-30,Jamaica
+11434,Queens,2021-07-30,Jamaica
+10301,Staten Island,2021-07-30,Stapleton and St. George
+10303,Staten Island,2021-07-30,Port Richmond
+10304,Staten Island,2021-07-30,Stapleton and St. George
+10305,Staten Island,2021-07-30,Stapleton and St. George
+10307,Staten Island,2021-07-30,South Shore
+10308,Staten Island,2021-07-30,South Shore
+10309,Staten Island,2021-07-30,South Shore
+10310,Staten Island,2021-07-30,Port Richmond
+10312,Staten Island,2021-07-30,South Shore
+10314,Staten Island,2021-07-30,Mid-Island
+10456,Bronx,2021-07-23,High Bridge and Morrisania
+10457,Bronx,2021-07-23,Central Bronx
+10461,Bronx,2021-07-23,Southeast Bronx
+10463,Bronx,2021-07-23,Kingsbridge and Riverdale
+10464,Bronx,2021-07-23,Southeast Bronx
+10465,Bronx,2021-07-23,Southeast Bronx
+10471,Bronx,2021-07-23,Kingsbridge and Riverdale
+10472,Bronx,2021-07-23,Southeast Bronx
+10473,Bronx,2021-07-23,Southeast Bronx
+11206,Brooklyn,2021-07-23,Bushwick and Williamsburg
+11207,Brooklyn,2021-07-23,East New York and New Lots
+11208,Brooklyn,2021-07-23,East New York and New Lots
+11215,Brooklyn,2021-07-23,Northwest Brooklyn
+11221,Brooklyn,2021-07-23,Bushwick and Williamsburg
+11226,Brooklyn,2021-07-23,Flatbush
+11228,Brooklyn,2021-07-23,Southwest Brooklyn
+11232,Brooklyn,2021-07-23,Sunset Park
+10032,Manhattan,2021-07-23,Inwood and Washington Heights
+11354,Queens,2021-07-23,North Queens
+11355,Queens,2021-07-23,North Queens
+11356,Queens,2021-07-23,North Queens
+11357,Queens,2021-07-23,North Queens
+11358,Queens,2021-07-23,North Queens
+11360,Queens,2021-07-23,North Queens
+11361,Queens,2021-07-23,Northeast Queens
+11362,Queens,2021-07-23,Northeast Queens
+11363,Queens,2021-07-23,Northeast Queens
+11365,Queens,2021-07-23,Central Queens
+11368,Queens,2021-07-23,West Queens
+11377,Queens,2021-07-23,West Queens
+11379,Queens,2021-07-23,West Central Queens
+11413,Queens,2021-07-23,Southeast Queens
+11414,Queens,2021-07-23,Southwest Queens
+11415,Queens,2021-07-23,Southwest Queens
+11422,Queens,2021-07-23,Southeast Queens
+11426,Queens,2021-07-23,Southeast Queens
+11434,Queens,2021-07-23,Jamaica
+10301,Staten Island,2021-07-23,Stapleton and St. George
+10303,Staten Island,2021-07-23,Port Richmond
+10304,Staten Island,2021-07-23,Stapleton and St. George
+10305,Staten Island,2021-07-23,Stapleton and St. George
+10307,Staten Island,2021-07-23,South Shore
+10308,Staten Island,2021-07-23,South Shore
+10309,Staten Island,2021-07-23,South Shore
+10310,Staten Island,2021-07-23,Port Richmond
+10312,Staten Island,2021-07-23,South Shore
+10314,Staten Island,2021-07-23,Mid-Island
+10457,Bronx,2021-07-15,Central Bronx
+10461,Bronx,2021-07-15,Southeast Bronx
+10465,Bronx,2021-07-15,Southeast Bronx
+10471,Bronx,2021-07-15,Kingsbridge and Riverdale
+10473,Bronx,2021-07-15,Southeast Bronx
+11206,Brooklyn,2021-07-15,Bushwick and Williamsburg
+11207,Brooklyn,2021-07-15,East New York and New Lots
+11228,Brooklyn,2021-07-15,Southwest Brooklyn
+11232,Brooklyn,2021-07-15,Sunset Park
+11354,Queens,2021-07-15,North Queens
+11355,Queens,2021-07-15,North Queens
+11356,Queens,2021-07-15,North Queens
+11357,Queens,2021-07-15,North Queens
+11358,Queens,2021-07-15,North Queens
+11360,Queens,2021-07-15,North Queens
+11361,Queens,2021-07-15,Northeast Queens
+11362,Queens,2021-07-15,Northeast Queens
+11365,Queens,2021-07-15,Central Queens
+11368,Queens,2021-07-15,West Queens
+11414,Queens,2021-07-15,Southwest Queens
+11422,Queens,2021-07-15,Southeast Queens
+11434,Queens,2021-07-15,Jamaica
+10301,Staten Island,2021-07-15,Stapleton and St. George
+10303,Staten Island,2021-07-15,Port Richmond
+10305,Staten Island,2021-07-15,Stapleton and St. George
+10307,Staten Island,2021-07-15,South Shore
+10308,Staten Island,2021-07-15,South Shore
+10309,Staten Island,2021-07-15,South Shore
+10310,Staten Island,2021-07-15,Port Richmond
+10312,Staten Island,2021-07-15,South Shore
+10314,Staten Island,2021-07-15,Mid-Island
+10461,Bronx,2021-07-08,Southeast Bronx
+10465,Bronx,2021-07-08,Southeast Bronx
+10473,Bronx,2021-07-08,Southeast Bronx
+11354,Queens,2021-07-08,North Queens
+11355,Queens,2021-07-08,North Queens
+11356,Queens,2021-07-08,North Queens
+11357,Queens,2021-07-08,North Queens
+11358,Queens,2021-07-08,North Queens
+11360,Queens,2021-07-08,North Queens
+11361,Queens,2021-07-08,Northeast Queens
+11365,Queens,2021-07-08,Central Queens
+10307,Staten Island,2021-07-08,South Shore
+10308,Staten Island,2021-07-08,South Shore
+10309,Staten Island,2021-07-08,South Shore
+10312,Staten Island,2021-07-08,South Shore
+10314,Staten Island,2021-07-08,Mid-Island
+10473,Bronx,2021-07-02,Southeast Bronx
+11355,Queens,2021-07-02,North Queens
+11358,Queens,2021-07-02,North Queens
+11360,Queens,2021-07-02,North Queens
+11365,Queens,2021-07-02,Central Queens
+10307,Staten Island,2021-07-02,South Shore
+10309,Staten Island,2021-07-02,South Shore
+10312,Staten Island,2021-07-02,South Shore
+11358,Queens,2021-06-24,North Queens
+11365,Queens,2021-06-24,Central Queens
+10312,Staten Island,2021-06-24,South Shore
+11365,Queens,2021-06-18,Central Queens

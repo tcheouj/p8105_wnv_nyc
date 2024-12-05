@@ -1,0 +1,280 @@
+---
+title: "regression_models"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(broom)
+library(car)
+```
+
+# Data import
+
+First, we need to import our WNV data and predictor data. Ultimately, we are only modeling WNV+ mosquitoes, so we are actually just using the mosquito data and the weather data to predict WNV+ mosquito counts. Since Heat Vulnerability Index (HVI) is a quantitative proxy for human vulnerability to extreme heat and heatstroke, we do not hypothesize it to be causally relevant. This is supported by the lack of association between HVI and WNV+ mosquito count. 
+
+```{r data import, message=FALSE}
+wnv_cases <- read_csv("cleaned_data/wnv_cases.csv")
+wnv_mosquitoes <- read_csv("cleaned_data/wnv_mosquitoes_test.csv") 
+heat_vuln <- read_csv("cleaned_data/heat_vuln.csv")
+day_weather <- read_csv("cleaned_data/day_weather.csv")
+
+```
+
+# Model with year 
+
+This is the simplest model, predicting counts of WNV+ mosquitoes using year. Using our mosquito count data, we want to get counts per year to model from. As such, we `mutate` to create a year variable based on the date variable, `group_by` year, and calculate the count for each year.
+
+```{r year data}
+mosq_count_by_year <- 
+  wnv_mosquitoes |>
+  mutate(year = lubridate::year(date)) |>
+  group_by(year) |>
+  summarise(count = n()) |>
+  filter(year < 3000)
+
+mosq_count_by_year |> 
+  knitr::kable(col.names = c("Year", "Count of WNV+ mosquitoes")) 
+```
+
+```{r year model}
+fit1 <- glm(count ~ year, mosq_count_by_year, family = "poisson")
+
+fit1 |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Tes statistic", "p value")
+  )
+
+fit1 |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+```
+
+Since we are modeling counts of WNV+ mosquitoes, viable models for count data would be a Poisson regression or negative binomial regression. Our first initial model is a Poisson regression predicting counts of mosquitoes using year alone. 
+
+As expected, year does not really predict count much, with an estimated `r fit1 |> broom::tidy() |> filter(term == "year") |> pull(estimate) |> round(4)` count of mosquitoes for each additional year. The parameter is also not significant at the 0.05 level, with a p value of `r fit1 |> broom::tidy() |> filter(term == "year") |> pull(p.value) |> round(4)`.
+
+# Model with month 
+
+As for the simple model using year, we want to get counts of mosquitoes but per month this time instead of year. We create a month variable using `mutate`, and `group_by` is used again to calculate counts of mosquitoes per month.
+
+```{r month data}
+
+mosq_count_by_month <- 
+  wnv_mosquitoes |>
+  mutate(month = lubridate::month(date)) |>
+  group_by(month) |>
+  summarise(count = n())
+
+mosq_count_by_month |> 
+  knitr::kable(col.names = c("Month", "Count of WNV+ mosquitoes"))
+
+mosq_count_by_month |> 
+  ggplot(aes(x = month, y = count)) +
+  geom_bar(stat = "identity", fill = "#440154FF") +
+  guides(
+    fill = "none"
+  )
+
+```
+
+As shown on the table, the bulk of the counts are in the middle of summer in August, with `r mosq_count_by_month |> pull(count) |> max()` mosquitoes, tapering off towards the beginning and end in June and October. The start of data collection in June has the least number of WNV+ mosquitoes with `r mosq_count_by_month |> pull(count) |> min()`. When plotted, the distribution is also approximately normal.
+
+```{r month model}
+fit2 <- glm(count ~ month, mosq_count_by_month, family = "poisson") 
+
+fit2 |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+fit2 |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+
+```
+
+Our second model modeling mosquito count predicted by month only has a significant regression parameter of `r fit2 |> tidy() |>  filter(term == "month") |> pull(estimate) |> round(4)` mosquitoes for every increase by 1 month, with a p value of `r fit2 |> tidy() |>  filter(term == "month") |> pull(p.value) |> round(4)`.
+
+```{r month model fit}
+mosq_count_by_month |> 
+  cbind(pred = predict(fit2, type = "response")) |> 
+  ggplot(aes(x = month, y = count)) +
+  geom_point(color = "#404688FF", alpha = 0.5) + 
+  geom_line(aes(y = pred))
+```
+
+However, despite a significant model, the model does not fit our dataset well, so it is not useful in predicting counts. When plotting the predicted values against the observed values, the predicted values are linear since model is represented as a linear term, while our observed counts are parabolic.
+
+```{r linear and quadratic month model}
+fit3 <- glm(count ~ month + I(month^2), mosq_count_by_month, family = "poisson")
+
+fit3 |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+fit3 |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+```
+
+With this model, both linear and second order terms are significant predictors of mosquito counts, with p values of 
+`r fit3 |> tidy() |>  filter(term == "month") |> pull(p.value) |> round(4)` and `r fit3 |> tidy() |>  filter(term == "I(month^2)") |> pull(p.value) |> round(4)`, respectively.
+
+```{r linear and quadratic month fit}
+mosq_count_by_month |> 
+  cbind(pred = predict(fit3, type = "response")) |> 
+  ggplot(aes(x = month, y = count)) +
+  geom_point(color = "#3B528BFF", alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred))
+
+```
+
+With an included second order term for month, our predicted values better fit the observed values, depicting the parabolic shape of the data. 
+
+# Model with month and year
+
+Now that we are predicting both month and year, we want to get counts per each combination of month and year. We `mutate` to create month and year variables again, `group_by` month and year both this time, and get the mosquito counts per each combination as follows. 
+
+```{r month year data, message=FALSE}
+mosq_month_year <- 
+  wnv_mosquitoes |>
+  mutate(month = lubridate::month(date),
+         year = lubridate::year(date)) |>
+  group_by(year, month) |>
+  summarise(count = n()) |>
+  filter(year < 3000)
+
+mosq_month_year |> 
+  knitr::kable(col.names = c("Year", "Month", "Count of WNV+ mosquitoes"))
+```
+
+To determine whether year is a significant additional predictor to a model that already has linear and second order terms for month, we created a Poisson model with just the two month terms and one with both month terms and year as a predictor.
+
+```{r month year model}
+fit3.5 <- glm(count ~ month + I(month^2), mosq_month_year, family = "poisson")
+fit4 <- glm(count ~ month + I(month^2) + year, mosq_month_year, family = "poisson")
+
+fit3.5 |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+fit3.5 |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+
+fit4 |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+fit4 |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+
+anova(fit3.5, fit4) |> 
+  tidy()
+
+```
+
+In the model with year as a predictor, year is not significantly predicting mosquito counts, with a p value of `r fit4 |> tidy() |> filter(term == "year") |> pull(p.value) |> round(4)`. When conducting a chi-squared test to determine whether the addition of year is significant, the associated p value is `r anova(fit3.5, fit4) |> tidy() |> filter(term == "count ~ month + I(month^2) + year") |> pull(p.value) |> round(4)`. Adding year to a model that already has month as linear and second order terms does not significantly improve model prediction. 
+
+# Model with week and temperature
+
+To create a model that includes week as a parameter, we need aggregated mosquito counts by year and week. This is done again by `mutate` to make year and week variables, creating a variable `weekyear` that calculates the number of weeks from 2021 (the first year of available mosquito data), and grouping counts by combinations of year and week. 
+
+```{r week and temp data}
+mosq_cases <-
+  wnv_mosquitoes |>
+  mutate(
+    year = lubridate::year(date),
+    week = lubridate::week(date)) |>
+  group_by(year, week) |>
+  summarise(count = n()) |>
+  mutate(weekyear = (year - 2021)*52 + week) |>
+  filter(year < 3000)
+
+wnv_mosquitoes |>
+  mutate(
+    year = lubridate::year(date),
+    week = lubridate::week(date)) |>
+  group_by(year, week) |>
+  summarise(count = n()) |>
+  mutate(weekyear = (year - 2021)*52 + week) 
+  
+mosq_cases |> 
+  mutate(
+    year_2021 = year - 2021,
+    year_2021x52 = (year - 2021) * 52
+  ) |> 
+  knitr::kable()
+
+mosq_cases |>
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point()
+
+weekly_weather <- 
+  day_weather |>
+  mutate(
+    year = lubridate::year(date),
+    week = lubridate::week(date)) |>
+  group_by(year, week) |>
+  summarise(avg_temp = mean(avg_temp),
+            avg_prcp = mean(avg_prcp),
+            avg_dewp = mean(avg_dewp),
+            avg_max = mean(avg_max),
+            avg_min = mean(avg_min)) |>
+  arrange(year, week) |>
+  mutate(lag_temp = lag(avg_temp),
+         lag_prcp = lag(avg_prcp),
+         lag_dewp = lag(avg_dewp),
+         lag_max =  lag(avg_max),
+         lag_min =  lag(avg_min)) |>
+  mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021
+
+mosq_cases_temp <- mosq_cases |>
+  left_join(y = weekly_weather, by = join_by(weekyear)) |>
+  select(-ends_with(".y")) |>
+  rename(year = year.x, week = week.x) |>
+  mutate(
+    lag_count = lag(count),
+    lag_count = case_when(
+      is.na(lag_count) ~ 0,
+      .default = lag_count
+    )
+  ) |>
+  na.omit()
+
+
+```
+
