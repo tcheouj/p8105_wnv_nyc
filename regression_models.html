@@ -1,0 +1,2775 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>regression_models</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="report.html">Report</a>
+</li>
+<li>
+  <a href="data_exploration.html">Data Exploration</a>
+</li>
+<li>
+  <a href="data_analysis.html">Data Analysis</a>
+</li>
+<li>
+  <a href="https://jt3466.shinyapps.io/nyc_wnv/">Dashboard</a>
+</li>
+<li>
+  <a href="mailto:&lt;mm6410@cumc.columbia.edu&gt;,&lt;jt3466@cumc.columbia.edu&gt;, &lt;ssr2195@cumc.columbia.edu&gt;, &lt;ss7332@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/tcheouj/p8105_wnv_nyc">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">regression_models</h1>
+
+</div>
+
+
+<div id="data-import" class="section level1">
+<h1>Data import</h1>
+<p>First, we need to import our WNV data and predictor data. Ultimately,
+we are only modeling WNV+ mosquitoes, so we are actually just using the
+mosquito data and the weather data to predict WNV+ mosquito counts.
+Since Heat Vulnerability Index (HVI) is a quantitative proxy for human
+vulnerability to extreme heat and heatstroke, we do not hypothesize it
+to be causally relevant. This is supported by the lack of association
+between HVI and WNV+ mosquito count.</p>
+<pre class="r"><code>wnv_cases &lt;- read_csv(&quot;cleaned_data/wnv_cases.csv&quot;)
+wnv_mosquitoes &lt;- read_csv(&quot;cleaned_data/wnv_mosquitoes.csv&quot;) 
+heat_vuln &lt;- read_csv(&quot;cleaned_data/heat_vuln.csv&quot;)
+day_weather &lt;- read_csv(&quot;cleaned_data/day_weather.csv&quot;)</code></pre>
+</div>
+<div id="model-with-year" class="section level1">
+<h1>Model with year</h1>
+<p>This is the simplest model, predicting counts of WNV+ mosquitoes
+using year. Using our mosquito count data, we want to get counts per
+year to model from. As such, we <code>mutate</code> to create a year
+variable based on the date variable, <code>group_by</code> year, and
+calculate the count for each year.</p>
+<pre class="r"><code>mosq_count_by_year &lt;- 
+  wnv_mosquitoes |&gt;
+  mutate(year = lubridate::year(date)) |&gt;
+  group_by(year) |&gt;
+  summarise(count = n()) 
+
+mosq_count_by_year |&gt; 
+  knitr::kable(col.names = c(&quot;Year&quot;, &quot;Count of WNV+ mosquitoes&quot;)) </code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Year</th>
+<th align="right">Count of WNV+ mosquitoes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">732</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">789</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">711</td>
+</tr>
+<tr class="even">
+<td align="right">2024</td>
+<td align="right">692</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>fit1 &lt;- glm(count ~ year, mosq_count_by_year, family = &quot;poisson&quot;)
+
+fit1 |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Tes statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Tes statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">61.3872</td>
+<td align="right">33.4636</td>
+<td align="right">1.8344</td>
+<td align="right">0.0666</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="right">-0.0271</td>
+<td align="right">0.0165</td>
+<td align="right">-1.6374</td>
+<td align="right">0.1016</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>fit1 |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="8%" />
+<col width="8%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">7.1572</td>
+<td align="right">3</td>
+<td align="right">-19.1003</td>
+<td align="right">42.2006</td>
+<td align="right">40.9732</td>
+<td align="right">4.4754</td>
+<td align="right">2</td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+<p>Since we are modeling counts of WNV+ mosquitoes, viable models for
+count data would be a Poisson regression or negative binomial
+regression. Our first initial model is a Poisson regression predicting
+counts of mosquitoes using year alone.</p>
+<p>As expected, year does not really predict count much, with an
+estimated -0.0271 count of mosquitoes for each additional year. The
+parameter is also not significant at the 0.05 level, with a p value of
+0.1016.</p>
+</div>
+<div id="model-with-month" class="section level1">
+<h1>Model with month</h1>
+<p>As for the simple model using year, we want to get counts of
+mosquitoes but per month this time instead of year. We create a month
+variable using <code>mutate</code>, and <code>group_by</code> is used
+again to calculate counts of mosquitoes per month.</p>
+<pre class="r"><code>mosq_count_by_month &lt;- 
+  wnv_mosquitoes |&gt;
+  mutate(month = lubridate::month(date)) |&gt;
+  group_by(month) |&gt;
+  summarise(count = n())
+
+mosq_count_by_month |&gt; 
+  knitr::kable(col.names = c(&quot;Month&quot;, &quot;Count of WNV+ mosquitoes&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Month</th>
+<th align="right">Count of WNV+ mosquitoes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">6</td>
+<td align="right">48</td>
+</tr>
+<tr class="even">
+<td align="right">7</td>
+<td align="right">692</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">1282</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">782</td>
+</tr>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">120</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_count_by_month |&gt; 
+  ggplot(aes(x = month, y = count)) +
+  geom_bar(stat = &quot;identity&quot;, fill = &quot;#440154FF&quot;) +
+  guides(
+    fill = &quot;none&quot;
+  )</code></pre>
+<p><img src="regression_models_files/figure-html/month%20data-1.png" width="672" /></p>
+<p>As shown on the table, the bulk of the counts are in the middle of
+summer in August, with 1282 mosquitoes, tapering off towards the
+beginning and end in June and October. The start of data collection in
+June has the least number of WNV+ mosquitoes with 48. When plotted, the
+distribution is also approximately normal.</p>
+<pre class="r"><code>fit2 &lt;- glm(count ~ month, mosq_count_by_month, family = &quot;poisson&quot;) 
+
+fit2 |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">6.0493</td>
+<td align="right">0.1074</td>
+<td align="right">56.3390</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">month</td>
+<td align="right">0.0400</td>
+<td align="right">0.0131</td>
+<td align="right">3.0589</td>
+<td align="right">0.0022</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>fit2 |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2079.812</td>
+<td align="right">4</td>
+<td align="right">-1054.328</td>
+<td align="right">2112.656</td>
+<td align="right">2111.875</td>
+<td align="right">2070.445</td>
+<td align="right">3</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<p>Our second model modeling mosquito count predicted by month only has
+a significant regression parameter of 0.04 mosquitoes for every increase
+by 1 month, with a p value of 0.0022.</p>
+<pre class="r"><code>mosq_count_by_month |&gt; 
+  cbind(pred = predict(fit2, type = &quot;response&quot;)) |&gt; 
+  ggplot(aes(x = month, y = count)) +
+  geom_point(color = &quot;#404688FF&quot;, alpha = 0.5) + 
+  geom_line(aes(y = pred), size = 0.6)</code></pre>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<p><img src="regression_models_files/figure-html/month%20model%20fit-1.png" width="672" /></p>
+<p>However, despite a significant model, the model does not fit our
+dataset well, so it is not useful in predicting counts. When plotting
+the predicted values against the observed values, the predicted values
+are linear since model is represented as a linear term, while our
+observed counts are parabolic.</p>
+<pre class="r"><code>fit3 &lt;- glm(count ~ month + I(month^2), mosq_count_by_month, family = &quot;poisson&quot;)
+
+fit3 |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-36.5164</td>
+<td align="right">1.2301</td>
+<td align="right">-29.6863</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">month</td>
+<td align="right">10.8205</td>
+<td align="right">0.3058</td>
+<td align="right">35.3854</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">I(month^2)</td>
+<td align="right">-0.6694</td>
+<td align="right">0.0189</td>
+<td align="right">-35.4324</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>fit3 |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="8%" />
+<col width="7%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2079.812</td>
+<td align="right">4</td>
+<td align="right">-30.4953</td>
+<td align="right">66.9907</td>
+<td align="right">65.819</td>
+<td align="right">22.7796</td>
+<td align="right">2</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<p>With this model, both linear and second order terms are significant
+predictors of mosquito counts, with p values of 0 and 0,
+respectively.</p>
+<pre class="r"><code>mosq_count_by_month |&gt; 
+  cbind(pred = predict(fit3, type = &quot;response&quot;)) |&gt; 
+  ggplot(aes(x = month, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred), color = &quot;#3B528BFF&quot;, size = 0.6)</code></pre>
+<p><img src="regression_models_files/figure-html/linear%20and%20quadratic%20month%20fit-1.png" width="672" /></p>
+<p>With an included second order term for month, our predicted values
+better fit the observed values, depicting the parabolic shape of the
+data.</p>
+</div>
+<div id="model-with-month-and-year" class="section level1">
+<h1>Model with month and year</h1>
+<p>Now that we are predicting both month and year, we want to get counts
+per each combination of month and year. We <code>mutate</code> to create
+month and year variables again, <code>group_by</code> month and year
+both this time, and get the mosquito counts per each combination as
+follows.</p>
+<pre class="r"><code>mosq_month_year &lt;- 
+  wnv_mosquitoes |&gt;
+  mutate(month = lubridate::month(date),
+         year = lubridate::year(date)) |&gt;
+  group_by(year, month) |&gt;
+  summarise(count = n()) 
+
+mosq_month_year |&gt; 
+  knitr::kable(col.names = c(&quot;Year&quot;, &quot;Month&quot;, &quot;Count of WNV+ mosquitoes&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Year</th>
+<th align="right">Month</th>
+<th align="right">Count of WNV+ mosquitoes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">6</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">7</td>
+<td align="right">162</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">8</td>
+<td align="right">303</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">9</td>
+<td align="right">200</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">10</td>
+<td align="right">63</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">6</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">7</td>
+<td align="right">109</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">8</td>
+<td align="right">358</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">9</td>
+<td align="right">293</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">10</td>
+<td align="right">21</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">7</td>
+<td align="right">72</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">8</td>
+<td align="right">342</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">9</td>
+<td align="right">262</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">10</td>
+<td align="right">35</td>
+</tr>
+<tr class="odd">
+<td align="right">2024</td>
+<td align="right">6</td>
+<td align="right">36</td>
+</tr>
+<tr class="even">
+<td align="right">2024</td>
+<td align="right">7</td>
+<td align="right">349</td>
+</tr>
+<tr class="odd">
+<td align="right">2024</td>
+<td align="right">8</td>
+<td align="right">279</td>
+</tr>
+<tr class="even">
+<td align="right">2024</td>
+<td align="right">9</td>
+<td align="right">27</td>
+</tr>
+<tr class="odd">
+<td align="right">2024</td>
+<td align="right">10</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p>To determine whether year is a significant additional predictor to a
+model that already has linear and second order terms for month, we
+created a Poisson model with just the two month terms and one with both
+month terms and year as a predictor.</p>
+<pre class="r"><code>fit3.5 &lt;- glm(count ~ month + I(month^2), mosq_month_year, family = &quot;poisson&quot;)
+fit4 &lt;- glm(count ~ month + I(month^2) + year, mosq_month_year, family = &quot;poisson&quot;)
+
+fit3.5 |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-36.0546</td>
+<td align="right">1.2560</td>
+<td align="right">-28.7065</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">month</td>
+<td align="right">10.3797</td>
+<td align="right">0.3115</td>
+<td align="right">33.3251</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">I(month^2)</td>
+<td align="right">-0.6434</td>
+<td align="right">0.0192</td>
+<td align="right">-33.5201</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>fit3.5 |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2472.735</td>
+<td align="right">18</td>
+<td align="right">-395.8216</td>
+<td align="right">797.6431</td>
+<td align="right">800.4764</td>
+<td align="right">675.8574</td>
+<td align="right">16</td>
+<td align="right">19</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>fit4 |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">12.5237</td>
+<td align="right">33.3785</td>
+<td align="right">0.3752</td>
+<td align="right">0.7075</td>
+</tr>
+<tr class="even">
+<td align="left">month</td>
+<td align="right">10.3857</td>
+<td align="right">0.3114</td>
+<td align="right">33.3503</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">I(month^2)</td>
+<td align="right">-0.6437</td>
+<td align="right">0.0192</td>
+<td align="right">-33.5435</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="right">-0.0240</td>
+<td align="right">0.0165</td>
+<td align="right">-1.4564</td>
+<td align="right">0.1453</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>fit4 |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2472.735</td>
+<td align="right">18</td>
+<td align="right">-394.7607</td>
+<td align="right">797.5213</td>
+<td align="right">801.2991</td>
+<td align="right">673.7356</td>
+<td align="right">15</td>
+<td align="right">19</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(fit3.5, fit4) |&gt; 
+  tidy()</code></pre>
+<pre><code>## # A tibble: 2 × 6
+##   term                      df.residual residual.deviance    df deviance p.value
+##   &lt;chr&gt;                           &lt;dbl&gt;             &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+## 1 count ~ month + I(month^…          16              676.    NA    NA     NA    
+## 2 count ~ month + I(month^…          15              674.     1     2.12   0.145</code></pre>
+<p>In the model with year as a predictor, year is not significantly
+predicting mosquito counts, with a p value of 0.1453. When conducting a
+chi-squared test to determine whether the addition of year is
+significant, the associated p value is 0.1452. Adding year to a model
+that already has month as linear and second order terms does not
+significantly improve model prediction.</p>
+<pre class="r"><code>mosq_month_year |&gt; 
+  cbind(pred = predict(fit4, type = &quot;response&quot;)) |&gt; 
+  mutate(monthyear = (year - 2021)*12 + month) |&gt; 
+  ggplot(aes(x = monthyear, y = count)) +
+  geom_point(alpha = 0.5) +
+  geom_line(aes(y = pred), color = &quot;#365D8DFF&quot;, size = 0.6)</code></pre>
+<p><img src="regression_models_files/figure-html/poisson%20overdispersion-1.png" width="672" /></p>
+<pre class="r"><code>mosq_month_year |&gt; 
+  cbind(
+    pred = predict(fit4, type = &quot;response&quot;),
+    resid = resid(fit4)
+  ) |&gt; 
+  ggplot(aes(x = pred, y = resid)) +
+  geom_point(color = &quot;#31688EFF&quot;,, size = 3) + 
+  geom_hline(yintercept = 0)</code></pre>
+<p><img src="regression_models_files/figure-html/poisson%20overdispersion-2.png" width="672" /></p>
+<pre class="r"><code>performance::check_overdispersion(fit4) </code></pre>
+<pre><code>## # Overdispersion test
+## 
+##        dispersion ratio =  42.234
+##   Pearson&#39;s Chi-Squared = 633.504
+##                 p-value = &lt; 0.001</code></pre>
+<pre><code>## Overdispersion detected.</code></pre>
+<p>However, before proceeding with the next model, we wanted to check
+model fit and see if the assumptions of the Poisson distribution still
+hold. When graphing the predicted values for the model with month and
+year, it is able to capture the peaks and declines in counts better than
+the simple linear model, but isn’t quite the best fit.</p>
+<p>One of the Poisson model assumptions is that variance is
+approximately equal to the mean, so as the mean increases, the variance
+does as well. However, when the observed variance is much higher than
+the mean, and therefore higher than the expected variance, the data is
+overdispersed and a Poisson model may not be the best choice for the
+data.</p>
+<p>When plotting the residuals vs fitted values, we would expect a
+fanning pattern as we would see the variance increase as the mean
+predicted values increase. However, at higher predicted values, the
+variance starts to decrease, indicating overdispersion.</p>
+<p>This is confirmed using the <code>check_overdispersion</code> test
+from the <code>performance</code> package, which tests the dispersion
+ratio of observed variance to the expected variance. The null hypothesis
+of this test is that the dispersion ratio is 1, so the observed and
+expected variances are equal. However, our test result is significant,
+rejecting the null hypothesis and indicating our model is overdispersed
+for our data. This suggests we may need to use a different model that
+accounts for dispersion, like a negative binomial model.</p>
+</div>
+<div id="model-with-week-and-temperature" class="section level1">
+<h1>Model with week and temperature</h1>
+<p>To create a model that includes week as a parameter, we need
+aggregated mosquito counts by year and week. This is done again by
+<code>mutate</code> to make year and week variables, creating a variable
+<code>weekyear</code> that calculates the number of weeks from 2021 (the
+first year of available mosquito data), and grouping counts by
+combinations of year and week. This <code>weekyear</code> variable is
+used to merge with weather data from GSOD.</p>
+<p>Daily weather readings from GSOD are aggregated to be by week,
+calculating the average temperature, precipitation, dewpoint, maximum
+temperature, and minimum temperature across several stations in NYC, by
+combinations of year and week. Additionally, since week-to-week weather
+is likely not independent as the weather conditions of the prior week
+probably influences the following week, lagging temperature variables
+are also created for the above weather variables. <code>weekyear</code>
+was also created.</p>
+<p>The mosquito counts and weather data are merged by
+<code>weekyear</code>, with duplicate columns from the weather data
+dropped. As with the weather, circulating WNV+ mosquitoes from week to
+week are also hypothesized to not be independent, since the presence of
+WNV+ circulating the week prior will persist and infect other mosquitoes
+in the following week. Therefore, lagging mosquito counts are also
+created.</p>
+<pre class="r"><code># mosq_cases |&gt; 
+#   ggplot(aes(x = weekyear, y = count)) +
+#   geom_point()
+mosq_cases &lt;-
+  wnv_mosquitoes |&gt;
+  mutate(
+    year = lubridate::year(date),
+    week = lubridate::week(date)) |&gt;
+  group_by(year, week) |&gt;
+  summarise(count = n()) |&gt;
+  mutate(weekyear = (year - 2021)*52 + week) </code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>weekly_weather &lt;- 
+  day_weather |&gt;
+  mutate(
+    year = lubridate::year(date),
+    week = lubridate::week(date)) |&gt;
+  group_by(year, week) |&gt;
+  summarise(avg_temp = mean(avg_temp),
+            avg_prcp = mean(avg_prcp),
+            avg_dewp = mean(avg_dewp),
+            avg_max = mean(avg_max),
+            avg_min = mean(avg_min)) |&gt;
+  arrange(year, week) |&gt;
+  mutate(lag_temp = lag(avg_temp),
+         lag_prcp = lag(avg_prcp),
+         lag_dewp = lag(avg_dewp),
+         lag_max =  lag(avg_max),
+         lag_min =  lag(avg_min)) |&gt;
+  mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>mosq_cases_temp &lt;- 
+  mosq_cases |&gt;
+  left_join(y = weekly_weather, by = join_by(weekyear)) |&gt;
+  select(-ends_with(&quot;.y&quot;)) |&gt;
+  rename(year = year.x, week = week.x) |&gt;
+  mutate(
+    id = row_number(),
+    lag_count = lag(count),
+    lag_count = case_when(
+      is.na(lag_count) ~ 0,
+      .default = lag_count
+    )
+  ) |&gt;
+  na.omit()
+
+mosq_cases_temp |&gt; 
+  knitr::kable()</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="3%" />
+<col width="3%" />
+<col width="4%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+<col width="7%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+<col width="7%" />
+<col width="6%" />
+<col width="6%" />
+<col width="2%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">year</th>
+<th align="right">week</th>
+<th align="right">count</th>
+<th align="right">weekyear</th>
+<th align="right">avg_temp</th>
+<th align="right">avg_prcp</th>
+<th align="right">avg_dewp</th>
+<th align="right">avg_max</th>
+<th align="right">avg_min</th>
+<th align="right">lag_temp</th>
+<th align="right">lag_prcp</th>
+<th align="right">lag_dewp</th>
+<th align="right">lag_max</th>
+<th align="right">lag_min</th>
+<th align="right">id</th>
+<th align="right">lag_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">25</td>
+<td align="right">4</td>
+<td align="right">25</td>
+<td align="right">72.57714</td>
+<td align="right">0.0378515</td>
+<td align="right">14.307143</td>
+<td align="right">84.16143</td>
+<td align="right">61.71286</td>
+<td align="right">68.23143</td>
+<td align="right">0.0214286</td>
+<td align="right">11.728571</td>
+<td align="right">77.91286</td>
+<td align="right">61.63571</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">27</td>
+<td align="right">24</td>
+<td align="right">27</td>
+<td align="right">73.85000</td>
+<td align="right">0.3135547</td>
+<td align="right">18.435714</td>
+<td align="right">84.97143</td>
+<td align="right">65.64714</td>
+<td align="right">78.68429</td>
+<td align="right">0.0435602</td>
+<td align="right">19.450000</td>
+<td align="right">89.03429</td>
+<td align="right">69.35000</td>
+<td align="right">2</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">28</td>
+<td align="right">31</td>
+<td align="right">28</td>
+<td align="right">75.84286</td>
+<td align="right">0.3442353</td>
+<td align="right">20.514286</td>
+<td align="right">85.82000</td>
+<td align="right">70.28857</td>
+<td align="right">73.85000</td>
+<td align="right">0.3135547</td>
+<td align="right">18.435714</td>
+<td align="right">84.97143</td>
+<td align="right">65.64714</td>
+<td align="right">3</td>
+<td align="right">24</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">30</td>
+<td align="right">47</td>
+<td align="right">30</td>
+<td align="right">76.98714</td>
+<td align="right">0.3235660</td>
+<td align="right">16.814286</td>
+<td align="right">86.06429</td>
+<td align="right">68.57857</td>
+<td align="right">79.04429</td>
+<td align="right">0.1421261</td>
+<td align="right">19.342857</td>
+<td align="right">87.86429</td>
+<td align="right">71.44571</td>
+<td align="right">4</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">31</td>
+<td align="right">60</td>
+<td align="right">31</td>
+<td align="right">72.73143</td>
+<td align="right">0.0128796</td>
+<td align="right">14.178571</td>
+<td align="right">81.77000</td>
+<td align="right">64.95286</td>
+<td align="right">76.98714</td>
+<td align="right">0.3235660</td>
+<td align="right">16.814286</td>
+<td align="right">86.06429</td>
+<td align="right">68.57857</td>
+<td align="right">5</td>
+<td align="right">47</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">32</td>
+<td align="right">152</td>
+<td align="right">32</td>
+<td align="right">76.84571</td>
+<td align="right">0.1528685</td>
+<td align="right">19.585714</td>
+<td align="right">86.15429</td>
+<td align="right">69.41429</td>
+<td align="right">72.73143</td>
+<td align="right">0.0128796</td>
+<td align="right">14.178571</td>
+<td align="right">81.77000</td>
+<td align="right">64.95286</td>
+<td align="right">6</td>
+<td align="right">60</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">33</td>
+<td align="right">77</td>
+<td align="right">33</td>
+<td align="right">79.73857</td>
+<td align="right">0.0228628</td>
+<td align="right">18.885714</td>
+<td align="right">88.23714</td>
+<td align="right">72.93714</td>
+<td align="right">76.84571</td>
+<td align="right">0.1528685</td>
+<td align="right">19.585714</td>
+<td align="right">86.15429</td>
+<td align="right">69.41429</td>
+<td align="right">7</td>
+<td align="right">152</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">35</td>
+<td align="right">144</td>
+<td align="right">35</td>
+<td align="right">75.88143</td>
+<td align="right">0.8514347</td>
+<td align="right">19.135714</td>
+<td align="right">86.46286</td>
+<td align="right">68.47571</td>
+<td align="right">79.48143</td>
+<td align="right">0.6785999</td>
+<td align="right">20.571429</td>
+<td align="right">87.91571</td>
+<td align="right">72.98857</td>
+<td align="right">8</td>
+<td align="right">77</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">37</td>
+<td align="right">95</td>
+<td align="right">37</td>
+<td align="right">74.19714</td>
+<td align="right">0.0328459</td>
+<td align="right">16.242857</td>
+<td align="right">83.27429</td>
+<td align="right">66.04571</td>
+<td align="right">72.43571</td>
+<td align="right">0.0542745</td>
+<td align="right">16.014286</td>
+<td align="right">81.73143</td>
+<td align="right">64.13000</td>
+<td align="right">9</td>
+<td align="right">144</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">38</td>
+<td align="right">35</td>
+<td align="right">38</td>
+<td align="right">73.01429</td>
+<td align="right">0.0028403</td>
+<td align="right">17.364286</td>
+<td align="right">81.28143</td>
+<td align="right">65.73714</td>
+<td align="right">74.19714</td>
+<td align="right">0.0328459</td>
+<td align="right">16.242857</td>
+<td align="right">83.27429</td>
+<td align="right">66.04571</td>
+<td align="right">10</td>
+<td align="right">95</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">40</td>
+<td align="right">47</td>
+<td align="right">40</td>
+<td align="right">65.99429</td>
+<td align="right">0.0092801</td>
+<td align="right">13.121429</td>
+<td align="right">75.07143</td>
+<td align="right">57.57286</td>
+<td align="right">67.42143</td>
+<td align="right">0.2428573</td>
+<td align="right">10.285714</td>
+<td align="right">77.63000</td>
+<td align="right">58.98714</td>
+<td align="right">11</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">41</td>
+<td align="right">13</td>
+<td align="right">41</td>
+<td align="right">66.76571</td>
+<td align="right">0.0149888</td>
+<td align="right">14.985714</td>
+<td align="right">74.86571</td>
+<td align="right">60.74857</td>
+<td align="right">65.99429</td>
+<td align="right">0.0092801</td>
+<td align="right">13.121429</td>
+<td align="right">75.07143</td>
+<td align="right">57.57286</td>
+<td align="right">12</td>
+<td align="right">47</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">42</td>
+<td align="right">3</td>
+<td align="right">42</td>
+<td align="right">64.01429</td>
+<td align="right">0.0235377</td>
+<td align="right">9.450000</td>
+<td align="right">75.71429</td>
+<td align="right">55.79857</td>
+<td align="right">66.76571</td>
+<td align="right">0.0149888</td>
+<td align="right">14.985714</td>
+<td align="right">74.86571</td>
+<td align="right">60.74857</td>
+<td align="right">13</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">26</td>
+<td align="right">8</td>
+<td align="right">78</td>
+<td align="right">75.79143</td>
+<td align="right">0.0592801</td>
+<td align="right">16.021429</td>
+<td align="right">86.56571</td>
+<td align="right">66.38000</td>
+<td align="right">68.29571</td>
+<td align="right">0.0349831</td>
+<td align="right">10.800000</td>
+<td align="right">80.42000</td>
+<td align="right">59.37286</td>
+<td align="right">14</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">27</td>
+<td align="right">11</td>
+<td align="right">79</td>
+<td align="right">77.51429</td>
+<td align="right">0.0064117</td>
+<td align="right">16.035714</td>
+<td align="right">87.86429</td>
+<td align="right">69.64571</td>
+<td align="right">75.79143</td>
+<td align="right">0.0592801</td>
+<td align="right">16.021429</td>
+<td align="right">86.56571</td>
+<td align="right">66.38000</td>
+<td align="right">15</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">28</td>
+<td align="right">17</td>
+<td align="right">80</td>
+<td align="right">77.37286</td>
+<td align="right">0.0392857</td>
+<td align="right">15.785714</td>
+<td align="right">87.83857</td>
+<td align="right">68.70714</td>
+<td align="right">77.51429</td>
+<td align="right">0.0064117</td>
+<td align="right">16.035714</td>
+<td align="right">87.86429</td>
+<td align="right">69.64571</td>
+<td align="right">16</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">29</td>
+<td align="right">28</td>
+<td align="right">81</td>
+<td align="right">81.80857</td>
+<td align="right">0.1357425</td>
+<td align="right">19.671429</td>
+<td align="right">90.92429</td>
+<td align="right">72.93714</td>
+<td align="right">77.37286</td>
+<td align="right">0.0392857</td>
+<td align="right">15.785714</td>
+<td align="right">87.83857</td>
+<td align="right">68.70714</td>
+<td align="right">17</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">30</td>
+<td align="right">53</td>
+<td align="right">82</td>
+<td align="right">81.43571</td>
+<td align="right">0.0892576</td>
+<td align="right">18.657143</td>
+<td align="right">90.93714</td>
+<td align="right">73.55429</td>
+<td align="right">81.80857</td>
+<td align="right">0.1357425</td>
+<td align="right">19.671429</td>
+<td align="right">90.92429</td>
+<td align="right">72.93714</td>
+<td align="right">18</td>
+<td align="right">28</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">31</td>
+<td align="right">79</td>
+<td align="right">83</td>
+<td align="right">79.77714</td>
+<td align="right">0.0485940</td>
+<td align="right">18.042857</td>
+<td align="right">90.29429</td>
+<td align="right">71.35571</td>
+<td align="right">81.43571</td>
+<td align="right">0.0892576</td>
+<td align="right">18.657143</td>
+<td align="right">90.93714</td>
+<td align="right">73.55429</td>
+<td align="right">19</td>
+<td align="right">53</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">32</td>
+<td align="right">92</td>
+<td align="right">84</td>
+<td align="right">81.95000</td>
+<td align="right">0.0821148</td>
+<td align="right">19.664286</td>
+<td align="right">92.01714</td>
+<td align="right">75.20000</td>
+<td align="right">79.77714</td>
+<td align="right">0.0485940</td>
+<td align="right">18.042857</td>
+<td align="right">90.29429</td>
+<td align="right">71.35571</td>
+<td align="right">20</td>
+<td align="right">79</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">33</td>
+<td align="right">95</td>
+<td align="right">85</td>
+<td align="right">74.68571</td>
+<td align="right">0.0314117</td>
+<td align="right">12.764286</td>
+<td align="right">84.93286</td>
+<td align="right">65.76286</td>
+<td align="right">81.95000</td>
+<td align="right">0.0821148</td>
+<td align="right">19.664286</td>
+<td align="right">92.01714</td>
+<td align="right">75.20000</td>
+<td align="right">21</td>
+<td align="right">92</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">34</td>
+<td align="right">92</td>
+<td align="right">86</td>
+<td align="right">78.72286</td>
+<td align="right">0.0200225</td>
+<td align="right">18.585714</td>
+<td align="right">88.77714</td>
+<td align="right">71.89571</td>
+<td align="right">74.68571</td>
+<td align="right">0.0314117</td>
+<td align="right">12.764286</td>
+<td align="right">84.93286</td>
+<td align="right">65.76286</td>
+<td align="right">22</td>
+<td align="right">95</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">35</td>
+<td align="right">82</td>
+<td align="right">87</td>
+<td align="right">77.59143</td>
+<td align="right">0.0285714</td>
+<td align="right">16.771429</td>
+<td align="right">88.01857</td>
+<td align="right">71.35571</td>
+<td align="right">78.72286</td>
+<td align="right">0.0200225</td>
+<td align="right">18.585714</td>
+<td align="right">88.77714</td>
+<td align="right">71.89571</td>
+<td align="right">23</td>
+<td align="right">92</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">36</td>
+<td align="right">70</td>
+<td align="right">88</td>
+<td align="right">72.92429</td>
+<td align="right">0.1478628</td>
+<td align="right">16.957143</td>
+<td align="right">82.31000</td>
+<td align="right">66.00714</td>
+<td align="right">77.59143</td>
+<td align="right">0.0285714</td>
+<td align="right">16.771429</td>
+<td align="right">88.01857</td>
+<td align="right">71.35571</td>
+<td align="right">24</td>
+<td align="right">82</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">37</td>
+<td align="right">61</td>
+<td align="right">89</td>
+<td align="right">72.50000</td>
+<td align="right">0.3464288</td>
+<td align="right">14.042857</td>
+<td align="right">82.92714</td>
+<td align="right">64.40000</td>
+<td align="right">72.92429</td>
+<td align="right">0.1478628</td>
+<td align="right">16.957143</td>
+<td align="right">82.31000</td>
+<td align="right">66.00714</td>
+<td align="right">25</td>
+<td align="right">70</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">38</td>
+<td align="right">50</td>
+<td align="right">90</td>
+<td align="right">70.77714</td>
+<td align="right">0.0435883</td>
+<td align="right">13.335714</td>
+<td align="right">82.19429</td>
+<td align="right">62.42000</td>
+<td align="right">72.50000</td>
+<td align="right">0.3464288</td>
+<td align="right">14.042857</td>
+<td align="right">82.92714</td>
+<td align="right">64.40000</td>
+<td align="right">26</td>
+<td align="right">61</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">39</td>
+<td align="right">30</td>
+<td align="right">91</td>
+<td align="right">63.08857</td>
+<td align="right">0.0778403</td>
+<td align="right">7.871429</td>
+<td align="right">73.22000</td>
+<td align="right">54.51286</td>
+<td align="right">70.77714</td>
+<td align="right">0.0435883</td>
+<td align="right">13.335714</td>
+<td align="right">82.19429</td>
+<td align="right">62.42000</td>
+<td align="right">27</td>
+<td align="right">50</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">40</td>
+<td align="right">14</td>
+<td align="right">92</td>
+<td align="right">57.81714</td>
+<td align="right">0.5114176</td>
+<td align="right">9.328571</td>
+<td align="right">65.08143</td>
+<td align="right">50.86143</td>
+<td align="right">63.08857</td>
+<td align="right">0.0778403</td>
+<td align="right">7.871429</td>
+<td align="right">73.22000</td>
+<td align="right">54.51286</td>
+<td align="right">28</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">41</td>
+<td align="right">7</td>
+<td align="right">93</td>
+<td align="right">59.90000</td>
+<td align="right">0.1614455</td>
+<td align="right">7.107143</td>
+<td align="right">70.45571</td>
+<td align="right">50.43714</td>
+<td align="right">57.81714</td>
+<td align="right">0.5114176</td>
+<td align="right">9.328571</td>
+<td align="right">65.08143</td>
+<td align="right">50.86143</td>
+<td align="right">29</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">27</td>
+<td align="right">5</td>
+<td align="right">131</td>
+<td align="right">78.51714</td>
+<td align="right">0.1457256</td>
+<td align="right">21.328571</td>
+<td align="right">88.23714</td>
+<td align="right">71.44571</td>
+<td align="right">73.46429</td>
+<td align="right">0.0285996</td>
+<td align="right">18.335714</td>
+<td align="right">83.32571</td>
+<td align="right">66.50857</td>
+<td align="right">30</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">28</td>
+<td align="right">11</td>
+<td align="right">132</td>
+<td align="right">79.40429</td>
+<td align="right">0.1471598</td>
+<td align="right">20.014286</td>
+<td align="right">88.30143</td>
+<td align="right">71.93429</td>
+<td align="right">78.51714</td>
+<td align="right">0.1457256</td>
+<td align="right">21.328571</td>
+<td align="right">88.23714</td>
+<td align="right">71.44571</td>
+<td align="right">31</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">29</td>
+<td align="right">23</td>
+<td align="right">133</td>
+<td align="right">77.82286</td>
+<td align="right">0.2814119</td>
+<td align="right">20.464286</td>
+<td align="right">86.07714</td>
+<td align="right">71.83143</td>
+<td align="right">79.40429</td>
+<td align="right">0.1471598</td>
+<td align="right">20.014286</td>
+<td align="right">88.30143</td>
+<td align="right">71.93429</td>
+<td align="right">32</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">30</td>
+<td align="right">33</td>
+<td align="right">134</td>
+<td align="right">79.82857</td>
+<td align="right">0.0771373</td>
+<td align="right">19.514286</td>
+<td align="right">89.42000</td>
+<td align="right">71.15000</td>
+<td align="right">77.82286</td>
+<td align="right">0.2814119</td>
+<td align="right">20.464286</td>
+<td align="right">86.07714</td>
+<td align="right">71.83143</td>
+<td align="right">33</td>
+<td align="right">23</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">31</td>
+<td align="right">41</td>
+<td align="right">135</td>
+<td align="right">73.70857</td>
+<td align="right">0.0492970</td>
+<td align="right">13.850000</td>
+<td align="right">83.06857</td>
+<td align="right">66.08429</td>
+<td align="right">79.82857</td>
+<td align="right">0.0771373</td>
+<td align="right">19.514286</td>
+<td align="right">89.42000</td>
+<td align="right">71.15000</td>
+<td align="right">34</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">32</td>
+<td align="right">57</td>
+<td align="right">136</td>
+<td align="right">75.90714</td>
+<td align="right">0.1978629</td>
+<td align="right">17.550000</td>
+<td align="right">85.52429</td>
+<td align="right">68.79714</td>
+<td align="right">73.70857</td>
+<td align="right">0.0492970</td>
+<td align="right">13.850000</td>
+<td align="right">83.06857</td>
+<td align="right">66.08429</td>
+<td align="right">35</td>
+<td align="right">41</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">33</td>
+<td align="right">73</td>
+<td align="right">137</td>
+<td align="right">75.47000</td>
+<td align="right">0.5949947</td>
+<td align="right">18.485714</td>
+<td align="right">84.20000</td>
+<td align="right">68.37286</td>
+<td align="right">75.90714</td>
+<td align="right">0.1978629</td>
+<td align="right">17.550000</td>
+<td align="right">85.52429</td>
+<td align="right">68.79714</td>
+<td align="right">36</td>
+<td align="right">57</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">34</td>
+<td align="right">86</td>
+<td align="right">138</td>
+<td align="right">74.58286</td>
+<td align="right">0.1121485</td>
+<td align="right">16.492857</td>
+<td align="right">82.94000</td>
+<td align="right">65.84000</td>
+<td align="right">75.47000</td>
+<td align="right">0.5949947</td>
+<td align="right">18.485714</td>
+<td align="right">84.20000</td>
+<td align="right">68.37286</td>
+<td align="right">37</td>
+<td align="right">73</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">35</td>
+<td align="right">85</td>
+<td align="right">139</td>
+<td align="right">71.88286</td>
+<td align="right">0.0300056</td>
+<td align="right">15.457143</td>
+<td align="right">81.74429</td>
+<td align="right">65.49286</td>
+<td align="right">74.58286</td>
+<td align="right">0.1121485</td>
+<td align="right">16.492857</td>
+<td align="right">82.94000</td>
+<td align="right">65.84000</td>
+<td align="right">38</td>
+<td align="right">86</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">36</td>
+<td align="right">79</td>
+<td align="right">140</td>
+<td align="right">80.49714</td>
+<td align="right">0.0057087</td>
+<td align="right">20.728571</td>
+<td align="right">91.56714</td>
+<td align="right">71.62571</td>
+<td align="right">71.88286</td>
+<td align="right">0.0300056</td>
+<td align="right">15.457143</td>
+<td align="right">81.74429</td>
+<td align="right">65.49286</td>
+<td align="right">39</td>
+<td align="right">85</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">37</td>
+<td align="right">72</td>
+<td align="right">141</td>
+<td align="right">71.96000</td>
+<td align="right">0.3978630</td>
+<td align="right">16.642857</td>
+<td align="right">81.15286</td>
+<td align="right">65.50571</td>
+<td align="right">80.49714</td>
+<td align="right">0.0057087</td>
+<td align="right">20.728571</td>
+<td align="right">91.56714</td>
+<td align="right">71.62571</td>
+<td align="right">40</td>
+<td align="right">79</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">38</td>
+<td align="right">68</td>
+<td align="right">142</td>
+<td align="right">66.14857</td>
+<td align="right">0.1550057</td>
+<td align="right">12.071429</td>
+<td align="right">75.26429</td>
+<td align="right">58.79429</td>
+<td align="right">71.96000</td>
+<td align="right">0.3978630</td>
+<td align="right">16.642857</td>
+<td align="right">81.15286</td>
+<td align="right">65.50571</td>
+<td align="right">41</td>
+<td align="right">72</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">39</td>
+<td align="right">43</td>
+<td align="right">143</td>
+<td align="right">60.59429</td>
+<td align="right">1.2664236</td>
+<td align="right">13.307143</td>
+<td align="right">65.90429</td>
+<td align="right">55.78571</td>
+<td align="right">66.14857</td>
+<td align="right">0.1550057</td>
+<td align="right">12.071429</td>
+<td align="right">75.26429</td>
+<td align="right">58.79429</td>
+<td align="right">42</td>
+<td align="right">68</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">40</td>
+<td align="right">17</td>
+<td align="right">144</td>
+<td align="right">68.21857</td>
+<td align="right">0.0293026</td>
+<td align="right">16.128571</td>
+<td align="right">76.94857</td>
+<td align="right">59.25714</td>
+<td align="right">60.59429</td>
+<td align="right">1.2664236</td>
+<td align="right">13.307143</td>
+<td align="right">65.90429</td>
+<td align="right">55.78571</td>
+<td align="right">43</td>
+<td align="right">43</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">41</td>
+<td align="right">11</td>
+<td align="right">145</td>
+<td align="right">58.10000</td>
+<td align="right">0.1921261</td>
+<td align="right">7.100000</td>
+<td align="right">67.08714</td>
+<td align="right">51.20857</td>
+<td align="right">68.21857</td>
+<td align="right">0.0293026</td>
+<td align="right">16.128571</td>
+<td align="right">76.94857</td>
+<td align="right">59.25714</td>
+<td align="right">44</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">42</td>
+<td align="right">5</td>
+<td align="right">146</td>
+<td align="right">58.07429</td>
+<td align="right">0.2378235</td>
+<td align="right">9.242857</td>
+<td align="right">64.70857</td>
+<td align="right">51.05429</td>
+<td align="right">58.10000</td>
+<td align="right">0.1921261</td>
+<td align="right">7.100000</td>
+<td align="right">67.08714</td>
+<td align="right">51.20857</td>
+<td align="right">45</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">43</td>
+<td align="right">2</td>
+<td align="right">147</td>
+<td align="right">60.72286</td>
+<td align="right">0.0392857</td>
+<td align="right">8.614286</td>
+<td align="right">71.35571</td>
+<td align="right">50.93857</td>
+<td align="right">58.07429</td>
+<td align="right">0.2378235</td>
+<td align="right">9.242857</td>
+<td align="right">64.70857</td>
+<td align="right">51.05429</td>
+<td align="right">46</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<p>The first model is just the week as a linear and a second order term
+as well as year to predict mosquito counts, using a negative binomial
+model this time.</p>
+<pre class="r"><code>null_fit &lt;- MASS::glm.nb(count ~ week + I(week^2) + year, mosq_cases_temp)
+
+null_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">376.6600</td>
+<td align="right">106.1410</td>
+<td align="right">3.5487</td>
+<td align="right">4e-04</td>
+</tr>
+<tr class="even">
+<td align="left">week</td>
+<td align="right">3.0002</td>
+<td align="right">0.1619</td>
+<td align="right">18.5307</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="odd">
+<td align="left">I(week^2)</td>
+<td align="right">-0.0440</td>
+<td align="right">0.0024</td>
+<td align="right">-18.5946</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="right">-0.2093</td>
+<td align="right">0.0526</td>
+<td align="right">-3.9812</td>
+<td align="right">1e-04</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>null_fit |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">461.1903</td>
+<td align="right">45</td>
+<td align="right">-169.3198</td>
+<td align="right">348.6396</td>
+<td align="right">357.7829</td>
+<td align="right">45.8789</td>
+<td align="right">42</td>
+<td align="right">46</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(pred = predict(null_fit, type = &quot;response&quot;)) |&gt; 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred), color = &quot;#472D7BFF&quot;, size = 0.6)</code></pre>
+<p><img src="regression_models_files/figure-html/week%20year%20model-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(null_fit)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#472D7BFF&quot;) # null model works well</code></pre>
+<p><img src="regression_models_files/figure-html/week%20year%20model-2.png" width="672" /></p>
+<p>All predictors in the model are significant, with p values for first
+order week and second order week of 0 and 0, respectively. Year has a p
+value of 10^{-4}.</p>
+<p>When fitting the model to the data, we see that it also fits
+well.</p>
+<pre class="r"><code>ar_fit &lt;- MASS::glm.nb(count ~ lag_count, mosq_cases_temp)
+
+ar_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">2.6807</td>
+<td align="right">0.1546</td>
+<td align="right">17.3418</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0206</td>
+<td align="right">0.0025</td>
+<td align="right">8.3024</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ar_fit |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">98.4597</td>
+<td align="right">45</td>
+<td align="right">-206.6273</td>
+<td align="right">419.2545</td>
+<td align="right">424.7405</td>
+<td align="right">49.0993</td>
+<td align="right">44</td>
+<td align="right">46</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(pred = predict(ar_fit, type = &quot;response&quot;)) |&gt; 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred), color = &quot;#31688EFF&quot;, size = 0.6)</code></pre>
+<p><img src="regression_models_files/figure-html/lag%20count%20model-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(ar_fit)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#31688EFF&quot;) </code></pre>
+<p><img src="regression_models_files/figure-html/lag%20count%20model-2.png" width="672" /></p>
+<p>Next, we have a model with just the lagging count of mosquitoes. The
+estimated increase in counts based on the prior count of mosquitoes is
+0.0206 with a p value of 0. The lagging mosquito count is then a
+significant predictor of estimated mosquito counts, and the graph
+illustrates the model fits the observed points well, except for the
+peaks in the 2021 data.</p>
+<pre class="r"><code>ar_temp_fit &lt;- MASS::glm.nb(count ~ lag_count + lag_temp, mosq_cases_temp)
+
+ar_temp_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.1404</td>
+<td align="right">0.9371</td>
+<td align="right">-2.2840</td>
+<td align="right">0.0224</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0182</td>
+<td align="right">0.0021</td>
+<td align="right">8.6333</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">lag_temp</td>
+<td align="right">0.0665</td>
+<td align="right">0.0129</td>
+<td align="right">5.1451</td>
+<td align="right">0.0000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ar_temp_fit |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">145.0718</td>
+<td align="right">45</td>
+<td align="right">-196.4871</td>
+<td align="right">400.9742</td>
+<td align="right">408.2888</td>
+<td align="right">47.1966</td>
+<td align="right">43</td>
+<td align="right">46</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(
+    pred_ar = predict(ar_fit, type = &quot;response&quot;),
+    pred_ar_temp = predict(ar_temp_fit, type = &quot;response&quot;)
+  ) |&gt; 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 2) + 
+  geom_line(aes(y = pred_ar, color = &quot;AR&quot;), linetype = &quot;dashed&quot;, size = 0.6) +
+  geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;), linetype = &quot;solid&quot;, size = 0.6) +
+  scale_color_manual(name = &quot;models&quot;, values = c(&quot;AR&quot; = &quot;#31688EFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;))</code></pre>
+<p><img src="regression_models_files/figure-html/lag%20count%20temp%20model-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(ar_temp_fit)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#1F9A8AFF&quot;) </code></pre>
+<p><img src="regression_models_files/figure-html/lag%20count%20temp%20model-2.png" width="672" /></p>
+<p>Afterwards, a model that also has lagging average temperature has
+significant terms for both lagging temperature and lagging mosquito
+counts. The associated estimate for lagging count is now 0.0182, with a
+p value of 0. For lagging temperature, the estimate is 0.0665 , with a p
+value of 0. This model indicates lagging temperature has a larger effect
+on estimating mosquito counts than lagging mosquito counts. Compared to
+the model with just lagging mosquito counts, lagging mosquito counts has
+a slightly smaller effect on predicting counts in this model.</p>
+<p>Lastly, when we explored Poisson models, we had a saturated model
+that included precipitation as a predictor and found it was a
+considerably significant predictor with a larger effect size than the
+other predictors. However, since a Poisson regression is overdispersed
+for our data, we wanted to see if precipitation also has a considerable
+impact on predicting mosquito counts in a negative binomial regression
+model.</p>
+<pre class="r"><code>ar_temp_rain_fit &lt;- MASS::glm.nb(count ~ lag_count + lag_temp + lag_prcp, mosq_cases_temp)
+
+ar_temp_rain_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.6065</td>
+<td align="right">0.9698</td>
+<td align="right">-2.6878</td>
+<td align="right">0.0072</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0179</td>
+<td align="right">0.0021</td>
+<td align="right">8.6810</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">lag_temp</td>
+<td align="right">0.0717</td>
+<td align="right">0.0131</td>
+<td align="right">5.4620</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">lag_prcp</td>
+<td align="right">0.5452</td>
+<td align="right">0.3399</td>
+<td align="right">1.6038</td>
+<td align="right">0.1088</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ar_temp_rain_fit |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">152.2455</td>
+<td align="right">45</td>
+<td align="right">-195.2517</td>
+<td align="right">400.5035</td>
+<td align="right">409.6467</td>
+<td align="right">46.9848</td>
+<td align="right">42</td>
+<td align="right">46</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(
+    pred_null = predict(null_fit, type = &quot;response&quot;),
+    pred_ar_temp = predict(ar_temp_fit, type = &quot;response&quot;),
+    pred_ar_temp_rain = predict(ar_temp_rain_fit, type = &quot;response&quot;)
+  ) |&gt; 
+  ggplot(aes(x = weekyear, y = count)) +
+  geom_point(alpha = 0.5, size = 3) + 
+  geom_line(aes(y = pred_null, color = &quot;null&quot;), linetype = &quot;dotted&quot;, size = 1.9) +
+  geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;), linetype = &quot;solid&quot;, size = 0.6) +
+  geom_line(aes(y = pred_ar_temp_rain, color = &quot;AR+temp+rain&quot;), linetype = &quot;dashed&quot;, size = 0.6) +
+  scale_color_manual(name = &quot;models&quot;, values = c(&quot;null&quot; = &quot;#472D7BFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;, &quot;AR+temp+rain&quot; = &quot;#5DC863FF&quot;))</code></pre>
+<p><img src="regression_models_files/figure-html/lag%20count%20temp%20rain-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(ar_temp_rain_fit)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#5DC863FF&quot;) </code></pre>
+<p><img src="regression_models_files/figure-html/lag%20count%20temp%20rain-2.png" width="672" /></p>
+<p>For this model, the estimated coefficient for lagging mosquito counts
+is 0.0179, compared to its coefficient in the model without rain with
+0.0182. The p value for this estimate is 0, while it has a p value in
+the prior model of 0. With lagging average temperature, the estimate is
+now 0.0717 (p = 0 compared to 0.0665 (p = 0).</p>
+<p>The new term of lagging precipitation has an estimate of 0.5452 with
+a p value of 0.1088. Despite having a large effect size compared to the
+other predictors, it is now no longer a significant estimate in a
+negative binomial model. This is likely from adjusting for the
+overdispersion, which would have biased the standard error of the
+lagging precipitation estimate towards zero and artificially inflated
+the significance. In terms of model fit, including the lagging
+precipitation term only slightly improved model fit for 2023. As such,
+for maintaining parsimony, our final model only includes lagging average
+temperature and lagging mosquito counts, not lagging rain.</p>
+<pre class="r"><code># rain doesnt significantly contribute, but makes fit visually better
+# especially for 2023
+
+final_fit &lt;- ar_temp_fit
+
+final_fit |&gt; 
+  ggcoef_model(
+    variable_labels = c(
+      lag_count = &quot;Lagging \nmosquito count&quot;,
+      lag_temp = &quot;Lagging \naverage temperature&quot;
+    ),
+    signif_stars = FALSE
+    ) +
+    labs(
+      title = &quot;Predicted WNV+ mosquito counts in NYC&quot;,
+      x = &quot;Negative binomial regression estimated coefficients&quot;
+    )</code></pre>
+<p><img src="regression_models_files/figure-html/final%20model-1.png" width="672" /></p>
+<pre class="r"><code>augment_df &lt;- 
+  augment(final_fit) |&gt;
+  mutate(
+    id = row_number(),
+    avg_hat_2 = 2*mean(.hat),
+    avg_hat_3 = 3*mean(.hat),
+    influential = case_when(
+      .cooksd &gt; avg_hat_2 ~ 1,
+      .cooksd &gt; avg_hat_3 ~ 1,
+      .std.resid &gt; 2 ~ 1, 
+      .default = 0
+    )
+  ) |&gt; 
+  select(id, everything())</code></pre>
+<pre><code>## Warning: The `augment()` method for objects of class `negbin` is not maintained by the broom team, and is only supported through the `glm` tidier method. Please be cautious in interpreting and reporting broom output.
+## 
+## This warning is displayed once per session.</code></pre>
+<pre class="r"><code>avg_hat_2 &lt;- 
+  augment_df |&gt; 
+  pull(avg_hat_2) |&gt; 
+  nth(1)
+  
+avg_hat_3 &lt;-
+  augment_df |&gt; 
+  pull(avg_hat_3) |&gt; 
+  nth(1)
+  
+augment_df |&gt; 
+  ggplot(aes(x = .hat, y = .std.resid)) + 
+  geom_point(aes(size = .cooksd, color = .cooksd)) +
+  geom_hline(
+    yintercept = c(-2, 0, 2)
+  ) +
+  geom_vline(
+    xintercept = c(avg_hat_2, avg_hat_3)
+  ) +
+  guides(
+    color = &quot;none&quot;,
+    size = &quot;none&quot;
+  )</code></pre>
+<p><img src="regression_models_files/figure-html/influence%20analysis-1.png" width="672" /></p>
+<pre class="r"><code>augment_df |&gt; 
+  filter(influential == 1) |&gt; 
+  select(-c(id, starts_with(&quot;avg_hat&quot;), influential)) |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Count&quot;, &quot;Lagging count&quot;, &quot;Lagging temperature&quot;, &quot;Fitted&quot;, &quot;Residual&quot;, &quot;Hat&quot;, &quot;Sigma&quot;, &quot;Cook&#39;s distance&quot;, &quot;Studentized residuals&quot;)
+  )</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="5%" />
+<col width="12%" />
+<col width="18%" />
+<col width="6%" />
+<col width="8%" />
+<col width="6%" />
+<col width="6%" />
+<col width="14%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Count</th>
+<th align="right">Lagging count</th>
+<th align="right">Lagging temperature</th>
+<th align="right">Fitted</th>
+<th align="right">Residual</th>
+<th align="right">Hat</th>
+<th align="right">Sigma</th>
+<th align="right">Cook’s distance</th>
+<th align="right">Studentized residuals</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">152</td>
+<td align="right">60</td>
+<td align="right">72.7314</td>
+<td align="right">3.7853</td>
+<td align="right">3.1521</td>
+<td align="right">0.0254</td>
+<td align="right">0.9386</td>
+<td align="right">0.2133</td>
+<td align="right">3.1928</td>
+</tr>
+<tr class="even">
+<td align="right">77</td>
+<td align="right">152</td>
+<td align="right">76.8457</td>
+<td align="right">5.7297</td>
+<td align="right">-2.3341</td>
+<td align="right">0.2075</td>
+<td align="right">0.9798</td>
+<td align="right">0.2681</td>
+<td align="right">-2.6218</td>
+</tr>
+<tr class="odd">
+<td align="right">47</td>
+<td align="right">35</td>
+<td align="right">67.4214</td>
+<td align="right">2.9783</td>
+<td align="right">1.9720</td>
+<td align="right">0.0445</td>
+<td align="right">1.0133</td>
+<td align="right">0.1128</td>
+<td align="right">2.0174</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># car::influencePlot(final_fit) |&gt; 
+#  knitr::kable(col.names = c(&quot;Studentized residuals&quot;, &quot;Hat values (influence)&quot;, &quot;Cook&#39;s distance&quot;))</code></pre>
+<p>When looking at influential points in our dataset, there are 3
+different influential points that may warrant further analysis to see if
+omitting them alter the model parameter estimates.</p>
+<pre class="r"><code>influential_ids &lt;- 
+  augment_df |&gt; 
+  filter(influential == 1) |&gt; 
+  pull(id)
+
+final_fit_omitted &lt;-
+  mosq_cases_temp |&gt; 
+  select(id, count, lag_count, everything()) |&gt; 
+  filter(!(id %in% influential_ids)) |&gt; 
+  MASS::glm.nb(count ~ lag_count + lag_temp, data = _)
+  
+final_fit |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.1404</td>
+<td align="right">0.9371</td>
+<td align="right">-2.2840</td>
+<td align="right">0.0224</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0182</td>
+<td align="right">0.0021</td>
+<td align="right">8.6333</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">lag_temp</td>
+<td align="right">0.0665</td>
+<td align="right">0.0129</td>
+<td align="right">5.1451</td>
+<td align="right">0.0000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>final_fit |&gt; 
+  ggcoef_model(
+    variable_labels = c(
+      lag_count = &quot;Lagging \nmosquito count&quot;,
+      lag_temp = &quot;Lagging \naverage temperature&quot;
+    ),
+    signif_stars = FALSE
+    ) +
+    labs(
+      title = &quot;Predicted WNV+ mosquito counts in NYC&quot;,
+      x = &quot;Negative binomial regression estimated coefficients&quot;
+    )</code></pre>
+<p><img src="regression_models_files/figure-html/omit%20influential%20points-1.png" width="672" /></p>
+<pre class="r"><code>final_fit_omitted |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  ) </code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.8242</td>
+<td align="right">0.7706</td>
+<td align="right">-3.6652</td>
+<td align="right">2e-04</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0194</td>
+<td align="right">0.0018</td>
+<td align="right">11.0384</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="odd">
+<td align="left">lag_temp</td>
+<td align="right">0.0740</td>
+<td align="right">0.0105</td>
+<td align="right">7.0591</td>
+<td align="right">0e+00</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>final_fit_omitted |&gt; 
+  ggcoef_model(
+    variable_labels = c(
+      lag_count = &quot;Lagging \nmosquito count&quot;,
+      lag_temp = &quot;Lagging \naverage temperature&quot;
+    ),
+    signif_stars = FALSE
+    ) +
+    labs(
+      title = &quot;Predicted WNV+ mosquito counts in NYC&quot;,
+      x = &quot;Negative binomial regression estimated coefficients&quot;
+    )</code></pre>
+<p><img src="regression_models_files/figure-html/omit%20influential%20points-2.png" width="672" /></p>
+<p>When omitting the influential points, the lagging count estimate does
+not change much, going from 0.0182 to 0.0194. The lagging temperature
+estimate does change a bit, changing from 0.0665 to 0.0194.</p>
+<pre class="r"><code>pred_vals_omit &lt;-
+  mosq_cases_temp |&gt; 
+  filter(!(id %in% influential_ids)) |&gt;  
+  cbind( 
+    pred_fin_omit = predict(final_fit_omitted, type = &quot;response&quot;)
+  ) |&gt; 
+  select(id, count, pred_fin_omit)
+
+pred_vals &lt;-
+  mosq_cases_temp |&gt; 
+  cbind(
+    pred_fin = predict(final_fit, type = &quot;response&quot;)
+  ) |&gt; 
+  select(id, count, pred_fin)
+
+inner_join(pred_vals, pred_vals_omit, by = join_by(id)) |&gt; 
+  select(-ends_with(&quot;.y&quot;)) |&gt;
+  rename(count = count.x) |&gt; 
+  ggplot(aes(x = count, y = pred_fin)) +
+  geom_point(color = &quot;#404788FF&quot;) +
+  geom_point(aes(y = pred_fin_omit), color = &quot;#55C667FF&quot;) +
+  labs(
+    y = &quot;Predicted values&quot;,
+    x = &quot;Observed values&quot;
+  )</code></pre>
+<p><img src="regression_models_files/figure-html/predicted%20vals-1.png" width="672" />
+When plotting predicted values from both models for a given observed
+count, the values do not seem to differ much either, especially for
+smaller observed values. These influential points therefore do not seem
+to be weighing the model heavily.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
