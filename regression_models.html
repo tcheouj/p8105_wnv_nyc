@@ -1008,7 +1008,7 @@ significantly improve model prediction.</p>
   mutate(monthyear = (year - 2021)*12 + month) |&gt; 
   ggplot(aes(x = monthyear, y = count)) +
   geom_point(alpha = 0.5) +
-  geom_line(aes(y = pred), color = &quot;#365D8DFF&quot;, size = 0.6)</code></pre>
+  geom_line(aes(y = pred, group = year), color = &quot;#365D8DFF&quot;, size = 0.6)</code></pre>
 <p><img src="regression_models_files/figure-html/poisson%20overdispersion-1.png" width="672" /></p>
 <pre class="r"><code>mosq_month_year |&gt; 
   cbind(
@@ -1050,8 +1050,8 @@ rejecting the null hypothesis and indicating our model is overdispersed
 for our data. This suggests we may need to use a different model that
 accounts for dispersion, like a negative binomial model.</p>
 </div>
-<div id="model-with-week-and-temperature" class="section level1">
-<h1>Model with week and temperature</h1>
+<div id="model-with-week-and-year" class="section level1">
+<h1>Model with week and year</h1>
 <p>To create a model that includes week as a parameter, we need
 aggregated mosquito counts by year and week. This is done again by
 <code>mutate</code> to make year and week variables, creating a variable
@@ -2092,7 +2092,7 @@ null_fit |&gt;
   cbind(pred = predict(null_fit, type = &quot;response&quot;)) |&gt; 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred), color = &quot;#472D7BFF&quot;, size = 0.6)</code></pre>
+  geom_line(aes(y = pred, group = year), color = &quot;#472D7BFF&quot;, size = 0.6)</code></pre>
 <p><img src="regression_models_files/figure-html/week%20year%20model-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 
   cbind(resid = resid(null_fit)) |&gt; 
@@ -2104,6 +2104,18 @@ order week and second order week of 0 and 0, respectively. Year has a p
 value of 10^{-4}.</p>
 <p>When fitting the model to the data, we see that it also fits
 well.</p>
+</div>
+<div id="fitting-temperature" class="section level1">
+<h1>Fitting temperature</h1>
+<p>Before we continue, we note another regression assumption may be
+violated. A standard generalized linear model assumes that the samples
+are independent. In most situations this assumption is trivial, but in
+our case it becomes an issue. Since mosquitoes reproduce, mosquito
+incidence in a sufficiently short time period is highly dependent on the
+incidence in a previous time period. The null model is essentially
+guessing this effect based on the average in the other years. This leads
+to an inappropriate fit for the data in 2021. To address this problem,
+we fit an autoregressive model based on the previous week.</p>
 <pre class="r"><code>ar_fit &lt;- MASS::glm.nb(count ~ lag_count, mosq_cases_temp)
 
 ar_fit |&gt; 
@@ -2185,14 +2197,14 @@ ar_fit |&gt;
   cbind(pred = predict(ar_fit, type = &quot;response&quot;)) |&gt; 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred), color = &quot;#31688EFF&quot;, size = 0.6)</code></pre>
+  geom_line(aes(y = pred, group = year), color = &quot;#31688EFF&quot;, size = 0.6)</code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20model-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 
   cbind(resid = resid(ar_fit)) |&gt; 
   ggplot(aes(x = count, y = resid)) +
   geom_point(color = &quot;#31688EFF&quot;) </code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20model-2.png" width="672" /></p>
-<p>Next, we have a model with just the lagging count of mosquitoes. The
+<p>Now, we have a model with just the lagging count of mosquitoes. The
 estimated increase in counts based on the prior count of mosquitoes is
 0.0206 with a p value of 0. The lagging mosquito count is then a
 significant predictor of estimated mosquito counts, and the graph
@@ -2289,8 +2301,8 @@ ar_temp_fit |&gt;
   ) |&gt; 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred_ar, color = &quot;AR&quot;), linetype = &quot;dashed&quot;, size = 0.6) +
-  geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;), linetype = &quot;solid&quot;, size = 0.6) +
+  geom_line(aes(y = pred_ar, color = &quot;AR&quot;, group = year), linetype = &quot;dashed&quot;, size = 0.6) +
+  geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;, group = year), linetype = &quot;solid&quot;, size = 0.6) +
   scale_color_manual(name = &quot;models&quot;, values = c(&quot;AR&quot; = &quot;#31688EFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;))</code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20temp%20model-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 
@@ -2305,7 +2317,9 @@ p value of 0. For lagging temperature, the estimate is 0.0665 , with a p
 value of 0. This model indicates lagging temperature has a larger effect
 on estimating mosquito counts than lagging mosquito counts. Compared to
 the model with just lagging mosquito counts, lagging mosquito counts has
-a slightly smaller effect on predicting counts in this model.</p>
+a slightly smaller effect on predicting counts in this model. Note the
+addition of the temperature variable improves the prediction notably for
+2021.</p>
 <p>Lastly, when we explored Poisson models, we had a saturated model
 that included precipitation as a predictor and found it was a
 considerably significant predictor with a larger effect size than the
@@ -2412,9 +2426,9 @@ ar_temp_rain_fit |&gt;
   ) |&gt; 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 3) + 
-  geom_line(aes(y = pred_null, color = &quot;null&quot;), linetype = &quot;dotted&quot;, size = 1.9) +
-  geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;), linetype = &quot;solid&quot;, size = 0.6) +
-  geom_line(aes(y = pred_ar_temp_rain, color = &quot;AR+temp+rain&quot;), linetype = &quot;dashed&quot;, size = 0.6) +
+  geom_line(aes(y = pred_null, color = &quot;null&quot;, group = year), linetype = &quot;dotted&quot;, size = 1.9) +
+  geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;, group = year), linetype = &quot;solid&quot;, size = 0.6) +
+  geom_line(aes(y = pred_ar_temp_rain, color = &quot;AR+temp+rain&quot;, group = year), linetype = &quot;dashed&quot;, size = 0.6) +
   scale_color_manual(name = &quot;models&quot;, values = c(&quot;null&quot; = &quot;#472D7BFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;, &quot;AR+temp+rain&quot; = &quot;#5DC863FF&quot;))</code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20temp%20rain-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 

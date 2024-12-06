@@ -146,6 +146,7 @@ wnv_cases <- read_csv("data/wnv_cases.csv") |>
 
 hvi_zcta <- read_csv("https://data.cityofnewyork.us/resource/4mhf-duep.csv")  |> 
   rename(zip_code = zcta20)
+write_csv(hvi_zcta, "cleaned_data/hvi_zcta.csv")
 
 inner_join(wnv_mosquito_detection, hvi_zcta, by = join_by(zip_code)) |> 
   group_by(hvi) |> 

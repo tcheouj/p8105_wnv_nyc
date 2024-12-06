@@ -17,7 +17,7 @@ zip_nbhd <- read_html("https://p8105.com/data/zip_codes.html") |>
     "New York" = "Manhattan",
     "Richmond" = "Staten Island"
   ))) |>
-  select(zip_code, neighborhood)
+  select(zip_code, neighborhood, borough)
 
 
 ## 2021 - 2023 are simple HTML tables
@@ -32,17 +32,10 @@ mosquitoes_2021_url <- "https://www.nyc.gov/site/doh/health/health-topics/west-n
 ## After getting it in a readable state (minus the neighborhoods)
 
 ### 2024
-mosquitoes_2024_table <- 
-  read_csv("data/mosquitoes_2024.csv") |>
+mosquitoes_2024_table <- read_csv("data/mosquitoes_2024.csv") |>
   pivot_longer(cols = starts_with("date"), values_to = "date") |>
-  select(-name, -detection_type) |> 
-  mutate(
-    date = case_match(
-      date,
-      "8/5/5024" ~ "8/5/2024",
-      .default = date
-    ),
-    date = lubridate::mdy(date)) |> 
+  select(-name, -detection_type) |>
+  mutate(date = lubridate::mdy(date)) |>
   na.omit()
 
 ### 2023
