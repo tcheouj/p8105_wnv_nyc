@@ -750,3 +750,21 @@ augment_df |>
 ```
 
 Again, we look for influential outliers and see whether they made a difference in the analysis. Comparing influence versus standardized residual shows better performance than the linear count model.
+
+# Final Model
+```{r}
+final_fit_quadratic_counts |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+final_fit_quadratic_counts |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+```
+
