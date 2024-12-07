@@ -36,13 +36,13 @@ We hypothesize that ***between the years of 2021 to 2024, the NYC boroughs with 
 
 We utilized the [Supplmentary Dataset of NYC Zip Codes](https://p8105.com/data/zip_codes.html) that was provided on our P8105 class website, which includes information on *NYC zip codes, boroughs*, and *neighborhoods*.
 
-We located the [NYC Heat Vulnerability Index (HVI)](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary) through the NYC Department of Health and Mental Hygiene (DOHMH) Environment and Health Data Portal. We also utilized [Zip Code Tabulated Area Level HVI](https://catalog.data.gov/dataset/heat-vulnerability-index-rankings) data, which is designed to approximate zip codes and works well with merging this data with our other datasets. The HVI shows the risk of community-level health impacts due to extreme heat and includes factors such as surface temperatures, green spaces, access to home air conditioning, median income, and the percentage of residents who are low-income or non-Latinx Black (who are often excluded from heat resources). Neighborhoods with a **HVI score of 1** have the lowest risk while those with a **HVI score of 5** have the highest risk.
+We located the [NYC Heat Vulnerability Index (HVI)](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary) through the NYC DOHMH Environment and Health Data Portal. We also utilized [Zip Code Tabulated Area Level HVI](https://catalog.data.gov/dataset/heat-vulnerability-index-rankings) data, which is designed to approximate zip codes and works well with merging HVI scores with our other datasets. The HVI shows the risk of community-level health impacts due to extreme heat and includes factors such as surface temperatures, green spaces, access to home air conditioning, median income, and the percentage of residents who are low-income or non-Latinx Black (who are often excluded from heat resources). Neighborhoods with a **HVI score of 1** have the lowest risk while those with a **HVI score of 5** have the highest risk.
 
 Data from the [West Nile Virus Mosquito Activity reports](https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page) was used to show the detection of positive mosquitoes for West Nile virus in various NYC neighborhoods. Further, we used geographic files for [Modified ZIP Code Tabulation Areas (MODZCTA)](https://github.com/nychealth/coronavirus-data/tree/master/Geography-resources) to create the NYC maps. All data is provided by the NYC DOHMH. More information on how this mosquito surveillance is conducted by the NYC DOHMH can be found [here](https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2023/wnvplan2023.pdf).
 
 We located the [West Nile Virus NYC Human Cases](https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2024/wnvplan2024.pdf) through the *2024 NYC DOHMH Comprehensive Mosquito Surveillance and Control Plan*. The report provides the number of West Nile virus human cases in NYC between 1999-2023, separated by borough.
 
-The [Global Surface Summary of the Day (GSOD) package](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) contains global daily average weather observations from weather stations. A `GSODR` package exists where we can load in data from specific stations and select various weather measurements. Our indicators include: mean temperature, dew point temperature, sea level pressure, station pressure, visibility, wind speed, gust, precipitation amount, and snow depth. This data is provided by the National Oceanic and Atmospheric Administration.
+The [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516) contains global daily average weather observations from weather stations. A `GSODR` package exists where we can load in data from specific stations and select various weather measurements. Our indicators include: mean temperature, dew point temperature, sea level pressure, station pressure, visibility, wind speed, gust, precipitation amount, and snow depth. This data is provided by the National Oceanic and Atmospheric Administration.
 
 ### Cleaning
 
@@ -50,13 +50,13 @@ The [Global Surface Summary of the Day (GSOD) package](https://www.ncei.noaa.gov
 
 The supplementary zip codes dataset was imported using `read_html` and initially cleaned using `janitor::clean_names`. We filtered the dataset to only include zip codes within NYC, used a mutate step to change borough names to: *Brooklyn*, *Manhattan*, and *Staten Island*, and only selected relevant variables: *zip_code*, *borough*, and *neighborhood*.
 
-**Positive Mosquitoes Detected with West Nile Virus Datsets (2021-2024)**
+**Positive Mosquitoes Detected with West Nile Virus in NYC Datsets (2021-2024)**
 
-For the years 2021-2023, the datasets provided by the NYC DOHMH are simple html tables that were imported using `read_html` and cleaned using `janitor::clean_names`. Zip codes for each detection of positive mosquitoes on a specific day are listed and separated by commas. To clean this, we used multiple `separate_longer_delim` steps to separate each positive mosquito detection into a separate observation, while keeping the corresponding detection date. 
+For the years 2021-2023, the datasets provided by the NYC DOHMH are simple html tables that were imported using `read_html` and cleaned using `janitor::clean_names`. Zip codes for each detection of WNV-positive mosquitoes on a specific day are listed and separated by commas. To clean this, we used multiple `separate_longer_delim` steps to separate each positive mosquito detection into a separate observation, while keeping the corresponding detection date. 
 
-For the year 2024, a .csv file was imported using `read_csv` and reshaped using `pivot_longer` to consolidate all positive mosquito detection dates into a single `date` column.
+For the year 2024, a .csv file was imported using `read_csv` and reshaped using `pivot_longer` to consolidate all WNV-positive mosquito detection dates into a single `date` column.
 
-For all datasets, we reformatted the `zip_code` column to integers and the `date` column to a date object, corrected any zip code and date entry errors, and removed unnecessary columns and N/A values.
+For all datasets, we reformatted the `zip_code` column to integers and the `date` column to a date object (yyyy-mm-dd), corrected any zip code and date entry errors, and removed unnecessary columns and N/A values. As a result, each row now represents a single WNV-positive mosquito detected in a specific zip code/borough/neighborhood on a specific date. 
 
 **NYC Positive Cases of West Nile Virus Dataset (1999-2023)**
 
@@ -64,40 +64,44 @@ Data was downloaded as a .csv file, imported using `read_csv`, and initially cle
 
 **NYC Heat Vulnerability Index Dataset**
 
-This dataset was already in a tidy format after downloading. We simply imported the dataset using `read_csv` and applied `janitor::clean_names` for consistency. 
+This dataset was already in a tidy format after downloading (thank you NYC DOHMH Environment and Health!!). We simply imported the dataset using `read_csv` and applied `janitor::clean_names` for consistency. Our columns include: `zip_codes` and `hvi` scores.
 
 **GSODR Dataset**
 
-We identified Bushwick, Brooklyn as the geographical center of NYC. We loaded the `GSODR` package and used the `nearest_stations` function to identify weather stations surrounding the longitude and latitude coordinates of Bushwick. We used a 20 mile radius to capture stations in all boroughs. We then filtered out stations not in NYC and those without 2021-2024 weather data. This left us with only 5 stations: **Wall St**, **LGA**, **Central Park**, **JFK**, and **The Battery**.
+Through online research, we identified Bushwick, Brooklyn as the geographical center of NYC. We loaded the `GSODR` package and used the `nearest_stations` function to identify weather stations surrounding the longitude and latitude coordinates of Bushwick. We used a 20-mile radius to capture stations across all boroughs. We then filtered out stations not in NYC and those without 2021-2024 weather data. This left us with only 5 stations: **Wall St**, **LGA**, **Central Park**, **JFK**, and **The Battery**.
 
-We pulled weather data between 2021-2024 from the 5 weather stations using `get_GSOD`, applied `janitor::cleannames`, and selected these variables: `station name`, `latitude` and `longitude`, date (`yearmoda`) mean temperature (`temp`), mean precipitation (`prcp`), mean dew point (`dewp`) (to get an idea of water content in the air), and `max` and `min` temperature. Finally, we applied a series of mutate steps to convert temperature measurements to Fahrenheit, precipitation to inches, and renamed weather stations to more intuitive names.
+We pulled weather data between 2021-2024 from the 5 weather stations using `get_GSOD`, applied `janitor::cleannames`, and selected these variables: `station name`, `latitude` and `longitude`, date (`yearmoda`) mean temperature (`temp`), mean precipitation (`prcp`), mean dew point (`dewp`) (to get an idea of water content in the air), and `max` and `min` temperature. Finally, we applied a series of mutate steps to convert temperature measurements to Fahrenheit, precipitation measures to inches, and renamed weather stations to more intuitive names.
 
 
 
 ### Merging
 
-To integrate our datasets, we utilized the shared `zip_code` variable as a key for merging. This allowed us to successfully combine WNV-positive mosquito datasets (2021–2024), HVI scores, and MODZCTA shape files. For the mosquito data, we ensured that zip codes without mosquito detection were assigned a value of zero.
+To combine our datasets, we utilized the shared `zip_code` variable as a key for merging. This allowed us to successfully combine WNV-positive mosquito datasets (2021–2024), HVI scores, and MODZCTA shape files. For the mosquito data, we ensured that zip codes without mosquito detection were assigned a value of zero.
 
 Our relevant variables for our datasets include:
 
 **WNV+ Mosquito Data**
-* `zip_code`: The zip code within NYC in which the WNV+ mosquitoes was detected
-* `borough`: The NYC borough (Brooklyn, Manhattan, Bronx, Staten Island, or Queens) corresponding to the zip code's location. 
+
+* `zip_code`: The zip code within NYC in which the WNV+ mosquitoes were detected
+* `borough`: The NYC borough (Brooklyn, Manhattan, Bronx, Staten Island, or Queens) corresponding to the zip code location. 
 * `date`: The date in which the WNV+ mosquito was detected within a specific zip code.
 * `count`: The number of WNV+ mosquitoes detected within a specific zip code.
 * `neighborhood`: The name of the NYC neighborhood in which the WNV+ mosquito was detected.
 * `hvi`: The HVI score (ranging from 1-5)
 
 **GSODR**
+
 * `name`: The name of the NYC weather station
 * `latitude`: Latitude coordinate of the weather station
-* `longtitude`: Longitude coordinate of the weather weation
+* `longtitude`: Longitude coordinate of the weather station
 * `yearmoda`: year of the weather station data that was pulled
 * `temp`: mean temperature (Fahrenheit)
 * `max`: maximum temperature measured (Fahrenheit)
 * `min`: minimum temperature measured (Fahrenheit)
 * `prcp`: mean precipitation (inches)
 * `dewp`: mean dew point (Fahrenheit)
+
+Our datasets are now ready for analysis!
 
 
 ## Exploratory Analysis
