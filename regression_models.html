@@ -255,13 +255,13 @@ $(document).ready(function () {
   <a href="about.html">About</a>
 </li>
 <li>
+  <a href="report.html">Report</a>
+</li>
+<li>
   <a href="data_exploration.html">Data Exploration</a>
 </li>
 <li>
   <a href="regression_models.html">Data Analysis</a>
-</li>
-<li>
-  <a href="report.html">Report</a>
 </li>
 <li>
   <a href="https://jt3466.shinyapps.io/nyc_wnv/">Dashboard</a>
@@ -597,8 +597,8 @@ by 1 month, with a p value of 0.0022.</p>
 <pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning
+## was generated.</code></pre>
 <p><img src="regression_models_files/figure-html/month%20model%20fit-1.png" width="672" /></p>
 <p>However, despite a significant model, the model does not fit our
 dataset well, so it is not useful in predicting counts. When plotting
@@ -1097,8 +1097,8 @@ mosq_cases &lt;-
   group_by(year, week) |&gt;
   summarise(count = n()) |&gt;
   mutate(weekyear = (year - 2021)*52 + week) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
+## the `.groups` argument.</code></pre>
 <pre class="r"><code>weekly_weather &lt;- 
   day_weather |&gt;
   mutate(
@@ -1117,8 +1117,8 @@ mosq_cases &lt;-
          lag_max =  lag(avg_max),
          lag_min =  lag(avg_min)) |&gt;
   mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
+## the `.groups` argument.</code></pre>
 <pre class="r"><code>mosq_cases_temp &lt;- 
   mosq_cases |&gt;
   left_join(y = weekly_weather, by = join_by(weekyear)) |&gt;
