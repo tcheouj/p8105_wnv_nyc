@@ -336,6 +336,8 @@ Our datasets are now ready for exploration and analysis!
   
 ## **Data Exploration**
 
+***NOTE: For more information on the code we used, please visit the [Data Exploration](data_exploration.html) page on our website.*** 
+
 ### Comparing Temperature Data Across Weather Stations
 
 We first wanted to look at which weather station to use for our temperature analysis as we were curious of whether there were any variations between temperature data from these 5 stations. We plotted the temperature data between 2021 and 2024. 
@@ -452,14 +454,17 @@ mosquitoes_2024_table |>
 The figures show that there are drastic differences in the counts of WNV-positive mosquitoes between boroughs. Queens consistently had the highest counts of WNV-positive mosquitoes compared to the other boroughs across all years, while Manhattan had the lowest counts of WNV-positive mosquitoes. 
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-wnv_mosquito_detection |> 
-  mutate(count = 1) |> 
-  group_by(date) |> 
-  summarize(
-    count = sum(count)
-  ) |> 
-  ggplot(aes(x = date, y = count)) +
-  geom_point()
+wnv_mosquitoes <- read_csv("cleaned_data/wnv_mosquitoes.csv")
+
+wnv_mosquitoes |>
+  mutate(
+    year = lubridate::year(date),
+    week = lubridate::week(date)) |>
+  group_by(year, week) |>
+  summarise(count = n()) |>
+  mutate(weekyear = (year - 2021)*52 + week) |> 
+ggplot(aes(x = weekyear, y = count)) +
+geom_point()
 ```
 
 Further, when boroughs are grouped together, we see that the number of WNV-positive mosquitoes peaked in 2021, followed by a decline in 2022 and 2023. There is a slight increase in the counts peak in the year 2024.
@@ -579,6 +584,7 @@ mos_by_modzcta |>
 ```
 
 Interestingly, from the figure, we found that there are zip codes in Queens and Staten Island that appear to have an increase in the number of mosquitoes positive for WNV from 2021 to 2024. Manhattan, Brooklyn, and the Bronx remained relatively low.  
+
 
 ## **Data Analysis**
 

@@ -5,11 +5,16 @@ output:
     code_folding: hide
 ---
 
-```{r setup, include=FALSE}
+```{r setup, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(modelr)
 library(broom)
+library(rvest)
+library(httr)
+library(GSODR)
+library(sf)
+library(patchwork)
 library(car)
 library(GGally)
 library(broom.helpers)
