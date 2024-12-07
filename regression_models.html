@@ -493,7 +493,8 @@ mosq_count_by_month |&gt;
   geom_bar(stat = &quot;identity&quot;, fill = &quot;#440154FF&quot;) +
   guides(
     fill = &quot;none&quot;
-  )</code></pre>
+  ) +
+  labs(title = &quot;Count by Month&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/month%20data-1.png" width="672" /></p>
 <p>As shown on the table, the bulk of the counts are in the middle of
 summer in August, with 1282 mosquitoes, tapering off towards the
@@ -584,15 +585,8 @@ by 1 month, with a p value of 0.0022.</p>
   cbind(pred = predict(fit2, type = &quot;response&quot;)) |&gt; 
   ggplot(aes(x = month, y = count)) +
   geom_point(color = &quot;#404688FF&quot;, alpha = 0.5) + 
-  geom_line(aes(y = pred), size = 0.6)</code></pre>
-<<<<<<< HEAD
-<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning
-## was generated.</code></pre>
-=======
->>>>>>> 778e9eb89932adbb585a07d180fadd2f494b4e44
+  geom_line(aes(y = pred), size = 0.6) +
+  labs(title = &quot;Prediction of Linear Month Model&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/month%20model%20fit-1.png" width="672" /></p>
 <p>However, despite a significant model, the model does not fit our
 dataset well, so it is not useful in predicting counts. When plotting
@@ -690,7 +684,8 @@ respectively.</p>
   cbind(pred = predict(fit3, type = &quot;response&quot;)) |&gt; 
   ggplot(aes(x = month, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred), color = &quot;#3B528BFF&quot;, size = 0.6)</code></pre>
+  geom_line(aes(y = pred), color = &quot;#3B528BFF&quot;, size = 0.6)  +
+  labs(title = &quot;Prediction of Quadratic Month Model&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/linear%20and%20quadratic%20month%20fit-1.png" width="672" /></p>
 <p>With an included second order term for month, our predicted values
 better fit the observed values, depicting the parabolic shape of the
@@ -997,12 +992,46 @@ fit3.5 |&gt;
 </tbody>
 </table>
 <pre class="r"><code>anova(fit3.5, fit4) |&gt; 
-  tidy()</code></pre>
-<pre><code># A tibble: 2 × 6
-  term                      df.residual residual.deviance    df deviance p.value
-  &lt;chr&gt;                           &lt;dbl&gt;             &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-1 count ~ month + I(month^…          16              676.    NA    NA     NA    
-2 count ~ month + I(month^…          15              674.     1     2.12   0.145</code></pre>
+  tidy() |&gt;
+  knitr::kable()</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="39%" />
+<col width="13%" />
+<col width="20%" />
+<col width="3%" />
+<col width="10%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">df.residual</th>
+<th align="right">residual.deviance</th>
+<th align="right">df</th>
+<th align="right">deviance</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">count ~ month + I(month^2)</td>
+<td align="right">16</td>
+<td align="right">675.8574</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">count ~ month + I(month^2) + year</td>
+<td align="right">15</td>
+<td align="right">673.7356</td>
+<td align="right">1</td>
+<td align="right">2.121774</td>
+<td align="right">0.1452183</td>
+</tr>
+</tbody>
+</table>
 <p>In the model with year as a predictor, year is not significantly
 predicting mosquito counts, with a p value of 0.1453. When conducting a
 chi-squared test to determine whether the addition of year is
@@ -1023,7 +1052,9 @@ significantly improve model prediction.</p>
   ) |&gt; 
   ggplot(aes(x = pred, y = resid)) +
   geom_point(color = &quot;#31688EFF&quot;,, size = 3) + 
-  geom_hline(yintercept = 0)</code></pre>
+  geom_hline(yintercept = 0)  +
+  labs(title = &quot;Prediction of Month + Year Model&quot;,
+       x = &quot;Months Since January 2021&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/poisson%20overdispersion-2.png" width="672" /></p>
 <pre class="r"><code>performance::check_overdispersion(fit4) </code></pre>
 <pre><code># Overdispersion test
@@ -1089,16 +1120,9 @@ mosq_cases &lt;-
     week = lubridate::week(date)) |&gt;
   group_by(year, week) |&gt;
   summarise(count = n()) |&gt;
-<<<<<<< HEAD
-  mutate(weekyear = (year - 2021)*52 + week) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
-## the `.groups` argument.</code></pre>
-<pre class="r"><code>weekly_weather &lt;- 
-=======
   mutate(weekyear = (year - 2021)*52 + week) 
   
 weekly_weather &lt;- 
->>>>>>> 778e9eb89932adbb585a07d180fadd2f494b4e44
   day_weather |&gt;
   mutate(
     year = lubridate::year(date),
@@ -1115,16 +1139,9 @@ weekly_weather &lt;-
          lag_dewp = lag(avg_dewp),
          lag_max =  lag(avg_max),
          lag_min =  lag(avg_min)) |&gt;
-<<<<<<< HEAD
-  mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
-## the `.groups` argument.</code></pre>
-<pre class="r"><code>mosq_cases_temp &lt;- 
-=======
   mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021
 
 mosq_cases_temp &lt;- 
->>>>>>> 778e9eb89932adbb585a07d180fadd2f494b4e44
   mosq_cases |&gt;
   left_join(y = weekly_weather, by = join_by(weekyear)) |&gt;
   select(-ends_with(&quot;.y&quot;)) |&gt;
@@ -1390,12 +1407,16 @@ null_fit |&gt;
   cbind(pred = predict(null_fit, type = &quot;response&quot;)) |&gt; 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred, group = year), color = &quot;#472D7BFF&quot;, size = 0.6)</code></pre>
+  geom_line(aes(y = pred, group = year), color = &quot;#472D7BFF&quot;, size = 0.6)   +
+  labs(title = &quot;Prediction of Week + Year Model&quot;,
+       x = &quot;Weeks Since January 2021&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/week%20year%20model-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 
   cbind(resid = resid(null_fit)) |&gt; 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = &quot;#472D7BFF&quot;) # null model works well</code></pre>
+  geom_point(color = &quot;#472D7BFF&quot;)   +
+  labs(title = &quot;Residual vs Prediction of Month + Year Model&quot;,
+       x = &quot;Count&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/week%20year%20model-2.png" width="672" /></p>
 <p>All predictors in the model are significant, with p values for first
 order week and second order week of 0 and 0, respectively. Year has a p
@@ -1496,12 +1517,15 @@ ar_fit |&gt;
   cbind(pred = predict(ar_fit, type = &quot;response&quot;)) |&gt; 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred, group = year), color = &quot;#31688EFF&quot;, size = 0.6)</code></pre>
+  geom_line(aes(y = pred, group = year), color = &quot;#31688EFF&quot;, size = 0.6) +
+  labs(title = &quot;Prediction of Autoregressive Count Model&quot;,
+       x = &quot;Weeks Since January 2021&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20model-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 
   cbind(resid = resid(ar_fit)) |&gt; 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = &quot;#31688EFF&quot;) </code></pre>
+  geom_point(color = &quot;#31688EFF&quot;) +
+  labs(title = &quot;Residuals vs Prediction of Autoregressive Count Model&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20model-2.png" width="672" /></p>
 <p>Now, we have a model with just the lagging count of mosquitoes. The
 estimated increase in counts based on the prior count of mosquitoes is
@@ -1603,12 +1627,15 @@ ar_temp_fit |&gt;
   geom_point(alpha = 0.5, size = 2) + 
   geom_line(aes(y = pred_ar, color = &quot;AR&quot;, group = year), linetype = &quot;dashed&quot;, size = 0.6) +
   geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;, group = year), linetype = &quot;solid&quot;, size = 0.6) +
-  scale_color_manual(name = &quot;models&quot;, values = c(&quot;AR&quot; = &quot;#31688EFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;))</code></pre>
+  scale_color_manual(name = &quot;models&quot;, values = c(&quot;AR&quot; = &quot;#31688EFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;)) +
+  labs(title = &quot;Comparing AR Model with AR + Temperature Effect&quot;,
+       x = &quot;Weeks Since January 2021&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20temp%20model-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 
   cbind(resid = resid(ar_temp_fit)) |&gt; 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = &quot;#1F9A8AFF&quot;) </code></pre>
+  geom_point(color = &quot;#1F9A8AFF&quot;)  +
+  labs(title = &quot;Residuals of AR + Temp&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20temp%20model-2.png" width="672" /></p>
 <p>Afterwards, a model that also has lagging average temperature has
 significant terms for both lagging temperature and lagging mosquito
@@ -1729,12 +1756,15 @@ ar_temp_rain_fit |&gt;
   geom_line(aes(y = pred_null, color = &quot;null&quot;, group = year), linetype = &quot;dotted&quot;, size = 1.9) +
   geom_line(aes(y = pred_ar_temp, color = &quot;AR+temp&quot;, group = year), linetype = &quot;solid&quot;, size = 0.6) +
   geom_line(aes(y = pred_ar_temp_rain, color = &quot;AR+temp+rain&quot;, group = year), linetype = &quot;dashed&quot;, size = 0.6) +
-  scale_color_manual(name = &quot;models&quot;, values = c(&quot;null&quot; = &quot;#472D7BFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;, &quot;AR+temp+rain&quot; = &quot;#5DC863FF&quot;))</code></pre>
+  scale_color_manual(name = &quot;models&quot;, values = c(&quot;null&quot; = &quot;#472D7BFF&quot;, &quot;AR+temp&quot; = &quot;#1F9A8AFF&quot;, &quot;AR+temp+rain&quot; = &quot;#5DC863FF&quot;))  +
+  labs(title = &quot;Comparing Candidate Models&quot;,
+       x = &quot;Weeks Since January 2021&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20temp%20rain-1.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt; 
   cbind(resid = resid(ar_temp_rain_fit)) |&gt; 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = &quot;#5DC863FF&quot;) </code></pre>
+  geom_point(color = &quot;#5DC863FF&quot;)  +
+  labs(title = &quot;Residuals of AR + Temp + Rain&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/lag%20count%20temp%20rain-2.png" width="672" /></p>
 <p>For this model, the estimated coefficient for lagging mosquito counts
 is 0.0179, compared to its coefficient in the model without rain with
@@ -2035,6 +2065,7 @@ inner_join(pred_vals, pred_vals_omit, by = join_by(id)) |&gt;
   ggplot(aes(x = count, y = prediction, color = model)) +
   geom_point() +
   labs(
+    title = &quot;Comparing Predictions When Outliers are Removed&quot;,
     y = &quot;Predicted values&quot;,
     x = &quot;Observed values&quot;
   )</code></pre>
@@ -2044,7 +2075,8 @@ inner_join(pred_vals, pred_vals_omit, by = join_by(id)) |&gt;
   filter(!(id %in% influential_ids)) |&gt;
   cbind(resid = resid(final_fit_omitted)) |&gt; 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = &quot;#5DC863FF&quot;) </code></pre>
+  geom_point(color = &quot;#5DC863FF&quot;)  +
+  labs(title = &quot;Residuals When Outliers are Removed&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/predicted%20vals-2.png" width="672" /></p>
 <p>Plotting predicted values from both models shows a reduction in the
 positive bias from the full model. This is a slight improvement, but the
@@ -2110,18 +2142,71 @@ final_fit_quadratic_counts |&gt;
   ggplot(aes(x = count, y = resid)) +
   geom_point(color = &quot;#5DC863FF&quot;) + 
   geom_hline(yintercept = 0) +
-  labs(title = &quot;Residuals for Quadratic Count Model&quot;)</code></pre>
+  labs(title = &quot;Partial Residuals for Quadratic Count Model (Counts)&quot;)</code></pre>
 <p><img src="regression_models_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(final_fit_quadratic_counts)) |&gt; 
+  ggplot(aes(x = lag_temp, y = resid)) +
+  geom_point(color = &quot;#5DC863FF&quot;) + 
+  geom_hline(yintercept = 0) +
+  labs(title = &quot;Residuals for Quadratic Count Model (Temps)&quot;)</code></pre>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
 <pre class="r"><code>mosq_cases_temp |&gt;
   cbind(prediction = predict(final_fit_quadratic_counts, type = &quot;response&quot;)) |&gt; 
   ggplot(aes(x = weekyear, y = count, group = year)) +
   geom_point() + 
   geom_line(aes(x = weekyear, y = prediction), color = &quot;#5DC863FF&quot;) +
   labs(title = &quot;Predictions for Quadratic Count Model&quot;)</code></pre>
-<p><img src="regression_models_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
 <p>Adding a quadratic term for the previous week’s count of mosquitoes
 improved the residual behavior, but caused unusual behavior in the
-predictions.</p>
+predictions. The does not appear to be a non-linear trend for the
+partial residuals of the lagged temperature variable.</p>
+<pre class="r"><code>augment_df &lt;- 
+  augment(final_fit_quadratic_counts) |&gt;
+  mutate(
+    id = row_number(),
+    avg_hat_2 = 2*mean(.hat),
+    avg_hat_3 = 3*mean(.hat),
+    influential = case_when(
+      .cooksd &gt; avg_hat_2 ~ 1,
+      .cooksd &gt; avg_hat_3 ~ 1,
+      .std.resid &gt; 2 ~ 1, 
+      .default = 0
+    )
+  ) |&gt; 
+  select(id, everything())
+
+avg_hat_2 &lt;- 
+  augment_df |&gt; 
+  pull(avg_hat_2) |&gt; 
+  nth(1)
+  
+avg_hat_3 &lt;-
+  augment_df |&gt; 
+  pull(avg_hat_3) |&gt; 
+  nth(1)
+  
+augment_df |&gt; 
+  ggplot(aes(x = .hat, y = .std.resid)) + 
+  geom_point(aes(size = .cooksd, color = .cooksd)) +
+  geom_hline(
+    yintercept = c(-2, 0, 2)
+  ) +
+  geom_vline(
+    xintercept = c(avg_hat_2, avg_hat_3)
+  ) +
+  guides(
+    color = &quot;none&quot;,
+    size = &quot;none&quot;
+  ) +
+  labs(title = &quot;Influence Plot for Quadratic Count Model&quot;,
+       y = &quot;Standardized Residuals&quot;,
+       x = &quot;Hat Value&quot;)</code></pre>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Again, we look for influential outliers and see whether they made a
+difference in the analysis. Comparing influence versus standardized
+residual shows better performance than the linear count model.</p>
 </div>
 </div>
 

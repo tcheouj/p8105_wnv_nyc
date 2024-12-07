@@ -96,7 +96,8 @@ mosq_count_by_month |>
   geom_bar(stat = "identity", fill = "#440154FF") +
   guides(
     fill = "none"
-  )
+  ) +
+  labs(title = "Count by Month")
 
 ```
 
@@ -128,7 +129,8 @@ mosq_count_by_month |>
   cbind(pred = predict(fit2, type = "response")) |> 
   ggplot(aes(x = month, y = count)) +
   geom_point(color = "#404688FF", alpha = 0.5) + 
-  geom_line(aes(y = pred), size = 0.6)
+  geom_line(aes(y = pred), size = 0.6) +
+  labs(title = "Prediction of Linear Month Model")
 ```
 
 However, despite a significant model, the model does not fit our dataset well, so it is not useful in predicting counts. When plotting the predicted values against the observed values, the predicted values are linear since model is represented as a linear term, while our observed counts are parabolic.
@@ -159,7 +161,8 @@ mosq_count_by_month |>
   cbind(pred = predict(fit3, type = "response")) |> 
   ggplot(aes(x = month, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred), color = "#3B528BFF", size = 0.6)
+  geom_line(aes(y = pred), color = "#3B528BFF", size = 0.6)  +
+  labs(title = "Prediction of Quadratic Month Model")
 
 ```
 
@@ -216,7 +219,8 @@ fit4 |>
   )
 
 anova(fit3.5, fit4) |> 
-  tidy()
+  tidy() |>
+  knitr::kable()
 
 ```
 
@@ -237,7 +241,9 @@ mosq_month_year |>
   ) |> 
   ggplot(aes(x = pred, y = resid)) +
   geom_point(color = "#31688EFF",, size = 3) + 
-  geom_hline(yintercept = 0)
+  geom_hline(yintercept = 0)  +
+  labs(title = "Prediction of Month + Year Model",
+       x = "Months Since January 2021")
 
 performance::check_overdispersion(fit4) 
 
@@ -338,12 +344,16 @@ mosq_cases_temp |>
   cbind(pred = predict(null_fit, type = "response")) |> 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred, group = year), color = "#472D7BFF", size = 0.6)
+  geom_line(aes(y = pred, group = year), color = "#472D7BFF", size = 0.6)   +
+  labs(title = "Prediction of Week + Year Model",
+       x = "Weeks Since January 2021")
 
 mosq_cases_temp |> 
   cbind(resid = resid(null_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = "#472D7BFF") # null model works well
+  geom_point(color = "#472D7BFF")   +
+  labs(title = "Residual vs Prediction of Month + Year Model",
+       x = "Count")
 ```
 
 All predictors in the model are significant, with p values for first order week and second order week of `r null_fit |> tidy() |> filter(term == "week") |>  pull(p.value) |> round(6)` and `r null_fit |> tidy() |> filter(term == "I(week^2)") |>  pull(p.value) |> round(6)`, respectively. Year has a p value of `r null_fit |> tidy() |> filter(term == "year") |>  pull(p.value) |> round(6)`. 
@@ -375,12 +385,15 @@ mosq_cases_temp |>
   cbind(pred = predict(ar_fit, type = "response")) |> 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred, group = year), color = "#31688EFF", size = 0.6)
+  geom_line(aes(y = pred, group = year), color = "#31688EFF", size = 0.6) +
+  labs(title = "Prediction of Autoregressive Count Model",
+       x = "Weeks Since January 2021")
 
 mosq_cases_temp |> 
   cbind(resid = resid(ar_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = "#31688EFF") 
+  geom_point(color = "#31688EFF") +
+  labs(title = "Residuals vs Prediction of Autoregressive Count Model")
 ```
 
 Now, we have a model with just the lagging count of mosquitoes. The estimated increase in counts based on the prior count of mosquitoes is `r ar_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)` with a p value of `r ar_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(6)`. The lagging mosquito count is then a significant predictor of estimated mosquito counts, and the graph illustrates the model fits the observed points well, except for the peaks in the 2021 data. Further, there appears to be a positive bias in the model when the count is close to zero. 
@@ -411,12 +424,15 @@ mosq_cases_temp |>
   geom_point(alpha = 0.5, size = 2) + 
   geom_line(aes(y = pred_ar, color = "AR", group = year), linetype = "dashed", size = 0.6) +
   geom_line(aes(y = pred_ar_temp, color = "AR+temp", group = year), linetype = "solid", size = 0.6) +
-  scale_color_manual(name = "models", values = c("AR" = "#31688EFF", "AR+temp" = "#1F9A8AFF"))
+  scale_color_manual(name = "models", values = c("AR" = "#31688EFF", "AR+temp" = "#1F9A8AFF")) +
+  labs(title = "Comparing AR Model with AR + Temperature Effect",
+       x = "Weeks Since January 2021")
 
 mosq_cases_temp |> 
   cbind(resid = resid(ar_temp_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = "#1F9A8AFF") 
+  geom_point(color = "#1F9A8AFF")  +
+  labs(title = "Residuals of AR + Temp")
 
 ```
 
@@ -452,12 +468,15 @@ mosq_cases_temp |>
   geom_line(aes(y = pred_null, color = "null", group = year), linetype = "dotted", size = 1.9) +
   geom_line(aes(y = pred_ar_temp, color = "AR+temp", group = year), linetype = "solid", size = 0.6) +
   geom_line(aes(y = pred_ar_temp_rain, color = "AR+temp+rain", group = year), linetype = "dashed", size = 0.6) +
-  scale_color_manual(name = "models", values = c("null" = "#472D7BFF", "AR+temp" = "#1F9A8AFF", "AR+temp+rain" = "#5DC863FF"))
+  scale_color_manual(name = "models", values = c("null" = "#472D7BFF", "AR+temp" = "#1F9A8AFF", "AR+temp+rain" = "#5DC863FF"))  +
+  labs(title = "Comparing Candidate Models",
+       x = "Weeks Since January 2021")
 
 mosq_cases_temp |> 
   cbind(resid = resid(ar_temp_rain_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = "#5DC863FF") 
+  geom_point(color = "#5DC863FF")  +
+  labs(title = "Residuals of AR + Temp + Rain")
 ```
 
 For this model, the estimated coefficient for lagging mosquito counts is `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`, compared to its coefficient in the model without rain with `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`. The p value for this estimate is `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`, while it has a p value in the prior model of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`. With lagging average temperature, the estimate is now `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` (p = `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_temp") |> pull(p.value) |> round(6)` compared to `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` (p = `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(6)`)). 
@@ -632,6 +651,7 @@ inner_join(pred_vals, pred_vals_omit, by = join_by(id)) |>
   ggplot(aes(x = count, y = prediction, color = model)) +
   geom_point() +
   labs(
+    title = "Comparing Predictions When Outliers are Removed",
     y = "Predicted values",
     x = "Observed values"
   )
@@ -641,7 +661,8 @@ mosq_cases_temp |>
   filter(!(id %in% influential_ids)) |>
   cbind(resid = resid(final_fit_omitted)) |> 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = "#5DC863FF") 
+  geom_point(color = "#5DC863FF")  +
+  labs(title = "Residuals When Outliers are Removed")
 ```
 
 Plotting predicted values from both models shows a reduction in the positive bias from the full model. This is a slight improvement, but the residuals vs predicted values plot shows this model does not completely characterize the response data. There remains a quadratic trend not accounted for by our model.
