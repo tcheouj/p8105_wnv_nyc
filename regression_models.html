@@ -300,18 +300,9 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-library(modelr)
-library(broom)
-library(rvest)
-library(httr)
-library(GSODR)
-library(sf)
-library(patchwork)
-library(car)
-library(GGally)
-library(broom.helpers)</code></pre>
+<p>In this section, we show our model building process. We start with an
+uninformative month-based model and move to a more granular
+autoregressive model with temperature effects.</p>
 <div id="data-import" class="section level1">
 <h1>Data import</h1>
 <p>First, we need to import our WNV data and predictor data. Ultimately,
@@ -594,11 +585,6 @@ by 1 month, with a p value of 0.0022.</p>
   ggplot(aes(x = month, y = count)) +
   geom_point(color = &quot;#404688FF&quot;, alpha = 0.5) + 
   geom_line(aes(y = pred), size = 0.6)</code></pre>
-<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
 <p><img src="regression_models_files/figure-html/month%20model%20fit-1.png" width="672" /></p>
 <p>However, despite a significant model, the model does not fit our
 dataset well, so it is not useful in predicting counts. When plotting
@@ -1004,11 +990,11 @@ fit3.5 |&gt;
 </table>
 <pre class="r"><code>anova(fit3.5, fit4) |&gt; 
   tidy()</code></pre>
-<pre><code>## # A tibble: 2 × 6
-##   term                      df.residual residual.deviance    df deviance p.value
-##   &lt;chr&gt;                           &lt;dbl&gt;             &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-## 1 count ~ month + I(month^…          16              676.    NA    NA     NA    
-## 2 count ~ month + I(month^…          15              674.     1     2.12   0.145</code></pre>
+<pre><code># A tibble: 2 × 6
+  term                      df.residual residual.deviance    df deviance p.value
+  &lt;chr&gt;                           &lt;dbl&gt;             &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+1 count ~ month + I(month^…          16              676.    NA    NA     NA    
+2 count ~ month + I(month^…          15              674.     1     2.12   0.145</code></pre>
 <p>In the model with year as a predictor, year is not significantly
 predicting mosquito counts, with a p value of 0.1453. When conducting a
 chi-squared test to determine whether the addition of year is
@@ -1032,12 +1018,11 @@ significantly improve model prediction.</p>
   geom_hline(yintercept = 0)</code></pre>
 <p><img src="regression_models_files/figure-html/poisson%20overdispersion-2.png" width="672" /></p>
 <pre class="r"><code>performance::check_overdispersion(fit4) </code></pre>
-<pre><code>## # Overdispersion test
-## 
-##        dispersion ratio =  42.234
-##   Pearson&#39;s Chi-Squared = 633.504
-##                 p-value = &lt; 0.001</code></pre>
-<pre><code>## Overdispersion detected.</code></pre>
+<pre><code># Overdispersion test
+
+       dispersion ratio =  42.234
+  Pearson&#39;s Chi-Squared = 633.504
+                p-value = &lt; 0.001</code></pre>
 <p>However, before proceeding with the next model, we wanted to check
 model fit and see if the assumptions of the Poisson distribution still
 hold. When graphing the predicted values for the model with month and
@@ -1096,10 +1081,9 @@ mosq_cases &lt;-
     week = lubridate::week(date)) |&gt;
   group_by(year, week) |&gt;
   summarise(count = n()) |&gt;
-  mutate(weekyear = (year - 2021)*52 + week) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>weekly_weather &lt;- 
+  mutate(weekyear = (year - 2021)*52 + week) 
+  
+weekly_weather &lt;- 
   day_weather |&gt;
   mutate(
     year = lubridate::year(date),
@@ -1116,10 +1100,9 @@ mosq_cases &lt;-
          lag_dewp = lag(avg_dewp),
          lag_max =  lag(avg_max),
          lag_min =  lag(avg_min)) |&gt;
-  mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>mosq_cases_temp &lt;- 
+  mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021
+
+mosq_cases_temp &lt;- 
   mosq_cases |&gt;
   left_join(y = weekly_weather, by = join_by(weekyear)) |&gt;
   select(-ends_with(&quot;.y&quot;)) |&gt;
@@ -1135,8 +1118,9 @@ mosq_cases &lt;-
   na.omit()
 
 mosq_cases_temp |&gt; 
+  head() |&gt;
   knitr::kable()</code></pre>
-<table style="width:100%;">
+<table>
 <colgroup>
 <col width="3%" />
 <col width="3%" />
@@ -1144,12 +1128,12 @@ mosq_cases_temp |&gt;
 <col width="6%" />
 <col width="6%" />
 <col width="7%" />
-<col width="7%" />
 <col width="6%" />
 <col width="6%" />
 <col width="6%" />
+<col width="6%" />
 <col width="7%" />
-<col width="7%" />
+<col width="6%" />
 <col width="6%" />
 <col width="6%" />
 <col width="2%" />
@@ -1183,12 +1167,12 @@ mosq_cases_temp |&gt;
 <td align="right">25</td>
 <td align="right">72.57714</td>
 <td align="right">0.0378515</td>
-<td align="right">14.307143</td>
+<td align="right">14.30714</td>
 <td align="right">84.16143</td>
 <td align="right">61.71286</td>
 <td align="right">68.23143</td>
 <td align="right">0.0214286</td>
-<td align="right">11.728571</td>
+<td align="right">11.72857</td>
 <td align="right">77.91286</td>
 <td align="right">61.63571</td>
 <td align="right">1</td>
@@ -1201,12 +1185,12 @@ mosq_cases_temp |&gt;
 <td align="right">27</td>
 <td align="right">73.85000</td>
 <td align="right">0.3135547</td>
-<td align="right">18.435714</td>
+<td align="right">18.43571</td>
 <td align="right">84.97143</td>
 <td align="right">65.64714</td>
 <td align="right">78.68429</td>
 <td align="right">0.0435602</td>
-<td align="right">19.450000</td>
+<td align="right">19.45000</td>
 <td align="right">89.03429</td>
 <td align="right">69.35000</td>
 <td align="right">2</td>
@@ -1219,12 +1203,12 @@ mosq_cases_temp |&gt;
 <td align="right">28</td>
 <td align="right">75.84286</td>
 <td align="right">0.3442353</td>
-<td align="right">20.514286</td>
+<td align="right">20.51429</td>
 <td align="right">85.82000</td>
 <td align="right">70.28857</td>
 <td align="right">73.85000</td>
 <td align="right">0.3135547</td>
-<td align="right">18.435714</td>
+<td align="right">18.43571</td>
 <td align="right">84.97143</td>
 <td align="right">65.64714</td>
 <td align="right">3</td>
@@ -1237,12 +1221,12 @@ mosq_cases_temp |&gt;
 <td align="right">30</td>
 <td align="right">76.98714</td>
 <td align="right">0.3235660</td>
-<td align="right">16.814286</td>
+<td align="right">16.81429</td>
 <td align="right">86.06429</td>
 <td align="right">68.57857</td>
 <td align="right">79.04429</td>
 <td align="right">0.1421261</td>
-<td align="right">19.342857</td>
+<td align="right">19.34286</td>
 <td align="right">87.86429</td>
 <td align="right">71.44571</td>
 <td align="right">4</td>
@@ -1255,12 +1239,12 @@ mosq_cases_temp |&gt;
 <td align="right">31</td>
 <td align="right">72.73143</td>
 <td align="right">0.0128796</td>
-<td align="right">14.178571</td>
+<td align="right">14.17857</td>
 <td align="right">81.77000</td>
 <td align="right">64.95286</td>
 <td align="right">76.98714</td>
 <td align="right">0.3235660</td>
-<td align="right">16.814286</td>
+<td align="right">16.81429</td>
 <td align="right">86.06429</td>
 <td align="right">68.57857</td>
 <td align="right">5</td>
@@ -1273,736 +1257,16 @@ mosq_cases_temp |&gt;
 <td align="right">32</td>
 <td align="right">76.84571</td>
 <td align="right">0.1528685</td>
-<td align="right">19.585714</td>
+<td align="right">19.58571</td>
 <td align="right">86.15429</td>
 <td align="right">69.41429</td>
 <td align="right">72.73143</td>
 <td align="right">0.0128796</td>
-<td align="right">14.178571</td>
+<td align="right">14.17857</td>
 <td align="right">81.77000</td>
 <td align="right">64.95286</td>
 <td align="right">6</td>
 <td align="right">60</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">33</td>
-<td align="right">77</td>
-<td align="right">33</td>
-<td align="right">79.73857</td>
-<td align="right">0.0228628</td>
-<td align="right">18.885714</td>
-<td align="right">88.23714</td>
-<td align="right">72.93714</td>
-<td align="right">76.84571</td>
-<td align="right">0.1528685</td>
-<td align="right">19.585714</td>
-<td align="right">86.15429</td>
-<td align="right">69.41429</td>
-<td align="right">7</td>
-<td align="right">152</td>
-</tr>
-<tr class="even">
-<td align="right">2021</td>
-<td align="right">35</td>
-<td align="right">144</td>
-<td align="right">35</td>
-<td align="right">75.88143</td>
-<td align="right">0.8514347</td>
-<td align="right">19.135714</td>
-<td align="right">86.46286</td>
-<td align="right">68.47571</td>
-<td align="right">79.48143</td>
-<td align="right">0.6785999</td>
-<td align="right">20.571429</td>
-<td align="right">87.91571</td>
-<td align="right">72.98857</td>
-<td align="right">8</td>
-<td align="right">77</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">37</td>
-<td align="right">95</td>
-<td align="right">37</td>
-<td align="right">74.19714</td>
-<td align="right">0.0328459</td>
-<td align="right">16.242857</td>
-<td align="right">83.27429</td>
-<td align="right">66.04571</td>
-<td align="right">72.43571</td>
-<td align="right">0.0542745</td>
-<td align="right">16.014286</td>
-<td align="right">81.73143</td>
-<td align="right">64.13000</td>
-<td align="right">9</td>
-<td align="right">144</td>
-</tr>
-<tr class="even">
-<td align="right">2021</td>
-<td align="right">38</td>
-<td align="right">35</td>
-<td align="right">38</td>
-<td align="right">73.01429</td>
-<td align="right">0.0028403</td>
-<td align="right">17.364286</td>
-<td align="right">81.28143</td>
-<td align="right">65.73714</td>
-<td align="right">74.19714</td>
-<td align="right">0.0328459</td>
-<td align="right">16.242857</td>
-<td align="right">83.27429</td>
-<td align="right">66.04571</td>
-<td align="right">10</td>
-<td align="right">95</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">40</td>
-<td align="right">47</td>
-<td align="right">40</td>
-<td align="right">65.99429</td>
-<td align="right">0.0092801</td>
-<td align="right">13.121429</td>
-<td align="right">75.07143</td>
-<td align="right">57.57286</td>
-<td align="right">67.42143</td>
-<td align="right">0.2428573</td>
-<td align="right">10.285714</td>
-<td align="right">77.63000</td>
-<td align="right">58.98714</td>
-<td align="right">11</td>
-<td align="right">35</td>
-</tr>
-<tr class="even">
-<td align="right">2021</td>
-<td align="right">41</td>
-<td align="right">13</td>
-<td align="right">41</td>
-<td align="right">66.76571</td>
-<td align="right">0.0149888</td>
-<td align="right">14.985714</td>
-<td align="right">74.86571</td>
-<td align="right">60.74857</td>
-<td align="right">65.99429</td>
-<td align="right">0.0092801</td>
-<td align="right">13.121429</td>
-<td align="right">75.07143</td>
-<td align="right">57.57286</td>
-<td align="right">12</td>
-<td align="right">47</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">42</td>
-<td align="right">3</td>
-<td align="right">42</td>
-<td align="right">64.01429</td>
-<td align="right">0.0235377</td>
-<td align="right">9.450000</td>
-<td align="right">75.71429</td>
-<td align="right">55.79857</td>
-<td align="right">66.76571</td>
-<td align="right">0.0149888</td>
-<td align="right">14.985714</td>
-<td align="right">74.86571</td>
-<td align="right">60.74857</td>
-<td align="right">13</td>
-<td align="right">13</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">26</td>
-<td align="right">8</td>
-<td align="right">78</td>
-<td align="right">75.79143</td>
-<td align="right">0.0592801</td>
-<td align="right">16.021429</td>
-<td align="right">86.56571</td>
-<td align="right">66.38000</td>
-<td align="right">68.29571</td>
-<td align="right">0.0349831</td>
-<td align="right">10.800000</td>
-<td align="right">80.42000</td>
-<td align="right">59.37286</td>
-<td align="right">14</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">27</td>
-<td align="right">11</td>
-<td align="right">79</td>
-<td align="right">77.51429</td>
-<td align="right">0.0064117</td>
-<td align="right">16.035714</td>
-<td align="right">87.86429</td>
-<td align="right">69.64571</td>
-<td align="right">75.79143</td>
-<td align="right">0.0592801</td>
-<td align="right">16.021429</td>
-<td align="right">86.56571</td>
-<td align="right">66.38000</td>
-<td align="right">15</td>
-<td align="right">8</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">28</td>
-<td align="right">17</td>
-<td align="right">80</td>
-<td align="right">77.37286</td>
-<td align="right">0.0392857</td>
-<td align="right">15.785714</td>
-<td align="right">87.83857</td>
-<td align="right">68.70714</td>
-<td align="right">77.51429</td>
-<td align="right">0.0064117</td>
-<td align="right">16.035714</td>
-<td align="right">87.86429</td>
-<td align="right">69.64571</td>
-<td align="right">16</td>
-<td align="right">11</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">29</td>
-<td align="right">28</td>
-<td align="right">81</td>
-<td align="right">81.80857</td>
-<td align="right">0.1357425</td>
-<td align="right">19.671429</td>
-<td align="right">90.92429</td>
-<td align="right">72.93714</td>
-<td align="right">77.37286</td>
-<td align="right">0.0392857</td>
-<td align="right">15.785714</td>
-<td align="right">87.83857</td>
-<td align="right">68.70714</td>
-<td align="right">17</td>
-<td align="right">17</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">30</td>
-<td align="right">53</td>
-<td align="right">82</td>
-<td align="right">81.43571</td>
-<td align="right">0.0892576</td>
-<td align="right">18.657143</td>
-<td align="right">90.93714</td>
-<td align="right">73.55429</td>
-<td align="right">81.80857</td>
-<td align="right">0.1357425</td>
-<td align="right">19.671429</td>
-<td align="right">90.92429</td>
-<td align="right">72.93714</td>
-<td align="right">18</td>
-<td align="right">28</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">31</td>
-<td align="right">79</td>
-<td align="right">83</td>
-<td align="right">79.77714</td>
-<td align="right">0.0485940</td>
-<td align="right">18.042857</td>
-<td align="right">90.29429</td>
-<td align="right">71.35571</td>
-<td align="right">81.43571</td>
-<td align="right">0.0892576</td>
-<td align="right">18.657143</td>
-<td align="right">90.93714</td>
-<td align="right">73.55429</td>
-<td align="right">19</td>
-<td align="right">53</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">32</td>
-<td align="right">92</td>
-<td align="right">84</td>
-<td align="right">81.95000</td>
-<td align="right">0.0821148</td>
-<td align="right">19.664286</td>
-<td align="right">92.01714</td>
-<td align="right">75.20000</td>
-<td align="right">79.77714</td>
-<td align="right">0.0485940</td>
-<td align="right">18.042857</td>
-<td align="right">90.29429</td>
-<td align="right">71.35571</td>
-<td align="right">20</td>
-<td align="right">79</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">33</td>
-<td align="right">95</td>
-<td align="right">85</td>
-<td align="right">74.68571</td>
-<td align="right">0.0314117</td>
-<td align="right">12.764286</td>
-<td align="right">84.93286</td>
-<td align="right">65.76286</td>
-<td align="right">81.95000</td>
-<td align="right">0.0821148</td>
-<td align="right">19.664286</td>
-<td align="right">92.01714</td>
-<td align="right">75.20000</td>
-<td align="right">21</td>
-<td align="right">92</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">34</td>
-<td align="right">92</td>
-<td align="right">86</td>
-<td align="right">78.72286</td>
-<td align="right">0.0200225</td>
-<td align="right">18.585714</td>
-<td align="right">88.77714</td>
-<td align="right">71.89571</td>
-<td align="right">74.68571</td>
-<td align="right">0.0314117</td>
-<td align="right">12.764286</td>
-<td align="right">84.93286</td>
-<td align="right">65.76286</td>
-<td align="right">22</td>
-<td align="right">95</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">35</td>
-<td align="right">82</td>
-<td align="right">87</td>
-<td align="right">77.59143</td>
-<td align="right">0.0285714</td>
-<td align="right">16.771429</td>
-<td align="right">88.01857</td>
-<td align="right">71.35571</td>
-<td align="right">78.72286</td>
-<td align="right">0.0200225</td>
-<td align="right">18.585714</td>
-<td align="right">88.77714</td>
-<td align="right">71.89571</td>
-<td align="right">23</td>
-<td align="right">92</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">36</td>
-<td align="right">70</td>
-<td align="right">88</td>
-<td align="right">72.92429</td>
-<td align="right">0.1478628</td>
-<td align="right">16.957143</td>
-<td align="right">82.31000</td>
-<td align="right">66.00714</td>
-<td align="right">77.59143</td>
-<td align="right">0.0285714</td>
-<td align="right">16.771429</td>
-<td align="right">88.01857</td>
-<td align="right">71.35571</td>
-<td align="right">24</td>
-<td align="right">82</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">37</td>
-<td align="right">61</td>
-<td align="right">89</td>
-<td align="right">72.50000</td>
-<td align="right">0.3464288</td>
-<td align="right">14.042857</td>
-<td align="right">82.92714</td>
-<td align="right">64.40000</td>
-<td align="right">72.92429</td>
-<td align="right">0.1478628</td>
-<td align="right">16.957143</td>
-<td align="right">82.31000</td>
-<td align="right">66.00714</td>
-<td align="right">25</td>
-<td align="right">70</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">38</td>
-<td align="right">50</td>
-<td align="right">90</td>
-<td align="right">70.77714</td>
-<td align="right">0.0435883</td>
-<td align="right">13.335714</td>
-<td align="right">82.19429</td>
-<td align="right">62.42000</td>
-<td align="right">72.50000</td>
-<td align="right">0.3464288</td>
-<td align="right">14.042857</td>
-<td align="right">82.92714</td>
-<td align="right">64.40000</td>
-<td align="right">26</td>
-<td align="right">61</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">39</td>
-<td align="right">30</td>
-<td align="right">91</td>
-<td align="right">63.08857</td>
-<td align="right">0.0778403</td>
-<td align="right">7.871429</td>
-<td align="right">73.22000</td>
-<td align="right">54.51286</td>
-<td align="right">70.77714</td>
-<td align="right">0.0435883</td>
-<td align="right">13.335714</td>
-<td align="right">82.19429</td>
-<td align="right">62.42000</td>
-<td align="right">27</td>
-<td align="right">50</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">40</td>
-<td align="right">14</td>
-<td align="right">92</td>
-<td align="right">57.81714</td>
-<td align="right">0.5114176</td>
-<td align="right">9.328571</td>
-<td align="right">65.08143</td>
-<td align="right">50.86143</td>
-<td align="right">63.08857</td>
-<td align="right">0.0778403</td>
-<td align="right">7.871429</td>
-<td align="right">73.22000</td>
-<td align="right">54.51286</td>
-<td align="right">28</td>
-<td align="right">30</td>
-</tr>
-<tr class="odd">
-<td align="right">2022</td>
-<td align="right">41</td>
-<td align="right">7</td>
-<td align="right">93</td>
-<td align="right">59.90000</td>
-<td align="right">0.1614455</td>
-<td align="right">7.107143</td>
-<td align="right">70.45571</td>
-<td align="right">50.43714</td>
-<td align="right">57.81714</td>
-<td align="right">0.5114176</td>
-<td align="right">9.328571</td>
-<td align="right">65.08143</td>
-<td align="right">50.86143</td>
-<td align="right">29</td>
-<td align="right">14</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">27</td>
-<td align="right">5</td>
-<td align="right">131</td>
-<td align="right">78.51714</td>
-<td align="right">0.1457256</td>
-<td align="right">21.328571</td>
-<td align="right">88.23714</td>
-<td align="right">71.44571</td>
-<td align="right">73.46429</td>
-<td align="right">0.0285996</td>
-<td align="right">18.335714</td>
-<td align="right">83.32571</td>
-<td align="right">66.50857</td>
-<td align="right">30</td>
-<td align="right">7</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">28</td>
-<td align="right">11</td>
-<td align="right">132</td>
-<td align="right">79.40429</td>
-<td align="right">0.1471598</td>
-<td align="right">20.014286</td>
-<td align="right">88.30143</td>
-<td align="right">71.93429</td>
-<td align="right">78.51714</td>
-<td align="right">0.1457256</td>
-<td align="right">21.328571</td>
-<td align="right">88.23714</td>
-<td align="right">71.44571</td>
-<td align="right">31</td>
-<td align="right">5</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">29</td>
-<td align="right">23</td>
-<td align="right">133</td>
-<td align="right">77.82286</td>
-<td align="right">0.2814119</td>
-<td align="right">20.464286</td>
-<td align="right">86.07714</td>
-<td align="right">71.83143</td>
-<td align="right">79.40429</td>
-<td align="right">0.1471598</td>
-<td align="right">20.014286</td>
-<td align="right">88.30143</td>
-<td align="right">71.93429</td>
-<td align="right">32</td>
-<td align="right">11</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">30</td>
-<td align="right">33</td>
-<td align="right">134</td>
-<td align="right">79.82857</td>
-<td align="right">0.0771373</td>
-<td align="right">19.514286</td>
-<td align="right">89.42000</td>
-<td align="right">71.15000</td>
-<td align="right">77.82286</td>
-<td align="right">0.2814119</td>
-<td align="right">20.464286</td>
-<td align="right">86.07714</td>
-<td align="right">71.83143</td>
-<td align="right">33</td>
-<td align="right">23</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">31</td>
-<td align="right">41</td>
-<td align="right">135</td>
-<td align="right">73.70857</td>
-<td align="right">0.0492970</td>
-<td align="right">13.850000</td>
-<td align="right">83.06857</td>
-<td align="right">66.08429</td>
-<td align="right">79.82857</td>
-<td align="right">0.0771373</td>
-<td align="right">19.514286</td>
-<td align="right">89.42000</td>
-<td align="right">71.15000</td>
-<td align="right">34</td>
-<td align="right">33</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">32</td>
-<td align="right">57</td>
-<td align="right">136</td>
-<td align="right">75.90714</td>
-<td align="right">0.1978629</td>
-<td align="right">17.550000</td>
-<td align="right">85.52429</td>
-<td align="right">68.79714</td>
-<td align="right">73.70857</td>
-<td align="right">0.0492970</td>
-<td align="right">13.850000</td>
-<td align="right">83.06857</td>
-<td align="right">66.08429</td>
-<td align="right">35</td>
-<td align="right">41</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">33</td>
-<td align="right">73</td>
-<td align="right">137</td>
-<td align="right">75.47000</td>
-<td align="right">0.5949947</td>
-<td align="right">18.485714</td>
-<td align="right">84.20000</td>
-<td align="right">68.37286</td>
-<td align="right">75.90714</td>
-<td align="right">0.1978629</td>
-<td align="right">17.550000</td>
-<td align="right">85.52429</td>
-<td align="right">68.79714</td>
-<td align="right">36</td>
-<td align="right">57</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">34</td>
-<td align="right">86</td>
-<td align="right">138</td>
-<td align="right">74.58286</td>
-<td align="right">0.1121485</td>
-<td align="right">16.492857</td>
-<td align="right">82.94000</td>
-<td align="right">65.84000</td>
-<td align="right">75.47000</td>
-<td align="right">0.5949947</td>
-<td align="right">18.485714</td>
-<td align="right">84.20000</td>
-<td align="right">68.37286</td>
-<td align="right">37</td>
-<td align="right">73</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">35</td>
-<td align="right">85</td>
-<td align="right">139</td>
-<td align="right">71.88286</td>
-<td align="right">0.0300056</td>
-<td align="right">15.457143</td>
-<td align="right">81.74429</td>
-<td align="right">65.49286</td>
-<td align="right">74.58286</td>
-<td align="right">0.1121485</td>
-<td align="right">16.492857</td>
-<td align="right">82.94000</td>
-<td align="right">65.84000</td>
-<td align="right">38</td>
-<td align="right">86</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">36</td>
-<td align="right">79</td>
-<td align="right">140</td>
-<td align="right">80.49714</td>
-<td align="right">0.0057087</td>
-<td align="right">20.728571</td>
-<td align="right">91.56714</td>
-<td align="right">71.62571</td>
-<td align="right">71.88286</td>
-<td align="right">0.0300056</td>
-<td align="right">15.457143</td>
-<td align="right">81.74429</td>
-<td align="right">65.49286</td>
-<td align="right">39</td>
-<td align="right">85</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">37</td>
-<td align="right">72</td>
-<td align="right">141</td>
-<td align="right">71.96000</td>
-<td align="right">0.3978630</td>
-<td align="right">16.642857</td>
-<td align="right">81.15286</td>
-<td align="right">65.50571</td>
-<td align="right">80.49714</td>
-<td align="right">0.0057087</td>
-<td align="right">20.728571</td>
-<td align="right">91.56714</td>
-<td align="right">71.62571</td>
-<td align="right">40</td>
-<td align="right">79</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">38</td>
-<td align="right">68</td>
-<td align="right">142</td>
-<td align="right">66.14857</td>
-<td align="right">0.1550057</td>
-<td align="right">12.071429</td>
-<td align="right">75.26429</td>
-<td align="right">58.79429</td>
-<td align="right">71.96000</td>
-<td align="right">0.3978630</td>
-<td align="right">16.642857</td>
-<td align="right">81.15286</td>
-<td align="right">65.50571</td>
-<td align="right">41</td>
-<td align="right">72</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">39</td>
-<td align="right">43</td>
-<td align="right">143</td>
-<td align="right">60.59429</td>
-<td align="right">1.2664236</td>
-<td align="right">13.307143</td>
-<td align="right">65.90429</td>
-<td align="right">55.78571</td>
-<td align="right">66.14857</td>
-<td align="right">0.1550057</td>
-<td align="right">12.071429</td>
-<td align="right">75.26429</td>
-<td align="right">58.79429</td>
-<td align="right">42</td>
-<td align="right">68</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">40</td>
-<td align="right">17</td>
-<td align="right">144</td>
-<td align="right">68.21857</td>
-<td align="right">0.0293026</td>
-<td align="right">16.128571</td>
-<td align="right">76.94857</td>
-<td align="right">59.25714</td>
-<td align="right">60.59429</td>
-<td align="right">1.2664236</td>
-<td align="right">13.307143</td>
-<td align="right">65.90429</td>
-<td align="right">55.78571</td>
-<td align="right">43</td>
-<td align="right">43</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">41</td>
-<td align="right">11</td>
-<td align="right">145</td>
-<td align="right">58.10000</td>
-<td align="right">0.1921261</td>
-<td align="right">7.100000</td>
-<td align="right">67.08714</td>
-<td align="right">51.20857</td>
-<td align="right">68.21857</td>
-<td align="right">0.0293026</td>
-<td align="right">16.128571</td>
-<td align="right">76.94857</td>
-<td align="right">59.25714</td>
-<td align="right">44</td>
-<td align="right">17</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">42</td>
-<td align="right">5</td>
-<td align="right">146</td>
-<td align="right">58.07429</td>
-<td align="right">0.2378235</td>
-<td align="right">9.242857</td>
-<td align="right">64.70857</td>
-<td align="right">51.05429</td>
-<td align="right">58.10000</td>
-<td align="right">0.1921261</td>
-<td align="right">7.100000</td>
-<td align="right">67.08714</td>
-<td align="right">51.20857</td>
-<td align="right">45</td>
-<td align="right">11</td>
-</tr>
-<tr class="even">
-<td align="right">2023</td>
-<td align="right">43</td>
-<td align="right">2</td>
-<td align="right">147</td>
-<td align="right">60.72286</td>
-<td align="right">0.0392857</td>
-<td align="right">8.614286</td>
-<td align="right">71.35571</td>
-<td align="right">50.93857</td>
-<td align="right">58.07429</td>
-<td align="right">0.2378235</td>
-<td align="right">9.242857</td>
-<td align="right">64.70857</td>
-<td align="right">51.05429</td>
-<td align="right">46</td>
-<td align="right">5</td>
 </tr>
 </tbody>
 </table>
@@ -2113,7 +1377,7 @@ null_fit |&gt;
 <p><img src="regression_models_files/figure-html/week%20year%20model-2.png" width="672" /></p>
 <p>All predictors in the model are significant, with p values for first
 order week and second order week of 0 and 0, respectively. Year has a p
-value of 10^{-4}.</p>
+value of 6.9^{-5}.</p>
 <p>When fitting the model to the data, we see that it also fits
 well.</p>
 </div>
@@ -2127,7 +1391,8 @@ incidence in a sufficiently short time period is highly dependent on the
 incidence in a previous time period. The null model is essentially
 guessing this effect based on the average in the other years. This leads
 to an inappropriate fit for the data in 2021. To address this problem,
-we fit an autoregressive model based on the previous week.</p>
+we fit an autoregressive model based on the previous week. For the first
+week of each year, we assume the count of WNV+ mosquitoes is 0.</p>
 <pre class="r"><code>ar_fit &lt;- MASS::glm.nb(count ~ lag_count, mosq_cases_temp)
 
 ar_fit |&gt; 
@@ -2221,7 +1486,8 @@ estimated increase in counts based on the prior count of mosquitoes is
 0.0206 with a p value of 0. The lagging mosquito count is then a
 significant predictor of estimated mosquito counts, and the graph
 illustrates the model fits the observed points well, except for the
-peaks in the 2021 data.</p>
+peaks in the 2021 data. Further, there appears to be a positive bias in
+the model when the count is close to zero.</p>
 <pre class="r"><code>ar_temp_fit &lt;- MASS::glm.nb(count ~ lag_count + lag_temp, mosq_cases_temp)
 
 ar_temp_fit |&gt; 
@@ -2331,7 +1597,7 @@ on estimating mosquito counts than lagging mosquito counts. Compared to
 the model with just lagging mosquito counts, lagging mosquito counts has
 a slightly smaller effect on predicting counts in this model. Note the
 addition of the temperature variable improves the prediction notably for
-2021.</p>
+2021 and for low count data points.</p>
 <p>Lastly, when we explored Poisson models, we had a saturated model
 that included precipitation as a predictor and found it was a
 considerably significant predictor with a larger effect size than the
@@ -2452,10 +1718,10 @@ ar_temp_rain_fit |&gt;
 is 0.0179, compared to its coefficient in the model without rain with
 0.0182. The p value for this estimate is 0, while it has a p value in
 the prior model of 0. With lagging average temperature, the estimate is
-now 0.0717 (p = 0 compared to 0.0665 (p = 0).</p>
+now 0.0717 (p = 0 compared to 0.0665 (p = 0)).</p>
 <p>The new term of lagging precipitation has an estimate of 0.5452 with
-a p value of 0.1088. Despite having a large effect size compared to the
-other predictors, it is now no longer a significant estimate in a
+a p value of 0.108757. Despite having a large effect size compared to
+the other predictors, it is now no longer a significant estimate in a
 negative binomial model. This is likely from adjusting for the
 overdispersion, which would have biased the standard error of the
 lagging precipitation estimate towards zero and artificially inflated
@@ -2481,6 +1747,8 @@ final_fit |&gt;
       x = &quot;Negative binomial regression estimated coefficients&quot;
     )</code></pre>
 <p><img src="regression_models_files/figure-html/final%20model-1.png" width="672" /></p>
+<div id="outlier-analysis" class="section level2">
+<h2>Outlier Analysis</h2>
 <pre class="r"><code>augment_df &lt;- 
   augment(final_fit) |&gt;
   mutate(
@@ -2494,11 +1762,9 @@ final_fit |&gt;
       .default = 0
     )
   ) |&gt; 
-  select(id, everything())</code></pre>
-<pre><code>## Warning: The `augment()` method for objects of class `negbin` is not maintained by the broom team, and is only supported through the `glm` tidier method. Please be cautious in interpreting and reporting broom output.
-## 
-## This warning is displayed once per session.</code></pre>
-<pre class="r"><code>avg_hat_2 &lt;- 
+  select(id, everything())
+
+avg_hat_2 &lt;- 
   augment_df |&gt; 
   pull(avg_hat_2) |&gt; 
   nth(1)
@@ -2733,18 +1999,108 @@ pred_vals &lt;-
 inner_join(pred_vals, pred_vals_omit, by = join_by(id)) |&gt; 
   select(-ends_with(&quot;.y&quot;)) |&gt;
   rename(count = count.x) |&gt; 
-  ggplot(aes(x = count, y = pred_fin)) +
-  geom_point(color = &quot;#404788FF&quot;) +
-  geom_point(aes(y = pred_fin_omit), color = &quot;#55C667FF&quot;) +
+  pivot_longer(
+    cols = starts_with(&quot;pred_fin&quot;),
+    values_to = &quot;prediction&quot;,
+    names_to = &quot;model&quot;,
+    names_prefix = &quot;pred_&quot;) |&gt;
+  mutate(
+    model = case_when(
+      model == &quot;fin&quot; ~ &quot;original&quot;,
+      .default = &quot;outliers omitted&quot;
+    )
+  ) |&gt;
+  ggplot(aes(x = count, y = prediction, color = model)) +
+  geom_point() +
   labs(
     y = &quot;Predicted values&quot;,
     x = &quot;Observed values&quot;
   )</code></pre>
-<p><img src="regression_models_files/figure-html/predicted%20vals-1.png" width="672" />
-When plotting predicted values from both models for a given observed
-count, the values do not seem to differ much either, especially for
-smaller observed values. These influential points therefore do not seem
-to be weighing the model heavily.</p>
+<p><img src="regression_models_files/figure-html/predicted%20vals-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  select(id, count, lag_count, everything()) |&gt; 
+  filter(!(id %in% influential_ids)) |&gt;
+  cbind(resid = resid(final_fit_omitted)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#5DC863FF&quot;) </code></pre>
+<p><img src="regression_models_files/figure-html/predicted%20vals-2.png" width="672" /></p>
+<p>Plotting predicted values from both models shows a reduction in the
+positive bias from the full model. This is a slight improvement, but the
+residuals vs predicted values plot shows this model does not completely
+characterize the response data. There remains a quadratic trend not
+accounted for by our model.</p>
+</div>
+<div id="adding-quadratic-lag-terms" class="section level2">
+<h2>Adding Quadratic Lag Terms</h2>
+<pre class="r"><code>final_fit_quadratic_counts &lt;-
+  mosq_cases_temp |&gt; 
+  MASS::glm.nb(count ~ lag_count + I(lag_count^2) + lag_temp, data = _)
+
+final_fit_quadratic_counts |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  ) </code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.3367</td>
+<td align="right">0.7528</td>
+<td align="right">-3.1039</td>
+<td align="right">0.0019</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0430</td>
+<td align="right">0.0047</td>
+<td align="right">9.2325</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">I(lag_count^2)</td>
+<td align="right">-0.0002</td>
+<td align="right">0.0000</td>
+<td align="right">-6.0501</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">lag_temp</td>
+<td align="right">0.0621</td>
+<td align="right">0.0103</td>
+<td align="right">6.0193</td>
+<td align="right">0.0000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mosq_cases_temp |&gt; 
+  cbind(resid = resid(final_fit_quadratic_counts)) |&gt; 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = &quot;#5DC863FF&quot;) + 
+  geom_hline(yintercept = 0) +
+  labs(title = &quot;Residuals for Quadratic Count Model&quot;)</code></pre>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>mosq_cases_temp |&gt;
+  cbind(prediction = predict(final_fit_quadratic_counts, type = &quot;response&quot;)) |&gt; 
+  ggplot(aes(x = weekyear, y = count, group = year)) +
+  geom_point() + 
+  geom_line(aes(x = weekyear, y = prediction), color = &quot;#5DC863FF&quot;) +
+  labs(title = &quot;Predictions for Quadratic Count Model&quot;)</code></pre>
+<p><img src="regression_models_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<p>Adding a quadratic term for the previous week’s count of mosquitoes
+improved the residual behavior, but caused unusual behavior in the
+predictions.</p>
+</div>
 </div>
 
 
