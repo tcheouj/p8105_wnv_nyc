@@ -8,6 +8,12 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rvest)
+library(httr)
+library(GSODR)
+library(sf)
+library(patchwork)
 ```
 
 ## **Motivation**
@@ -124,8 +130,75 @@ Our datasets are now ready for analysis!
   
   
 ## **Data Exploration**
-visualizations, summaries, exploratory statistical analyses  
-can link to page with full code  
+
+### Comparing Temperature Data Across Weather Stations
+
+We first wanted to look at which weather station to use for our temperature analysis as we were curious of whether there were any variations between temperature data from these 5 stations. We plotted the temperature data between 2021 and 2024. 
+
+```{r, message=FALSE, echo=FALSE}
+station_ids <-
+  nearest_stations(
+    LAT = 40.6958,
+    LON = -73.9171,
+    distance = 20
+  ) |>
+  filter(STATE != "NJ" & !(NAME %in% c("KINGS POINT",
+                                       "SANDY HOOK",
+                                       "BERGEN POINT",
+                                       "MITCHEL FIELD",
+                                       "HEMPSTEAD MITCHELL FLD AFB",
+                                       "AMBROSE LIGHT  NY",
+                                       "AMBROSE / FT. TILDEN",
+                                       "FREEPORT"))) |>
+  filter(!(STNID %in% c("999999-14732",
+                        "725033-94728",
+                        "725060-94728",
+                        "999999-94728",
+                        "744976-99999",
+                        "999999-14786",
+                        "999999-94789",
+                        "725026-99999",
+                        "997439-99999"))) |>
+  janitor::clean_names() |>
+  pull(stnid)
+
+# weather_2021_2024 <-
+#    get_GSOD(
+#      years = c(2021:2024),
+#      station = station_ids
+#    ) |>
+#    janitor::clean_names() |>
+#    select(name, latitude, longitude, yearmoda, temp, max, min, prcp, dewp) |>
+#    mutate(
+#      temp = (temp * 9/5) + 32,
+#      max = (max * 9/5) + 32,
+#      min = (min * 9/5) + 32,
+#      prcp = (prcp * 0.0393701),
+#      year = year(yearmoda),
+#      name = case_match(
+#        name,
+#        "PORT AUTH DOWNTN MANHATTAN WALL ST HEL" ~ "Wall St",
+#        "LA GUARDIA AIRPORT" ~ "LGA",
+#        "CENTRAL PARK" ~ "Central Park",
+#        "JOHN F KENNEDY INTERNATIONAL AIRPORT" ~ "JFK",
+#        "THE BATTERY" ~ "The Battery"
+#      )
+#    )
+
+# Uncomment this line after running the previous block once
+weather_2021_2024 <- read_csv("data/weather_2021_2023.csv")
+
+#write_csv(weather_2021_2024, "data/weather_2021_2023.csv")
+
+weather_2021_2024 |>
+  ggplot(aes(x = yearmoda, y = temp, color = name)) +
+  geom_point(size = 0.5, alpha = 0.5) +
+  geom_smooth(se = FALSE, color = "white", alpha = 0.5) +
+  theme(legend.position = "bottom") + 
+  geom_errorbar(aes(ymin = min, ymax = max), alpha = 0.5)
+```
+
+We found that, despite being in different boroughs, there is not much variation in measured temperatures. Since they were all fairly similar, we ended up taking the average of the 5 weather stations. 
   
 ## **Data Analysis**
 formal statistical analyses  

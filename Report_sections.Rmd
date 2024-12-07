@@ -106,20 +106,37 @@ Our datasets are now ready for analysis!
 
 ## Exploratory Analysis
 
-We first wanted to look at which weather station to use for our temperature analysis as we were curious of whether there were any variations between temperature data from these 5 stations. We plotted the temperature data between 2021 and 2024 and we found that, despite being in different boroughs, there is not much variation in measured temperatures. Since they were all fairly similar, we ended up taking the average of the 5 weather stations. 
 
-We then wanted to focus on the mosquito data. Specifically, we wanted to look at the number of mosquito counts by year and borough to explore whether mosquito season starts earlier. Since we predicted that temperatures are rising in NYC, then we should expect that warmer climates may cause mosquito season to start sooner. To visualize this, we created four separate plots of counts of mosquitoes positive for WNV for each year from 2021 through 2024, separated by borough. The figures show that there are drastic differences in the counts of WNV-positive mosquitoes between boroughs. Queens consistently had the highest counts of WNV-positive mosquitoes compared to the other boroughs across all years, while Manhattan had the lowest counts of WNV-positive mosquitoes. Further, when boroughs are grouped together, we see that the number of WNV-positive mosquitoes peaked in 2021, followed by a decline in 2022 and 2023. There is a slight increase in the counts peak in the year 2024.
+### Comparing Temperature Data Across Weather Stations
+
+We first wanted to look at which weather station to use for our temperature analysis as we were curious of whether there were any variations between temperature data from these 5 stations. We plotted the temperature data between 2021 and 2024. 
+
+We found that, despite being in different boroughs, there is not much variation in measured temperatures. Since they were all fairly similar, we ended up taking the average of the 5 weather stations. 
+
+
+### Exploring Trends in WNV-Positive Mosquito Counts
+
+We then wanted to focus on the mosquito data. Specifically, we wanted to look at the number of mosquito counts by year and borough to explore whether mosquito season starts earlier. Since we predicted that temperatures are rising in NYC, then we should expect that warmer climates may cause mosquito season to start sooner. To visualize this, we created four separate plots of counts of mosquitoes positive for WNV for each year from 2021 through 2024, separated by borough. 
+
+
+
+
+
+The figures show that there are drastic differences in the counts of WNV-positive mosquitoes between boroughs. Queens consistently had the highest counts of WNV-positive mosquitoes compared to the other boroughs across all years, while Manhattan had the lowest counts of WNV-positive mosquitoes. Further, when boroughs are grouped together, we see that the number of WNV-positive mosquitoes peaked in 2021, followed by a decline in 2022 and 2023. There is a slight increase in the counts peak in the year 2024.
 
 We can also see from these figures that between the years of 2021-2024, mosquito season typically ranges from June to October, which is still within a normal range of months for mosquito season in NYC. Unfortunately, the data we have access to only provides detections of WNV+ mosquitoes within NYC starting from 2021 so we won't be able to analyze long-term trends.
 
 
+### Mapping WNV-Positive Mosquito Trends Across NYC
+
 To visualize this further, we wanted to create a map of NYC between 2021-2024 and overlay the WNV positive mosquitoes data to see if we could visualize any trends on which boroughs or neighborhoods may be affected more. Interestingly, from the figure, we found that there are zip codes in Queens and Staten Island that appear to have an increase in the number of mosquitoes positive for WNV from 2021 to 2024. Manhattan, Brooklyn, and the Bronx remained relatively low.  
 
+
+### Examining the Relationship Between Heat Vulnerability and WNV-Positive Mosquitoes
 
 We then wanted to look at whether heat vulnerability index is associated with WNV+ mosquitoes. To do this, we used our merged dataset, grouped by zip code and borough, and then plotted hvi score and WNV+ mosquito counts. The results showed that there were no clear visual trends of association between HVI score, WNV+ mosquitoes, and borough. One noteworthy pattern was that neighborhoods with an HVI score of 5 had generally lower counts of WNV+ mosquito counts compared to neighborhoods with an HVI score of 1, which were more spread out.
 
 
-**Need to add poisson description**
 
 
 
