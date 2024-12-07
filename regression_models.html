@@ -11,7 +11,7 @@
 
 
 
-<title>regression_models</title>
+<title>Regression Models</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -295,33 +295,23 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">regression_models</h1>
+<h1 class="title toc-ignore">Regression Models</h1>
 
 </div>
 
 
-<pre><code>## 
-## Attaching package: &#39;broom&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:modelr&#39;:
-## 
-##     bootstrap</code></pre>
-<pre><code>## Loading required package: carData</code></pre>
-<pre><code>## 
-## Attaching package: &#39;car&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     recode</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     some</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
-##   method from   
-##   +.gg   ggplot2</code></pre>
-<pre><code>## 
-## Attaching package: &#39;broom.helpers&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:modelr&#39;:
-## 
-##     seq_range</code></pre>
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(modelr)
+library(broom)
+library(rvest)
+library(httr)
+library(GSODR)
+library(sf)
+library(patchwork)
+library(car)
+library(GGally)
+library(broom.helpers)</code></pre>
 <div id="data-import" class="section level1">
 <h1>Data import</h1>
 <p>First, we need to import our WNV data and predictor data. Ultimately,
@@ -607,8 +597,8 @@ by 1 month, with a p value of 0.0022.</p>
 <pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning
-## was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <p><img src="regression_models_files/figure-html/month%20model%20fit-1.png" width="672" /></p>
 <p>However, despite a significant model, the model does not fit our
 dataset well, so it is not useful in predicting counts. When plotting
@@ -1107,8 +1097,8 @@ mosq_cases &lt;-
   group_by(year, week) |&gt;
   summarise(count = n()) |&gt;
   mutate(weekyear = (year - 2021)*52 + week) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
-## the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>weekly_weather &lt;- 
   day_weather |&gt;
   mutate(
@@ -1127,8 +1117,8 @@ mosq_cases &lt;-
          lag_max =  lag(avg_max),
          lag_min =  lag(avg_min)) |&gt;
   mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
-## the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>mosq_cases_temp &lt;- 
   mosq_cases |&gt;
   left_join(y = weekly_weather, by = join_by(weekyear)) |&gt;

@@ -1,11 +1,11 @@
 ---
-title: "regression_models"
+title: "Regression Models"
 output: 
   html_document:
     code_folding: hide
 ---
 
-```{r setup, echo=FALSE}
+```{r setup, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(modelr)
