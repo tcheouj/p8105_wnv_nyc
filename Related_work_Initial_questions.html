@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Related_work_Initial_questions</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="data_exploration.html">Data Exploration</a>
+</li>
+<li>
+  <a href="regression_models.html">Data Analysis</a>
+</li>
+<li>
+  <a href="report.html">Report</a>
+</li>
+<li>
+  <a href="https://jt3466.shinyapps.io/nyc_wnv/">Dashboard</a>
+</li>
+<li>
+  <a href="mailto:&lt;mm6410@cumc.columbia.edu&gt;,&lt;jt3466@cumc.columbia.edu&gt;, &lt;ssr2195@cumc.columbia.edu&gt;, &lt;ss7332@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/tcheouj/p8105_wnv_nyc">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<div id="final-project-sections-mm" class="section level1">
+<h1>Final Project Sections (MM)</h1>
+<p>Mahdi Maktabi 2024-11-29</p>
+<div id="related-work" class="section level2">
+<h2>Related Work</h2>
+<p>Our group has a shared interest in addressing climate change,
+studying infectious diseases, and uniting over our mutual hatred of
+mosquito bites. Inspiration for this project stems from several relevant
+news articles and papers:</p>
+<ul>
+<li>A <a
+href="https://www.nytimes.com/article/west-nile-virus-nyc.html">2024 New
+York Times article</a> highlights the rising concern for an increased
+number of mosquitoes infected with West Nile virus over the summer in
+New York City and how this likely driven by climate change.</li>
+<li>A <a href="https://www.nature.com/articles/s41590-020-0648-y">2020
+Nature article</a> finds that climate change can affect mosquito
+abundance, survival, transmission dynamics, and pathogen development
+within vectors.</li>
+</ul>
+<p>This issue is concerning as worsening climate change trends and
+warmer temperatures in NYC can create more hospitable environments for
+mosquitoes carrying West Nile virus and may increase human-mosquito
+interaction. Motivated by these concerns, we aimed to explore the rising
+temperatures trends in NYC, West Nile virus incidence in NYC, and what
+is being done to control its spread.</p>
+</div>
+<div id="initial-questions" class="section level2">
+<h2>Initial Questions</h2>
+<p>With this inspiration, we wanted to explore available NYC data sets
+to answer some of these initial questions:</p>
+<ul>
+<li>What communities are affected most by rising temperatures? (heat
+vulnerability index)</li>
+<li>What do average temperatures look like over time in NYC? Is there
+any shift?
+<ul>
+<li>What about precipitation trends?</li>
+</ul></li>
+<li>If climate change is causing temperatures to rise in NYC, does this
+affect mosquito season?</li>
+<li>What is the incidence of mosquitoes carrying West Nile virus in NYC
+over time? Is it different across boroughs?</li>
+<li>Is there a relationship between heat vulnerability index score and
+incidence of West Nile virus?</li>
+<li>Are there specific boroughs in NYC that are disproportionately
+affected by West Nile virus?</li>
+<li>How has the NYC DOHMH’s mosquito control efforts during the summer
+affected the incidence of West Nile virus case detection?</li>
+</ul>
+<p>We hypothesize that <strong><em>between the years of 2021 to 2024,
+the NYC boroughs with warmer average temperatures will have a higher
+incidence of mosquitoes carrying West Nile virus</em></strong>. We also
+predict that areas with higher HVI scores will also have more positive
+WNV mosquitoes as these areas may be more likely to experience worse
+heat conditions and potentially create more suitable environments for
+mosquitoes infected with West Nile virus.</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<div id="sources" class="section level3">
+<h3>Sources</h3>
+<p>We utilized the <a
+href="https://p8105.com/data/zip_codes.html">Supplmentary Dataset of NYC
+Zip Codes</a> that was provided on our P8105 class website, which
+includes information on <em>NYC zip codes, boroughs</em>, and
+<em>neighborhoods</em>.</p>
+<p>We located the <a
+href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary">NYC
+Heat Vulnerability Index (HVI)</a> through the NYC Department of Health
+and Mental Hygiene (DOHMH) Environment and Health Data Portal. The HVI
+shows the risk of community-level health impacts due to extreme heat and
+includes factors such as surface temperatures, green spaces, access to
+home air conditioning, median income, and the percentage of residents
+who are low-income or non-Latinx Black (who are often excluded from heat
+resources). Neighborhoods with a <strong>HVI score of 1</strong> have
+the lowest risk while those with a <strong>HVI score of 5</strong> have
+the highest risk.</p>
+<p>Data from the <a
+href="https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page">West
+Nile Virus Mosquito Activity reports</a> was used to show the detection
+of positive mosquitoes for West Nile virus in various NYC neighborhoods.
+Further, we used geographic files for <a
+href="https://github.com/nychealth/coronavirus-data/tree/master/Geography-resources">Modified
+ZIP Code Tabulation Areas (MODZCTA)</a> to create the NYC maps. All data
+is provided by the NYC DOHMH.</p>
+<p>We located the <a
+href="https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2024/wnvplan2024.pdf">West
+Nile Virus Positive NYC Cases</a> through the <em>2024 NYC DOHMH
+Comprehensive Mosquito Surveillance and Control Plan</em>. The report
+provides the number of West Nile virus cases in NYC between 1999-2023,
+separated by borough.</p>
+<p>The <a
+href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516">Global
+Surface Summary of the Day (GSOD) package</a> contains global daily
+average weather observations from weather stations. A <code>GSODR</code>
+package exists where we can load in data from specific stations with
+specific weather measurements. Our indicators included: mean
+temperature, dew point temperature, sea level pressure, station
+pressure, visibility, wind speed, gust, precipitation amount, and snow
+depth. This data is provided by the National Oceanic and Atmospheric
+Administration.</p>
+</div>
+<div id="cleaning" class="section level3">
+<h3>Cleaning</h3>
+<p><strong>P8105 Zip Codes Dataset</strong></p>
+<p>The supplementary zip codes dataset was imported using
+<code>read_html</code> and initially cleaned using
+<code>janitor::clean_names</code>. We filtered the dataset to only
+include zip codes within NYC, used a mutate step to change borough names
+to: <em>Brooklyn</em>, <em>Manhattan</em>, and <em>Staten Island</em>,
+and only selected relevant variables: <em>zip_code</em>,
+<em>borough</em>, and <em>neighborhood</em>.</p>
+<p><strong>Positive Mosquitoes Detected with West Nile Virus Datsets
+(2021-2024)</strong></p>
+<p>For the years 2021-2023, the datasets provided by the NYC DOHMH are
+simple html tables that were imported using <code>read_html</code> and
+cleaned using <code>janitor::clean_names</code>. Zip codes for each
+detection of positive mosquitoes on a specific day are listed and
+separated by commas. To clean this, we used multiple
+<code>separate_longer_delim</code> steps to separate each positive
+mosquito detection into a separate observation, while keeping the
+corresponding day.</p>
+<p>For the year 2024, a .csv file was imported using
+<code>read_csv</code> and reshaped using <code>pivot_longer</code> to
+consolidate all positive mosquito detection dates into a single
+<code>date</code> column.</p>
+<p>For all datasets, we reformatted the <code>zip_code</code> column to
+integers and the <code>date</code> column to a date object, corrected
+any zip code and date entry errors, and removed unnecessary columns and
+N/A values.</p>
+<p><strong>NYC Positive Cases of West Nile Virus Dataset
+(1999-2023)</strong></p>
+<p>Data was downloaded as a .csv file, imported using
+<code>read_csv</code>, and initially cleaned using
+<code>janitor::clean_names</code>. The data was reshaped using
+<code>pivot_longer</code> such that our columns are now:
+<code>year</code>, <code>borough</code>, and <code>wnv_cases</code>
+(i.e. the number of West Nile virus cases counted within that
+borough).</p>
+<p><strong>NYC Heat Vulnerability Index Dataset</strong></p>
+<p>This dataset was already in a tidy format after downloading. We
+simply imported the dataset using <code>read_csv</code> and applied
+<code>janitor::clean_names</code> for consistency.</p>
+<p><strong>GSODR Dataset</strong></p>
+<p>We identified Bushwick, Brooklyn as the geographical center of NYC.
+We loaded the <code>GSODR</code> package and used the
+<code>nearest_stations</code> function to identify weather stations
+surrounding the longitude and latitude coordinates of Bushwick. We used
+a 20 mile radius to capture stations in all boroughs. We then filtered
+out stations not in NYC and those without 2021-2024 weather data. This
+left us with only 5 stations: <strong>Wall St</strong>,
+<strong>LGA</strong>, <strong>Central Park</strong>,
+<strong>JFK</strong>, and <strong>The Battery</strong>.</p>
+<p>We pulled weather data between 2021-2024 from the 5 weather stations
+using <code>get_GSOD</code>, applied <code>janitor::cleannames</code>,
+and selected these variables: <code>station name</code>,
+<code>latitude</code> and <code>longitude</code>, date
+(<code>yearmoda</code>) mean temperature (<code>temp</code>), mean
+precipitation (<code>prcp</code>), mean dew point (<code>dewp</code>)
+(to get an idea of water content in the air), and <code>max</code> and
+<code>min</code> temperature. Finally, we applied a series of mutate
+steps to convert temperature measurements to Fahrenheit, precipitation
+to inches, and renamed weather stations to more intuitive names.</p>
+</div>
+<div id="merging" class="section level3">
+<h3>Merging</h3>
+<p>To integrate our datasets, we utilized the shared
+<code>zip_code</code> variable as a key for merging. This allowed us to
+successfully combine WNV-positive mosquito datasets (2021–2024), HVI
+scores, and MODZCTA shapefiles. For the mosquito data, we ensured that
+zip codes without mosquito detection were assigned a value of zero.</p>
+<p>Relevant variables included in datasets:</p>
+<ul>
+<li><p>zip_code</p></li>
+<li><p>borough</p></li>
+<li><p>date</p></li>
+<li><p>neighborhood</p></li>
+<li><p>hvi</p></li>
+<li><p>name</p></li>
+<li><p>latitude</p></li>
+<li><p>longtitude</p></li>
+<li><p>yearmoda</p></li>
+<li><p>temp</p></li>
+<li><p>max</p></li>
+<li><p>min</p></li>
+<li><p>prcp</p></li>
+<li><p>dewp</p></li>
+<li><p>year</p></li>
+<li></li>
+</ul>
+</div>
+</div>
+<div id="exploratory-analysis" class="section level2">
+<h2>Exploratory Analysis</h2>
+<p>look at the distribution of wnv by borough</p>
+<p>We first wanted to look at which weather station to use for our
+temperature analysis as we were curious of whether there were any
+variations between temperature data from these 5 stations. We plotted
+the temperature data between 2021 and 2024 and we found that, despite
+being in different boroughs, there is not much variation in measured
+temperatures. From this, we understood that we could get by with using
+just one station and chose weather data from <strong>Central
+Park</strong>.</p>
+<p>We then wanted to focus on the mosquito data. Specifically, we wanted
+to look at the number of mosquito counts by year and borough to explore
+whether mosquito season starts earlier. Since we predicted that
+temperatures are rising in NYC, then we should expect that warmer
+climates may cause mosquito season to start sooner. To visualize this,
+we created four separate plots of counts of mosquitoes positive for WNV
+for each year from 2021 through 2024, separated by borough. (<strong>The
+figures show that - add conclusion here</strong>). We also created an
+additional plot just looking at (<strong>ask Johnstone about what the
+plot with the merged dataset is showing</strong>).</p>
+<p>To visualize this further, we wanted to create a map of NYC between
+2021-2024 and overlay the positive WNV mosquitoes data to see if we
+could visualize any trends on which boroughs or neighborhoods may be
+affected more. Interestingly, from the figure, we found that there are
+zip codes in Queens and Staten Island that appear to have an increase in
+the number of mosquitoes positive for WNV from 2021 to 2024. Manhattan,
+Brooklyn, and the Bronx remained relatively low.</p>
+<p>We then wanted to look at whether heat vulnerability index is
+associated with WNV+ mosquitoes. To do this, we used our merged dataset,
+grouped by zipcode and borough, and then plotted hvi score and WNV+
+mosquito counts. <strong>The results showed that there were no clear
+visual trends of association between HVI score, WNV+ mosquitoes, and
+borough. One noteworthy pattern was that neighborhoods with an HVI score
+of 5 had generally lower counts of WNV+ mosquito counts compared to
+neighborhoods with an HVI score of 1, which were more spread
+out.</strong></p>
+<p><strong>Need to add poisson description</strong></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

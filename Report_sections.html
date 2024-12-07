@@ -1,306 +1,615 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
-<meta charset="utf-8" />
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-
-<meta name="author" content="Mahdi Maktabi" />
-
-<meta name="date" content="2024-11-29" />
-
-<title>Final Project Sections (MM)</title>
-
-<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
 }
-</script>
-
-
-
-
-
-
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
 }
 img {
-  max-width:100%;
+border: 0;
 }
-.tabbed-pane {
-  padding-top: 12px;
+hr {
+box-sizing: content-box;
+height: 0;
 }
-.html-widget {
-  margin-bottom: 20px;
+pre {
+overflow: auto;
 }
-button.code-folding-btn:focus {
-  outline: none;
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
 }
-summary {
-  display: list-item;
+input {
+color: inherit;
+font: inherit;
+margin: 0;
 }
-details > summary > p:only-child {
-  display: inline;
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
 }
 pre code {
-  padding: 0;
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+padding-top: 0px;
 }
 </style>
-
-
-<style type="text/css">
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
-
-<!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<!-- code folding -->
-
-
 
 
 </head>
 
 <body>
 
-
-<div class="container-fluid main-container">
-
-
-
-
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">Home</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="about.html">About</a>
-</li>
-<li>
-  <a href="report.html">Report</a>
-</li>
-<li>
-  <a href="data_exploration.html">Data Exploration</a>
-</li>
-<li>
-  <a href="data_analysis.html">Data Analysis</a>
-</li>
-<li>
-  <a href="https://jt3466.shinyapps.io/nyc_wnv/">Dashboard</a>
-</li>
-<li>
-  <a href="mailto:&lt;mm6410@cumc.columbia.edu&gt;,&lt;jt3466@cumc.columbia.edu&gt;, &lt;ssr2195@cumc.columbia.edu&gt;, &lt;ss7332@cumc.columbia.edu&gt;">
-    <span class="fa fa-envelope fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="https://github.com/tcheouj/p8105_wnv_nyc">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
-
-<div id="header">
-
-
-
-<h1 class="title toc-ignore">Final Project Sections (MM)</h1>
-<h4 class="author">Mahdi Maktabi</h4>
-<h4 class="date">2024-11-29</h4>
-
-</div>
-
-
-<div id="related-work" class="section level2">
-<h2>Related Work</h2>
+<h1 id="final-project-sections-mm">Final Project Sections (MM)</h1>
+<p>Mahdi Maktabi 2024-11-29</p>
+<h2 id="related-work">Related Work</h2>
 <p>Our group has a shared interest in addressing climate change,
 studying infectious diseases, and uniting over our mutual hatred of
 mosquito bites. Inspiration for this project stems from several relevant
 news articles and papers:</p>
 <ul>
-<li>A <a
-href="https://www.nytimes.com/article/west-nile-virus-nyc.html">2024 New
+<li>A <a href="https://www.nytimes.com/article/west-nile-virus-nyc.html">2024 New
 York Times article</a> highlights the rising concern for an increased
 number of mosquitoes infected with West Nile virus over the summer in
 New York City and how this likely driven by climate change.</li>
@@ -315,9 +624,7 @@ mosquitoes carrying West Nile virus and may increase human-mosquito
 interaction. Motivated by these concerns, we aimed to explore the rising
 temperatures trends in NYC, West Nile virus incidence in NYC, and what
 is being done to control its spread.</p>
-</div>
-<div id="initial-questions" class="section level2">
-<h2>Initial Questions</h2>
+<h2 id="initial-questions">Initial Questions</h2>
 <p>With this inspiration, we wanted to explore available NYC data sets
 to answer some of these initial questions:</p>
 <ul>
@@ -343,29 +650,23 @@ disproportionately affected by West Nile virus?</li>
 <li>How has the NYC DOHMH’s mosquito control efforts during the summer
 affected the incidence of West Nile virus case detection?</li>
 </ul>
-<p>We hypothesize that <strong><em>between the years of 2021 to 2024,
+<p>We hypothesize that <em><strong>between the years of 2021 to 2024,
 the NYC boroughs with warmer average temperatures and greater amounts of
 precipitation will have a higher incidence of mosquitoes carrying West
-Nile virus</em></strong>. We also predict that areas with higher HVI
+Nile virus</strong></em>. We also predict that areas with higher HVI
 scores will also have more positive WNV mosquitoes as these areas may be
 more likely to experience worse heat conditions and potentially create
 more suitable environments for mosquitoes infected with West Nile
 virus.</p>
-</div>
-<div id="data" class="section level2">
-<h2>Data</h2>
-<div id="sources" class="section level3">
-<h3>Sources</h3>
-<p>We utilized the <a
-href="https://p8105.com/data/zip_codes.html">Supplmentary Dataset of NYC
+<h2 id="data">Data</h2>
+<h3 id="sources">Sources</h3>
+<p>We utilized the <a href="https://p8105.com/data/zip_codes.html">Supplmentary Dataset of NYC
 Zip Codes</a> that was provided on our P8105 class website, which
 includes information on <em>NYC zip codes, boroughs</em>, and
 <em>neighborhoods</em>.</p>
-<p>We located the <a
-href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary">NYC
+<p>We located the <a href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary">NYC
 Heat Vulnerability Index (HVI)</a> through the NYC DOHMH Environment and
-Health Data Portal. We also utilized <a
-href="https://catalog.data.gov/dataset/heat-vulnerability-index-rankings">Zip
+Health Data Portal. We also utilized <a href="https://catalog.data.gov/dataset/heat-vulnerability-index-rankings">Zip
 Code Tabulated Area Level HVI</a> data, which is designed to approximate
 zip codes and works well with merging HVI scores with our other
 datasets. The HVI shows the risk of community-level health impacts due
@@ -375,24 +676,19 @@ percentage of residents who are low-income or non-Latinx Black (who are
 often excluded from heat resources). Neighborhoods with a <strong>HVI
 score of 1</strong> have the lowest risk while those with a <strong>HVI
 score of 5</strong> have the highest risk.</p>
-<p>Data from the <a
-href="https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page">West
+<p>Data from the <a href="https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity.page">West
 Nile Virus Mosquito Activity reports</a> was used to show the detection
 of positive mosquitoes for West Nile virus in various NYC neighborhoods.
-Further, we used geographic files for <a
-href="https://github.com/nychealth/coronavirus-data/tree/master/Geography-resources">Modified
+Further, we used geographic files for <a href="https://github.com/nychealth/coronavirus-data/tree/master/Geography-resources">Modified
 ZIP Code Tabulation Areas (MODZCTA)</a> to create the NYC maps. All data
 is provided by the NYC DOHMH. More information on how this mosquito
-surveillance is conducted by the NYC DOHMH can be found <a
-href="https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2023/wnvplan2023.pdf">here</a>.</p>
-<p>We located the <a
-href="https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2024/wnvplan2024.pdf">West
+surveillance is conducted by the NYC DOHMH can be found <a href="https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2023/wnvplan2023.pdf">here</a>.</p>
+<p>We located the <a href="https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2024/wnvplan2024.pdf">West
 Nile Virus NYC Human Cases</a> through the <em>2024 NYC DOHMH
 Comprehensive Mosquito Surveillance and Control Plan</em>. The report
 provides the number of West Nile virus human cases in NYC between
 1999-2023, separated by borough.</p>
-<p>The <a
-href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516">Global
+<p>The <a href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00516">Global
 Surface Summary of the Day (GSOD)</a> contains global daily average
 weather observations from weather stations. A <code>GSODR</code> package
 exists where we can load in data from specific stations and select
@@ -400,9 +696,7 @@ various weather measurements. Our indicators include: mean temperature,
 dew point temperature, sea level pressure, station pressure, visibility,
 wind speed, gust, precipitation amount, and snow depth. This data is
 provided by the National Oceanic and Atmospheric Administration.</p>
-</div>
-<div id="cleaning" class="section level3">
-<h3>Cleaning</h3>
+<h3 id="cleaning">Cleaning</h3>
 <p><strong>P8105 Zip Codes Dataset</strong></p>
 <p>The supplementary zip codes dataset was imported using
 <code>read_html</code> and initially cleaned using
@@ -467,9 +761,7 @@ precipitation (<code>prcp</code>), mean dew point (<code>dewp</code>)
 steps to convert temperature measurements to Fahrenheit, precipitation
 measures to inches, and renamed weather stations to more intuitive
 names.</p>
-</div>
-<div id="merging" class="section level3">
-<h3>Merging</h3>
+<h3 id="merging">Merging</h3>
 <p>To combine our datasets, we utilized the shared <code>zip_code</code>
 variable as a key for merging. This allowed us to successfully combine
 WNV-positive mosquito datasets (2021–2024), HVI scores, and MODZCTA
@@ -506,38 +798,41 @@ pulled</li>
 <li><code>dewp</code>: mean dew point (Fahrenheit)</li>
 </ul>
 <p>Our datasets are now ready for analysis!</p>
-</div>
-</div>
-<div id="exploratory-analysis" class="section level2">
-<h2>Exploratory Analysis</h2>
+<h2 id="exploratory-analysis">Exploratory Analysis</h2>
+<h3 id="comparing-temperature-data-across-weather-stations">Comparing
+Temperature Data Across Weather Stations</h3>
 <p>We first wanted to look at which weather station to use for our
 temperature analysis as we were curious of whether there were any
 variations between temperature data from these 5 stations. We plotted
-the temperature data between 2021 and 2024 and we found that, despite
-being in different boroughs, there is not much variation in measured
-temperatures. Since they were all fairly similar, we ended up taking the
-average of the 5 weather stations.</p>
+the temperature data between 2021 and 2024.</p>
+<p>We found that, despite being in different boroughs, there is not much
+variation in measured temperatures. Since they were all fairly similar,
+we ended up taking the average of the 5 weather stations.</p>
+<h3 id="exploring-trends-in-wnv-positive-mosquito-counts">Exploring
+Trends in WNV-Positive Mosquito Counts</h3>
 <p>We then wanted to focus on the mosquito data. Specifically, we wanted
 to look at the number of mosquito counts by year and borough to explore
 whether mosquito season starts earlier. Since we predicted that
 temperatures are rising in NYC, then we should expect that warmer
 climates may cause mosquito season to start sooner. To visualize this,
 we created four separate plots of counts of mosquitoes positive for WNV
-for each year from 2021 through 2024, separated by borough. The figures
-show that there are drastic differences in the counts of WNV-positive
-mosquitoes between boroughs. Queens consistently had the highest counts
-of WNV-positive mosquitoes compared to the other boroughs across all
-years, while Manhattan had the lowest counts of WNV-positive mosquitoes.
-Further, when boroughs are grouped together, we see that the number of
-WNV-positive mosquitoes peaked in 2021, followed by a decline in 2022
-and 2023. There is a slight increase in the counts peak in the year
-2024.</p>
+for each year from 2021 through 2024, separated by borough.</p>
+<p>The figures show that there are drastic differences in the counts of
+WNV-positive mosquitoes between boroughs. Queens consistently had the
+highest counts of WNV-positive mosquitoes compared to the other boroughs
+across all years, while Manhattan had the lowest counts of WNV-positive
+mosquitoes. Further, when boroughs are grouped together, we see that the
+number of WNV-positive mosquitoes peaked in 2021, followed by a decline
+in 2022 and 2023. There is a slight increase in the counts peak in the
+year 2024.</p>
 <p>We can also see from these figures that between the years of
 2021-2024, mosquito season typically ranges from June to October, which
 is still within a normal range of months for mosquito season in NYC.
 Unfortunately, the data we have access to only provides detections of
 WNV+ mosquitoes within NYC starting from 2021 so we won’t be able to
 analyze long-term trends.</p>
+<h3 id="mapping-wnv-positive-mosquito-trends-across-nyc">Mapping
+WNV-Positive Mosquito Trends Across NYC</h3>
 <p>To visualize this further, we wanted to create a map of NYC between
 2021-2024 and overlay the WNV positive mosquitoes data to see if we
 could visualize any trends on which boroughs or neighborhoods may be
@@ -545,67 +840,62 @@ affected more. Interestingly, from the figure, we found that there are
 zip codes in Queens and Staten Island that appear to have an increase in
 the number of mosquitoes positive for WNV from 2021 to 2024. Manhattan,
 Brooklyn, and the Bronx remained relatively low.</p>
+<h3 id="examining-the-relationship-between-heat-vulnerability-and-wnv-positive-mosquitoes">Examining
+the Relationship Between Heat Vulnerability and WNV-Positive
+Mosquitoes</h3>
 <p>We then wanted to look at whether heat vulnerability index is
 associated with WNV+ mosquitoes. To do this, we used our merged dataset,
 grouped by zip code and borough, and then plotted hvi score and WNV+
-mosquito counts. The results showed that there were no clear visual
-trends of association between HVI score, WNV+ mosquitoes, and borough.
-One noteworthy pattern was that neighborhoods with an HVI score of 5 had
+mosquito counts.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>avg_hvi_borough <span class="ot">&lt;-</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">left_join</span>(hvi_zcta, zip_nbhd, <span class="at">by =</span> <span class="fu">join_by</span>(zip_code)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    <span class="fu">group_by</span>(borough) <span class="sc">|&gt;</span> </span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>      <span class="at">avg_hvi =</span> <span class="fu">mean</span>(hvi)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    )</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># is heat vulnerability associated with WNV+ human cases?</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">left_join</span>(wnv_cases, yearly_weather, <span class="at">by =</span> <span class="fu">join_by</span>(year)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">left_join</span>(avg_hvi_borough, <span class="at">by =</span> <span class="fu">join_by</span>(borough)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> avg_hvi, <span class="at">y =</span> wnv_cases, <span class="at">fill =</span> year, <span class="at">shape =</span> borough)) <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y =</span> mean, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)  <span class="co"># perhaps hvi is a parabolic distribution?</span></span></code></pre></div>
+<pre><code>## Warning: Removed 125 rows containing non-finite outside the scale range
+## (`stat_summary()`).
+
+## Warning in max(f): no non-missing arguments to max; returning -Inf
+
+## Warning: Computation failed in `stat_summary()`.
+## Caused by error in `seq_len()`:
+## ! argument must be coercible to non-negative integer
+
+## Warning: Removed 125 rows containing missing values or values outside the
+## scale range (`geom_point()`).</code></pre>
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAYAAAB6jN80AAAEDmlDQ1BrQ0dDb2xvclNwYWNlR2VuZXJpY1JHQgAAOI2NVV1oHFUUPpu5syskzoPUpqaSDv41lLRsUtGE2uj+ZbNt3CyTbLRBkMns3Z1pJjPj/KRpKT4UQRDBqOCT4P9bwSchaqvtiy2itFCiBIMo+ND6R6HSFwnruTOzu5O4a73L3PnmnO9+595z7t4LkLgsW5beJQIsGq4t5dPis8fmxMQ6dMF90A190C0rjpUqlSYBG+PCv9rt7yDG3tf2t/f/Z+uuUEcBiN2F2Kw4yiLiZQD+FcWyXYAEQfvICddi+AnEO2ycIOISw7UAVxieD/Cyz5mRMohfRSwoqoz+xNuIB+cj9loEB3Pw2448NaitKSLLRck2q5pOI9O9g/t/tkXda8Tbg0+PszB9FN8DuPaXKnKW4YcQn1Xk3HSIry5ps8UQ/2W5aQnxIwBdu7yFcgrxPsRjVXu8HOh0qao30cArp9SZZxDfg3h1wTzKxu5E/LUxX5wKdX5SnAzmDx4A4OIqLbB69yMesE1pKojLjVdoNsfyiPi45hZmAn3uLWdpOtfQOaVmikEs7ovj8hFWpz7EV6mel0L9Xy23FMYlPYZenAx0yDB1/PX6dledmQjikjkXCxqMJS9WtfFCyH9XtSekEF+2dH+P4tzITduTygGfv58a5VCTH5PtXD7EFZiNyUDBhHnsFTBgE0SQIA9pfFtgo6cKGuhooeilaKH41eDs38Ip+f4At1Rq/sjr6NEwQqb/I/DQqsLvaFUjvAx+eWirddAJZnAj1DFJL0mSg/gcIpPkMBkhoyCSJ8lTZIxk0TpKDjXHliJzZPO50dR5ASNSnzeLvIvod0HG/mdkmOC0z8VKnzcQ2M/Yz2vKldduXjp9bleLu0ZWn7vWc+l0JGcaai10yNrUnXLP/8Jf59ewX+c3Wgz+B34Df+vbVrc16zTMVgp9um9bxEfzPU5kPqUtVWxhs6OiWTVW+gIfywB9uXi7CGcGW/zk98k/kmvJ95IfJn/j3uQ+4c5zn3Kfcd+AyF3gLnJfcl9xH3OfR2rUee80a+6vo7EK5mmXUdyfQlrYLTwoZIU9wsPCZEtP6BWGhAlhL3p2N6sTjRdduwbHsG9kq32sgBepc+xurLPW4T9URpYGJ3ym4+8zA05u44QjST8ZIoVtu3qE7fWmdn5LPdqvgcZz8Ww8BWJ8X3w0PhQ/wnCDGd+LvlHs8dRy6bLLDuKMaZ20tZrqisPJ5ONiCq8yKhYM5cCgKOu66Lsc0aYOtZdo5QCwezI4wm9J/v0X23mlZXOfBjj8Jzv3WrY5D+CsA9D7aMs2gGfjve8ArD6mePZSeCfEYt8CONWDw8FXTxrPqx/r9Vt4biXeANh8vV7/+/16ffMD1N8AuKD/A/8leAvFY9bLAAAAOGVYSWZNTQAqAAAACAABh2kABAAAAAEAAAAaAAAAAAACoAIABAAAAAEAAAKgoAMABAAAAAEAAAHgAAAAABJf29wAAEAASURBVHgB7N0HeFVF2sDxNxUCgUACKkUpAlIELAgiooLSBJUFVAQLit3F3vVb1r4rUoRFV0BXRBAVbAhKUxRZiCBNikiRDtI7hITku++495gbUk6Se27uOfc/+4ScOmfmN3mefZ0zMycqy5eEhAACCCCAAAIIIIBAiASiQ/QcHoMAAggggAACCCCAgBEgAOUPAQEEEEAAAQQQQCCkAgSgIeXmYQgggAACCCCAAAIEoPwNIIAAAggggAACCIRUgAA0pNw8DAEEEEAAAQQQQIAAlL8BBBBAAAEEEEAAgZAKxIb0aUF42P79++XEiRNByIksEEAAAQQQQMAJgaioKKlYsaITWZOnRwRcF4AeP35cMjIyPMJPNRBAAAEEEEAAgcgT4BV85LU5NUYAAQQQQAABBEpUgAC0RPl5OAIIIIAAAgggEHkCBKCR1+bUGAEEEEAAAQQQKFEBAtAS5efhCCCAAAIIIIBA5AkQgEZem1NjBBBAAAEEEECgRAUIQEuUn4cjgAACCCCAAAKRJ+C6ZZgSEhIkJiYm8lqKGiOAAAIIIOASgaysLJeUlGKWlIDrAtCjR4+yEH1J/bXwXAQQQAABBGwKlClTxuaVXBaJAq4LQLWR+C+rSPxTpc4IIIAAAggg4BUBxoB6pSWpBwIIIIAAAggg4BIBAlCXNBTFRAABBBBAAAEEvCJAAOqVlqQeCCCAAAIIIICASwQIQF3SUBQTAQQQQAABBBDwigABqFdaknoggAACCCCAAAIuESAAdUlDUUwEEEAAAQQQQMArAgSgXmlJ6oEAAggggAACCLhEgADUJQ1FMRFAAAEEEEAAAa8IEIB6pSWpBwIIIIAAAggg4BIBAlCXNBTFRAABBBBAAAEEvCJAAOqVlqQeCCCAAAIIIICASwQIQF3SUBQTAQQQQAABBBDwigABqFdaknoggAACCCCAAAIuESAAdUlDUUwEEEAAAQQQQMArAgSgXmlJ6oEAAggggAACCLhEgADUJQ1FMRFAAAEEEEAAAa8IEIB6pSWpBwIIIIAAAggg4BIBAlCXNBTFRAABBBBAAAEEvCJAAOqVlqQeCCCAAAIIIICASwQIQF3SUBQTAQQQQAABBBDwigABqFdaknoggAACCCCAAAIuESAAdUlDUUwEEEAAAQQQQMArAgSgXmlJ6oEAAggggAACCLhEgADUJQ1FMRFAAAEEEEAAAa8IEIB6pSWpBwIIIIAAAggg4BIBAlCXNBTFRAABBBBAAAEEvCJAAOqVlqQeCCCAAAIIIICASwQIQF3SUBQTAQQQQAABBBDwigABqFdaknoggAACCCCAAAIuESAAdUlDUUwEEEAAAQQQQMArAgSgXmlJ6oEAAggggAACCLhEgADUJQ1FMRFAAAEEEEAAAa8IEIB6pSWpBwIIIIAAAggg4BIBAlCXNBTFRAABBBBAAAEEvCJAAOqVlqQeCCCAAAIIIICASwQIQF3SUBQTAQQQQAABBBDwigABqFdaknoggAACCCCAAAIuESAAdUlDUUwEEEAAAQQQQMArAgSgXmlJ6oEAAggggAACCLhEgADUJQ1FMRFAAAEEEEAAAa8IEIB6pSWpBwIIIIAAAggg4BIBAlCXNBTFRAABBBBAAAEEvCJAAOqVlqQeCCCAAAIIIICASwQIQF3SUBQTAQQQQAABBBDwigABqFdaknoggAACCCCAAAIuESAAdUlDUUwEEEAAAQQQQMArAgSgXmlJ6oEAAggggAACCLhEgADUJQ1FMRFAAAEEEEAAAa8IEIB6pSWpBwIIIIAAAggg4BIBAlCXNBTFRAABBBBAAAEEvCJAAOqVlqQeCCCAAAIIIICASwQIQF3SUBQTAQQQQAABBBDwigABqFdaknoggAACCCCAAAIuEQhZALpjxw75+uuv5bfffjuJZtWqVTJt2jTZtWvXSec4gAACCCCAAAIIIOAtgZAEoF9++aU89thjsnnzZnn22Wdl8uTJluLgwYNlwIABsmjRIunbt69s3LjROscGAggggAACCCCAgPcEYp2uUlZWlundfO6556RmzZrStGlTGTZsmHTu3FnWr18vs2fPlgkTJkh0dLSMHz9exo4dK0899ZTTxSJ/BBBAAAEEEEAAgRIScDwAjYqKkqFDh5rqpaeny5w5c0wgqgfWrVsnTZo0McGn7p933nkBvaN67PDhw3Lo0CHdNEkDWg1WSQgggAACCCCAAALuFHA8APWzHDhwQHr37i1Hjx6VkSNHmsPbtm2TpKQk/yVSvnx52b17t7WvG++9954MGTLEOvbJJ59Io0aNrH02EEAAAQQQQCC8BLSziIRAfgIhC0A1uPziiy/k+++/l7vuuks+//xziYmJkRMnTljly8jIkISEBGtfNzp06CB16tSxjmnAumfPHmufDQQQQAABBBAIP4Hk5OTwKxQlChsBxwPQ48ePy8KFC+XCCy8UfR1/6aWXyvDhw2X58uVSuXJlWbp0qYWhgWWVKlWsfd2oXbu2+fEf3Llzp6Slpfl3+Y0AAggggAACCCDgMgHHB1PGxcXJv//9b/nxxx8NjS65pK/Za9SoIRdccIEsW7ZMNm3aJNr7OWnSJGnevLnLCCkuAggggAACCCCAQGEEonzjNBwfqLF48WIThGqQWapUKbnhhhvk4osvNuXUJZp0Vrx21WtQ+uKLL0psbN4ds9oDqvmQEEAAAQQQQCB8BXK+0QzfklKykhAISQDqr5jOZk9MTPTvWr91dry+Vs/tnHXR/zYIQHOKsI8AAggggED4CRCAhl+bhFOJ8u5qdKCUeQWY+ppef0gIIIAAAggggAAC3hdwfAyo9wmpIQIIIIAAAgiESmDJkiXy2muvhepxQXvOBx98cNJa50HL3IUZEYC6sNEoMgIIIIAAApEqoPNKXn31VddVf9y4cQSg2VqNADQbBpsIIIAAAggggAACzgsQgDpvzBMQQAABBBBAIMgC3333nVx33XVy7bXXyscffxyQu37kRpeA/Mtf/iJXX321DBo0SHTCsyad9HzHHXfI/PnzpXv37vL4449LZmam+TBOXvfoVxz1nrVr11rP2bx5szm2b98+69i0adPMMX2ulunNN980H+HxX6ALD7399tumTDfffLN8++23/lMR95sANOKanAojgAACCCDgboG9e/fK9ddfL02bNjUftbnpppvMko7+Wt12223y5JNPSt26daVZs2byj3/8Qzp16iQaAGogOmrUKOnVq5dZGlIDyOjoaMnvHv2ojt7z+++/+x9h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" /><!-- --></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>merged_df <span class="ot">&lt;-</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  wnv_mosquito_data <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(borough)) <span class="sc">|&gt;</span>  <span class="co"># there are (likely nonresidential) ZIP codes with no boroughs and no detected WNV in mosquitoes and humans</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">group_by</span>(year, borough) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">wnv_mosquitoes =</span> <span class="fu">sum</span>(count) </span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">right_join</span>(wnv_cases, <span class="at">by =</span> <span class="fu">join_by</span>(year, borough)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="fu">left_join</span>(yearly_weather, <span class="at">by =</span> <span class="fu">join_by</span>(year)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="fu">left_join</span>(avg_hvi_borough, <span class="at">by =</span> <span class="fu">join_by</span>(borough)) <span class="sc">|&gt;</span>  </span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="fu">select</span>(year, borough, <span class="fu">starts_with</span>(<span class="st">&quot;wnv_&quot;</span>), <span class="fu">everything</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  <span class="fu">arrange</span>(year, borough)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
+## the `.groups` argument.</code></pre>
+<p>The results showed that there were no clear visual trends of
+association between HVI score, WNV+ mosquitoes, and borough. One
+noteworthy pattern was that neighborhoods with an HVI score of 5 had
 generally lower counts of WNV+ mosquito counts compared to neighborhoods
 with an HVI score of 1, which were more spread out.</p>
-<p><strong>Need to add poisson description</strong></p>
-</div>
-<div id="discussion" class="section level2">
-<h2>Discussion</h2>
+<h2 id="discussion">Discussion</h2>
 <p>For poisson model - Talk about how the precepitation was linked to
 increasing WNV+ mosquitoes (Ex: for every one inch of percepitation,
 there is 0.367 positive mosquitoes, p-value was significant). -</p>
-</div>
-
-
-
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
-  });
-});
-</script>
-
-<!-- code folding -->
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 
 </body>
 </html>
