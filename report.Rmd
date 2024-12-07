@@ -1,5 +1,5 @@
 ---
-title: "Report"
+title: "**Buzzing Threats: Climate Change, Mosquitoes, and West Nile Virus in New York City**"
 output: 
   html_document:
     toc: true
@@ -10,28 +10,51 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Motivation
+## **Motivation**
 merging motivaion (project goals, motivation) and related work (things that inspired us)
   
-## Initial Questions
-*questions we want to answer  
-*how questions evolved  
-* how questions evolved  
   
-## Data
+## **Related Work**
+
+Our group has a shared interest in addressing climate change, studying infectious diseases, and uniting over our mutual hatred of mosquito bites. Inspiration for this project stems from several relevant news articles and papers:
+
+* A [2024 New York Times article](https://www.nytimes.com/article/west-nile-virus-nyc.html) highlights the rising concern for an increased number of mosquitoes infected with West Nile virus (WNV) over the summer in New York City (NYC) and how this likely driven by climate change. 
+* A [2020 Nature article](https://www.nature.com/articles/s41590-020-0648-y) finds that climate change can affect mosquito abundance, survival, transmission dynamics, and pathogen development within vectors.
+
+This issue is concerning as worsening climate change trends and warmer temperatures in NYC can create more hospitable environments for mosquitoes carrying WNV and may increase human-mosquito interaction. Motivated by these concerns, we aimed to explore the rising temperatures trends in NYC, WNV incidence in NYC, and what is being done to control its spread. 
+
+  
+## **Initial Questions**
+
+With this inspiration, we wanted to explore available NYC data sets to answer some of these initial questions:
+
+* What communities are affected most by rising temperatures?
+* What do average temperatures look like over time in NYC? Is there any shift?
+  * What about precipitation trends?
+* If climate change is causing temperatures to rise in NYC, does this affect mosquito season?
+* What is the incidence of mosquitoes carrying WNV in NYC over time? 
+  * Is it different across boroughs?
+* Is there a relationship between heat vulnerability index (HVI) score and incidence of WNV?
+* Are the number of WNV human cases increasing over time in NYC?
+  * If so, are there specific boroughs in NYC that are disproportionately affected by WNV?
+* How has the NYC Department of Health and Mental Hygiene (DOHMH) mosquito control efforts during the summer affected the incidence of WNV case detection?
+
+We hypothesize that ***between the years of 2021 to 2024, the NYC boroughs with warmer average temperatures and greater amounts of precipitation will have a higher incidence of mosquitoes carrying West Nile virus***. We also predict that areas with higher HVI scores will also have more WNV-positive mosquitoes as these areas may be more likely to experience worse heat conditions and potentially create more suitable environments for infected mosquitoes.
+  
+## **Data**
 *source  
 *scraping method (?)  
 *cleaning  
   
-## Data Exploration
+## **Data Exploration**
 visualizations, summaries, exploratory statistical analyses  
 can link to page with full code  
   
-## Data Analysis
+## **Data Analysis**
 formal statistical analyses  
 can link to page with full code  
   
-## Discussion
+## **Discussion**
 *findings  
 *are they what we expected?  
 *what insights into data can we make?   
