@@ -507,8 +507,8 @@ consolidate all WNV-positive mosquito detection dates into a single
 <p>For all datasets, we reformatted the <code>zip_code</code> column to
 integers and the <code>date</code> column to a date object (yyyy-mm-dd),
 corrected any zip code and date entry errors, and removed unnecessary
-columns and N/A values. As a result, each row now represents a single
-WNV-positive mosquito detected in a specific zip
+columns and N/A values. As a result, for each year, each row now
+represents a single WNV-positive mosquito detected in a specific zip
 code/borough/neighborhood on a specific date.</p>
 <p><strong>NYC Positive Cases of West Nile Virus Dataset
 (1999-2023)</strong></p>
@@ -596,10 +596,36 @@ class="section level3">
 temperature analysis as we were curious of whether there were any
 variations between temperature data from these 5 stations. We plotted
 the temperature data between 2021 and 2024.</p>
-<p><img src="report_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="report_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>We found that, despite being in different boroughs, there is not much
 variation in measured temperatures. Since they were all fairly similar,
 we ended up taking the average of the 5 weather stations.</p>
+</div>
+<div id="exploring-trends-in-wnv-positive-mosquito-counts"
+class="section level3">
+<h3>Exploring Trends in WNV-Positive Mosquito Counts</h3>
+<p>We then wanted to focus on the mosquito data. Specifically, we wanted
+to look at the number of mosquito counts by year and borough to explore
+whether mosquito season starts earlier. Since we predicted that
+temperatures are rising in NYC, then we should expect that warmer
+climates may cause mosquito season to start sooner. To visualize this,
+we created four separate plots of counts of mosquitoes positive for WNV
+for each year from 2021 through 2024, separated by borough.</p>
+<p><img src="report_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="report_files/figure-html/unnamed-chunk-8-2.png" width="672" /><img src="report_files/figure-html/unnamed-chunk-8-3.png" width="672" /><img src="report_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
+<p>The figures show that there are drastic differences in the counts of
+WNV-positive mosquitoes between boroughs. Queens consistently had the
+highest counts of WNV-positive mosquitoes compared to the other boroughs
+across all years, while Manhattan had the lowest counts of WNV-positive
+mosquitoes. Further, when boroughs are grouped together, we see that the
+number of WNV-positive mosquitoes peaked in 2021, followed by a decline
+in 2022 and 2023. There is a slight increase in the counts peak in the
+year 2024.</p>
+<p>We can also see from these figures that between the years of
+2021-2024, mosquito season typically ranges from June to October, which
+is still within a normal range of months for mosquito season in NYC.
+Unfortunately, the data we have access to only provides detections of
+WNV+ mosquitoes within NYC starting from 2021 so we won’t be able to
+analyze long-term trends.</p>
 </div>
 </div>
 <div id="data-analysis" class="section level2">

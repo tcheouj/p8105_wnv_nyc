@@ -68,21 +68,139 @@ The [Global Surface Summary of the Day (GSOD)](https://www.ncei.noaa.gov/access/
 
 The supplementary zip codes dataset was imported using `read_html` and initially cleaned using `janitor::clean_names`. We filtered the dataset to only include zip codes within NYC, used a mutate step to change borough names to: *Brooklyn*, *Manhattan*, and *Staten Island*, and only selected relevant variables: *zip_code*, *borough*, and *neighborhood*.
 
+```{r, message=FALSE, echo=FALSE}
+zip_nbhd <- read_html("https://p8105.com/data/zip_codes.html") |>
+  html_table() |>
+  first() |>
+  janitor::clean_names() |>
+  filter(!(county == "New York" & zip_code %in% c(10463, 11201))) |>#duplicated zip codes, both are *not* in New York County
+  mutate(borough = str_replace_all(county, c(
+    "Kings" = "Brooklyn",
+    "New York" = "Manhattan",
+    "Richmond" = "Staten Island"
+  ))) |>
+  select(zip_code, borough, neighborhood)
+```
+
 **Positive Mosquitoes Detected with West Nile Virus in NYC Datasets (2021-2024)**
 
 For the years 2021-2023, the datasets provided by the NYC DOHMH are simple html tables that were imported using `read_html` and cleaned using `janitor::clean_names`. Zip codes for each detection of WNV-positive mosquitoes on a specific day are listed and separated by commas. To clean this, we used multiple `separate_longer_delim` steps to separate each positive mosquito detection into a separate observation, while keeping the corresponding detection date. 
 
 For the year 2024, a .csv file was imported using `read_csv` and reshaped using `pivot_longer` to consolidate all WNV-positive mosquito detection dates into a single `date` column.
 
-For all datasets, we reformatted the `zip_code` column to integers and the `date` column to a date object (yyyy-mm-dd), corrected any zip code and date entry errors, and removed unnecessary columns and N/A values. As a result, each row now represents a single WNV-positive mosquito detected in a specific zip code/borough/neighborhood on a specific date. 
+For all datasets, we reformatted the `zip_code` column to integers and the `date` column to a date object (yyyy-mm-dd), corrected any zip code and date entry errors, and removed unnecessary columns and N/A values. As a result, for each year, each row now represents a single WNV-positive mosquito detected in a specific zip code/borough/neighborhood on a specific date. 
+
+```{r, message=FALSE, echo=FALSE, warning=FALSE}
+## 2021 - 2023 are simple HTML tables
+mosquitoes_2024_url <- "https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity-2024.page"
+mosquitoes_2023_url <- "https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity-2023.page"
+mosquitoes_2022_url <- "https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity-2022.page"
+mosquitoes_2021_url <- "https://www.nyc.gov/site/doh/health/health-topics/west-nile-virus-activity-2021.page"
+
+### 2024
+mosquitoes_2024_table <- read_csv("data/mosquitoes_2024.csv") |>
+  pivot_longer(cols = starts_with("date"), values_to = "date") |>
+  select(-name, -detection_type) |>  
+  mutate(
+    date = case_when(
+      date == "8/5/5024" ~ "8/5/2024",
+      .default = date # one observation, 11426, with year miswritten as 5024-08-05 instead of 2024-08-05
+    ),
+    date = lubridate::mdy(date)
+  ) |> 
+  na.omit() 
+   
+### 2023
+mosquitoes_2023_table <- mosquitoes_2023_url |>
+  read_html() |> html_table() |> first() |>
+  janitor::clean_names() |>
+  separate_longer_delim(zip_code, delim = ", ") |>
+  separate_longer_delim(zip_code, delim = ",\n") |>
+  separate_longer_delim(zip_code, delim = ",") |> #this data is disgusting
+  select(-neighborhood, -download) |>
+  mutate(
+    zip_code = as.integer(zip_code),
+    date = str_c(date, ", ", 2023),
+    date = lubridate::mdy(date)
+  )
+
+### 2022
+mosquitoes_2022_table <- mosquitoes_2022_url |>
+  read_html() |> html_table() |> first() |>
+  janitor::clean_names() |>
+  separate_longer_delim(zip_code, delim = ", ") |>
+  separate_longer_delim(zip_code, delim = ",\n") |>
+  separate_longer_delim(zip_code, delim = ",") |> #this data is disgusting
+  select(-download) |>
+  mutate(
+    zip_code = as.integer(zip_code),
+    date = str_c(date, ", ", 2022),
+    date = lubridate::mdy(date)
+  )
+
+### 2021
+mosquitoes_2021_table <- mosquitoes_2021_url |>
+  read_html() |> html_table() |> first() |>
+  janitor::clean_names() |>
+  separate_longer_delim(zip_code, delim = ", ") |>
+  separate_longer_delim(zip_code, delim = ",\n") |>
+  separate_longer_delim(zip_code, delim = ",") |> #this data is disgusting
+  select(-download) |>
+  mutate(
+    zip_code = as.integer(zip_code),
+    date = str_c(date, ", ", 2021),
+    date = lubridate::mdy(date)
+  ) |> 
+  mutate(
+    zip_code = case_when(
+      zip_code == 1123 ~ 11236, # data entry error on the website, where 1123 is missing the last digit - per https://www.nyc.gov/assets/doh/downloads/pdf/wnv/2021/wnv-activity-bk-08192021.pdf it should be 11236
+    .default = zip_code
+    )
+  )
+```
 
 **NYC Positive Cases of West Nile Virus Dataset (1999-2023)**
 
 Data was downloaded as a .csv file, imported using `read_csv`, and initially cleaned using `janitor::clean_names`. The data was reshaped using `pivot_longer` such that our columns are now: `year`, `borough`, and `wnv_cases` (i.e. the number of West Nile virus cases counted within that borough).
 
+```{r, message=FALSE, echo=FALSE}
+wnv_cases <- read_csv("data/wnv_cases.csv") |>
+  janitor::clean_names() |>
+  pivot_longer(cols = c(
+    bronx,
+    brooklyn,
+    manhattan,
+    queens,
+    staten_island
+  ),
+  names_to = "borough",
+  values_to = "wnv_cases") |> 
+  mutate(
+    borough = case_match(
+      borough, 
+      "manhattan" ~ "Manhattan",
+      "brooklyn" ~ "Brooklyn",
+      "queens" ~ "Queens",
+      "bronx" ~ "Bronx",
+      "staten_island" ~ "Staten Island"
+    )
+  )
+```
+
+
 **NYC Heat Vulnerability Index Dataset**
 
 This dataset was already in a tidy format after downloading (thank you NYC DOHMH Environment and Health!!). We simply imported the dataset using `read_csv` and applied `janitor::clean_names` for consistency. Our columns include: `zip_codes` and `hvi` scores.
+
+```{r, message=FALSE, echo=FALSE}
+heat_vuln <- read_csv("data/heat_vulnerability.csv") |>
+  janitor::clean_names()
+
+hvi_zcta <- read_csv("https://data.cityofnewyork.us/resource/4mhf-duep.csv")  |> 
+  rename(zip_code = zcta20)
+write_csv(hvi_zcta, "cleaned_data/hvi_zcta.csv")
+```
+
 
 **GSODR Dataset**
 
@@ -90,6 +208,61 @@ Through online research, we identified Bushwick, Brooklyn as the geographical ce
 
 We pulled weather data between 2021-2024 from the 5 weather stations using `get_GSOD`, applied `janitor::cleannames`, and selected these variables: `station name`, `latitude` and `longitude`, date (`yearmoda`) mean temperature (`temp`), mean precipitation (`prcp`), mean dew point (`dewp`) (to get an idea of water content in the air), and `max` and `min` temperature. Finally, we applied a series of mutate steps to convert temperature measurements to Fahrenheit, precipitation measures to inches, and renamed weather stations to more intuitive names.
 
+```{r, eval=FALSE, echo=FALSE}
+station_ids <-
+  nearest_stations(
+    LAT = 40.6958,
+    LON = -73.9171,
+    distance = 20
+  ) |>
+  filter(STATE != "NJ" & !(NAME %in% c("KINGS POINT",
+                                       "SANDY HOOK",
+                                       "BERGEN POINT",
+                                       "MITCHEL FIELD",
+                                       "HEMPSTEAD MITCHELL FLD AFB",
+                                       "AMBROSE LIGHT  NY",
+                                       "AMBROSE / FT. TILDEN",
+                                       "FREEPORT"))) |>
+  filter(!(STNID %in% c("999999-14732",
+                        "725033-94728",
+                        "725060-94728",
+                        "999999-94728",
+                        "744976-99999",
+                        "999999-14786",
+                        "999999-94789",
+                        "725026-99999",
+                        "997439-99999"))) |>
+  janitor::clean_names() |>
+  pull(stnid)
+
+# weather_2021_2024 <-
+#    get_GSOD(
+#      years = c(2021:2024),
+#      station = station_ids
+#    ) |>
+#    janitor::clean_names() |>
+#    select(name, latitude, longitude, yearmoda, temp, max, min, prcp, dewp) |>
+#    mutate(
+#      temp = (temp * 9/5) + 32,
+#      max = (max * 9/5) + 32,
+#      min = (min * 9/5) + 32,
+#      prcp = (prcp * 0.0393701),
+#      year = year(yearmoda),
+#      name = case_match(
+#        name,
+#        "PORT AUTH DOWNTN MANHATTAN WALL ST HEL" ~ "Wall St",
+#        "LA GUARDIA AIRPORT" ~ "LGA",
+#        "CENTRAL PARK" ~ "Central Park",
+#        "JOHN F KENNEDY INTERNATIONAL AIRPORT" ~ "JFK",
+#        "THE BATTERY" ~ "The Battery"
+#      )
+#    )
+
+# Uncomment this line after running the previous block once
+weather_2021_2024 <- read_csv("data/weather_2021_2023.csv")
+
+#write_csv(weather_2021_2024, "data/weather_2021_2023.csv")
+```
 
 
   
@@ -107,6 +280,35 @@ Our relevant variables for our datasets include:
 * `count`: The number of WNV+ mosquitoes detected within a specific zip code.
 * `neighborhood`: The name of the NYC neighborhood in which the WNV+ mosquito was detected.
 * `hvi`: The HVI score (ranging from 1-5)
+
+```{r, message=FALSE, echo=FALSE, results='hide'}
+wnv_mosquito_detection <- bind_rows(
+  mosquitoes_2024_table,
+  mosquitoes_2023_table,
+  mosquitoes_2022_table,
+  mosquitoes_2021_table,
+) |> 
+  left_join(y = zip_nbhd, by = join_by(zip_code)) |>
+  select(zip_code, borough.x, date, neighborhood) |> 
+  rename(borough = borough.x) |> # one ZIP code, 10000 has NA for borough as it is not in ZIP list - Central Park based on a Google search
+  mutate(
+    borough = case_when(
+      zip_code == 10000 ~ "Manhattan",
+      .default = borough
+    ),
+    neighborhood = case_when(
+      zip_code == 10000 ~ "Central Park",
+      .default = neighborhood
+    )
+  )
+
+inner_join(wnv_mosquito_detection, hvi_zcta, by = join_by(zip_code)) |> 
+  group_by(hvi) |> 
+  summarize(
+    count = n()
+  )
+```
+
 
 **GSODR**
 
@@ -199,6 +401,60 @@ weather_2021_2024 |>
 ```
 
 We found that, despite being in different boroughs, there is not much variation in measured temperatures. Since they were all fairly similar, we ended up taking the average of the 5 weather stations. 
+
+
+### Exploring Trends in WNV-Positive Mosquito Counts
+
+We then wanted to focus on the mosquito data. Specifically, we wanted to look at the number of mosquito counts by year and borough to explore whether mosquito season starts earlier. Since we predicted that temperatures are rising in NYC, then we should expect that warmer climates may cause mosquito season to start sooner. To visualize this, we created four separate plots of counts of mosquitoes positive for WNV for each year from 2021 through 2024, separated by borough. 
+
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+mosquitoes_2021_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_col(stat = "identity") +
+  facet_grid(~borough)
+
+mosquitoes_2022_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_col(stat = "identity") +
+  facet_grid(~borough)
+
+mosquitoes_2023_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_col(stat = "identity") +
+  facet_grid(~borough)
+
+mosquitoes_2024_table |>
+  group_by(borough, date) |> 
+  summarize(
+    count = n()
+  ) |> 
+  ggplot(aes(x = date, y = count, fill = borough)) +
+  geom_col(stat = "identity") +
+  facet_grid(~borough)
+```
+
+The figures show that there are drastic differences in the counts of WNV-positive mosquitoes between boroughs. Queens consistently had the highest counts of WNV-positive mosquitoes compared to the other boroughs across all years, while Manhattan had the lowest counts of WNV-positive mosquitoes. Further, when boroughs are grouped together, we see that the number of WNV-positive mosquitoes peaked in 2021, followed by a decline in 2022 and 2023. There is a slight increase in the counts peak in the year 2024.
+
+We can also see from these figures that between the years of 2021-2024, mosquito season typically ranges from June to October, which is still within a normal range of months for mosquito season in NYC. Unfortunately, the data we have access to only provides detections of WNV+ mosquitoes within NYC starting from 2021 so we won't be able to analyze long-term trends.
+
+
+
+
+
+
   
 ## **Data Analysis**
 formal statistical analyses  
