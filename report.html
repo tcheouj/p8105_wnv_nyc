@@ -584,7 +584,7 @@ pulled</li>
 <li><code>prcp</code>: mean precipitation (inches)</li>
 <li><code>dewp</code>: mean dew point (Fahrenheit)</li>
 </ul>
-<p>Our datasets are now ready for analysis!</p>
+<p>Our datasets are now ready for exploration and analysis!</p>
 </div>
 </div>
 <div id="data-exploration" class="section level2">
@@ -616,16 +616,31 @@ for each year from 2021 through 2024, separated by borough.</p>
 WNV-positive mosquitoes between boroughs. Queens consistently had the
 highest counts of WNV-positive mosquitoes compared to the other boroughs
 across all years, while Manhattan had the lowest counts of WNV-positive
-mosquitoes. Further, when boroughs are grouped together, we see that the
-number of WNV-positive mosquitoes peaked in 2021, followed by a decline
-in 2022 and 2023. There is a slight increase in the counts peak in the
-year 2024.</p>
-<p>We can also see from these figures that between the years of
+mosquitoes.</p>
+<p><img src="report_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Further, when boroughs are grouped together, we see that the number
+of WNV-positive mosquitoes peaked in 2021, followed by a decline in 2022
+and 2023. There is a slight increase in the counts peak in the year
+2024.</p>
+<p>We can also see from both figures that between the years of
 2021-2024, mosquito season typically ranges from June to October, which
 is still within a normal range of months for mosquito season in NYC.
 Unfortunately, the data we have access to only provides detections of
 WNV+ mosquitoes within NYC starting from 2021 so we won’t be able to
 analyze long-term trends.</p>
+</div>
+<div id="mapping-wnv-positive-mosquito-trends-across-nyc"
+class="section level3">
+<h3>Mapping WNV-Positive Mosquito Trends Across NYC</h3>
+<p>To visualize this further, we wanted to create a map of NYC between
+2021-2024 and overlay the WNV positive mosquitoes data to see if we
+could visualize any trends on which boroughs or neighborhoods may be
+affected more.</p>
+<p><img src="report_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Interestingly, from the figure, we found that there are zip codes in
+Queens and Staten Island that appear to have an increase in the number
+of mosquitoes positive for WNV from 2021 to 2024. Manhattan, Brooklyn,
+and the Bronx remained relatively low.</p>
 </div>
 </div>
 <div id="data-analysis" class="section level2">

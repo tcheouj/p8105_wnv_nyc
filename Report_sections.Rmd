@@ -134,7 +134,41 @@ To visualize this further, we wanted to create a map of NYC between 2021-2024 an
 
 ### Examining the Relationship Between Heat Vulnerability and WNV-Positive Mosquitoes
 
-We then wanted to look at whether heat vulnerability index is associated with WNV+ mosquitoes. To do this, we used our merged dataset, grouped by zip code and borough, and then plotted hvi score and WNV+ mosquito counts. The results showed that there were no clear visual trends of association between HVI score, WNV+ mosquitoes, and borough. One noteworthy pattern was that neighborhoods with an HVI score of 5 had generally lower counts of WNV+ mosquito counts compared to neighborhoods with an HVI score of 1, which were more spread out.
+We then wanted to look at whether heat vulnerability index is associated with WNV+ mosquitoes. To do this, we used our merged dataset, grouped by zip code and borough, and then plotted hvi score and WNV+ mosquito counts. 
+
+```{r}
+avg_hvi_borough <-
+  left_join(hvi_zcta, zip_nbhd, by = join_by(zip_code)) |> 
+    group_by(borough) |> 
+    summarize(
+      avg_hvi = mean(hvi)
+    )
+
+# is heat vulnerability associated with WNV+ human cases?
+
+left_join(wnv_cases, yearly_weather, by = join_by(year)) |> 
+  left_join(avg_hvi_borough, by = join_by(borough)) |> 
+  ggplot(aes(x = avg_hvi, y = wnv_cases, fill = year, shape = borough)) +
+  geom_point() + 
+  stat_summary(fun.y = mean, color = "red")  # perhaps hvi is a parabolic distribution?
+
+
+
+merged_df <- 
+  wnv_mosquito_data |> 
+  filter(!is.na(borough)) |>  # there are (likely nonresidential) ZIP codes with no boroughs and no detected WNV in mosquitoes and humans
+  group_by(year, borough) |> 
+  summarize(
+    wnv_mosquitoes = sum(count) 
+  ) |> 
+  right_join(wnv_cases, by = join_by(year, borough)) |> 
+  left_join(yearly_weather, by = join_by(year)) |> 
+  left_join(avg_hvi_borough, by = join_by(borough)) |>  
+  select(year, borough, starts_with("wnv_"), everything()) |> 
+  arrange(year, borough)
+```
+
+The results showed that there were no clear visual trends of association between HVI score, WNV+ mosquitoes, and borough. One noteworthy pattern was that neighborhoods with an HVI score of 5 had generally lower counts of WNV+ mosquito counts compared to neighborhoods with an HVI score of 1, which were more spread out.
 
 
 
