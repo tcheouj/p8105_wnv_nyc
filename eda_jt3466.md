@@ -2,7 +2,7 @@ exploratory_data_analysis
 ================
 
     ## Rows: 193 Columns: 26
-    ## ── Column specification ────────────────────────────────────────────────────────
+    ## ── Column specification ──────────────────────────────────────────────
     ## Delimiter: ","
     ## chr (25): borough, detection_type, date1, date2, date3, date4, date5, date6,...
     ## dbl  (1): zip_code
@@ -16,7 +16,7 @@ exploratory_data_analysis
     ## !  2 failed to parse.
 
     ## Rows: 197 Columns: 6
-    ## ── Column specification ────────────────────────────────────────────────────────
+    ## ── Column specification ──────────────────────────────────────────────
     ## Delimiter: ","
     ## chr (2): GeoType, Geography
     ## dbl (4): TimePeriod, GeoID, GeoRank, Score out of 5
@@ -24,14 +24,14 @@ exploratory_data_analysis
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
     ## Rows: 25 Columns: 6
-    ## ── Column specification ────────────────────────────────────────────────────────
+    ## ── Column specification ──────────────────────────────────────────────
     ## Delimiter: ","
     ## dbl (6): Year, Bronx, Brooklyn, Manhattan, Queens, Staten Island
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
     ## Rows: 184 Columns: 2
-    ## ── Column specification ────────────────────────────────────────────────────────
+    ## ── Column specification ──────────────────────────────────────────────
     ## Delimiter: ","
     ## dbl (2): zcta20, hvi
     ## 
@@ -104,14 +104,14 @@ wnv_mosquito_data <-
   )
 ```
 
-    ## `summarise()` has grouped output by 'zip_code', 'neighborhood'. You can
-    ## override using the `.groups` argument.
-    ## `summarise()` has grouped output by 'zip_code', 'neighborhood'. You can
-    ## override using the `.groups` argument.
-    ## `summarise()` has grouped output by 'zip_code', 'neighborhood'. You can
-    ## override using the `.groups` argument.
-    ## `summarise()` has grouped output by 'zip_code', 'neighborhood'. You can
-    ## override using the `.groups` argument.
+    ## `summarise()` has grouped output by 'zip_code', 'neighborhood'. You
+    ## can override using the `.groups` argument.
+    ## `summarise()` has grouped output by 'zip_code', 'neighborhood'. You
+    ## can override using the `.groups` argument.
+    ## `summarise()` has grouped output by 'zip_code', 'neighborhood'. You
+    ## can override using the `.groups` argument.
+    ## `summarise()` has grouped output by 'zip_code', 'neighborhood'. You
+    ## can override using the `.groups` argument.
 
 ``` r
 wnv_mosquito_data |> 
@@ -129,14 +129,14 @@ wnv_mosquito_detection |>
     ## [1] 2924
 
     ## Rows: 25 Columns: 6
-    ## ── Column specification ────────────────────────────────────────────────────────
+    ## ── Column specification ──────────────────────────────────────────────
     ## Delimiter: ","
     ## dbl (6): year, avg_temp, avg_min, avg_max, avg_prcp, avg_dewp
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
     ## Rows: 9131 Columns: 6
-    ## ── Column specification ────────────────────────────────────────────────────────
+    ## ── Column specification ──────────────────────────────────────────────
     ## Delimiter: ","
     ## dbl  (5): avg_temp, avg_min, avg_max, avg_prcp, avg_dewp
     ## date (1): date
@@ -158,8 +158,8 @@ mosquitoes_2021_table |>
   facet_grid(~borough)
 ```
 
-    ## `summarise()` has grouped output by 'borough'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'borough'. You can override using
+    ## the `.groups` argument.
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
 ![](eda_jt3466_files/figure-gfm/cursory%20graphs-1.png)<!-- -->
@@ -176,8 +176,8 @@ mosquitoes_2022_table |>
   facet_grid(~borough)
 ```
 
-    ## `summarise()` has grouped output by 'borough'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'borough'. You can override using
+    ## the `.groups` argument.
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
 ![](eda_jt3466_files/figure-gfm/cursory%20graphs-2.png)<!-- -->
@@ -194,8 +194,8 @@ mosquitoes_2023_table |>
   facet_grid(~borough)
 ```
 
-    ## `summarise()` has grouped output by 'borough'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'borough'. You can override using
+    ## the `.groups` argument.
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
 ![](eda_jt3466_files/figure-gfm/cursory%20graphs-3.png)<!-- -->
@@ -212,8 +212,8 @@ mosquitoes_2024_table |>
   facet_grid(~borough)
 ```
 
-    ## `summarise()` has grouped output by 'borough'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'borough'. You can override using
+    ## the `.groups` argument.
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
 ![](eda_jt3466_files/figure-gfm/cursory%20graphs-4.png)<!-- -->
@@ -229,8 +229,8 @@ mosquitoes_2021_table |>
   facet_grid(~borough)
 ```
 
-    ## `summarise()` has grouped output by 'borough'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'borough'. You can override using
+    ## the `.groups` argument.
 
     ## Warning in geom_col(stat = "identity"): Ignoring unknown parameters: `stat`
 
@@ -247,8 +247,8 @@ mosquitoes_2022_table |>
   facet_grid(~borough)
 ```
 
-    ## `summarise()` has grouped output by 'borough'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'borough'. You can override using
+    ## the `.groups` argument.
 
     ## Warning in geom_col(stat = "identity"): Ignoring unknown parameters: `stat`
 
@@ -265,8 +265,8 @@ mosquitoes_2023_table |>
   facet_grid(~borough)
 ```
 
-    ## `summarise()` has grouped output by 'borough'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'borough'. You can override using
+    ## the `.groups` argument.
 
     ## Warning in geom_col(stat = "identity"): Ignoring unknown parameters: `stat`
 
@@ -283,8 +283,8 @@ mosquitoes_2024_table |>
   facet_grid(~borough)
 ```
 
-    ## `summarise()` has grouped output by 'borough'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'borough'. You can override using
+    ## the `.groups` argument.
 
     ## Warning in geom_col(stat = "identity"): Ignoring unknown parameters: `stat`
 
@@ -304,13 +304,24 @@ wnv_mosquito_detection |>
 ![](eda_jt3466_files/figure-gfm/cursory%20graphs-9.png)<!-- -->
 
     ## Reading layer `MODZCTA_2010' from data source 
-    ##   `C:\Users\bschn\OneDrive\Documents\P8105 Data Science I\GitHub repos\p8105_wnv_nyc\data\shapefiles\MODZCTA_2010.shp' 
+    ##   `/Users/mahdi/Desktop/p8105_final_project/data/shapefiles/MODZCTA_2010.shp' 
     ##   using driver `ESRI Shapefile'
     ## Simple feature collection with 178 features and 2 fields
     ## Geometry type: MULTIPOLYGON
     ## Dimension:     XY
     ## Bounding box:  xmin: 913176 ymin: 120122 xmax: 1067382 ymax: 272844
     ## Projected CRS: Lambert_Conformal_Conic
+
+    ## Reading layer `nybb' from data source 
+    ##   `/Users/mahdi/Desktop/p8105_final_project/data/shapefiles/nybb.shp' 
+    ##   using driver `ESRI Shapefile'
+    ## Simple feature collection with 5 features and 4 fields
+    ## Geometry type: MULTIPOLYGON
+    ## Dimension:     XY
+    ## Bounding box:  xmin: 913175.1 ymin: 120128.4 xmax: 1067383 ymax: 272844.3
+    ## Projected CRS: NAD83 / New York Long Island (ftUS)
+
+![](eda_jt3466_files/figure-gfm/geocoding%20human%20case%20data-1.png)<!-- -->
 
 ``` r
 mos_by_modzcta |>
@@ -349,14 +360,8 @@ left_join(wnv_cases, yearly_weather, by = join_by(year)) |>
   stat_summary(fun.y = mean, color = "red")  # perhaps hvi is a parabolic distribution?
 ```
 
-    ## Warning: The `fun.y` argument of `stat_summary()` is deprecated as of ggplot2 3.3.0.
-    ## ℹ Please use the `fun` argument instead.
-    ## This warning is displayed once every 8 hours.
-    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-    ## generated.
-
-    ## Warning: Removed 5 rows containing missing values or values outside the scale range
-    ## (`geom_segment()`).
+    ## Warning: Removed 5 rows containing missing values or values outside the scale
+    ## range (`geom_segment()`).
 
 ![](eda_jt3466_files/figure-gfm/case%20data-1.png)<!-- -->
 
@@ -375,8 +380,8 @@ merged_df <-
   arrange(year, borough)
 ```
 
-    ## `summarise()` has grouped output by 'year'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'year'. You can override using
+    ## the `.groups` argument.
 
 ``` r
 merged_df |> 
@@ -395,7 +400,7 @@ temp_quantiles <-
   pull(avg_temp) |> 
   quantile(probs = c(0.25, 0.50, 0.75))
 
-temp_as_categorical <-
+temp_cat <-
   merged_df |> 
   mutate(
     temp_quantile = case_when(
@@ -408,7 +413,7 @@ temp_as_categorical <-
   ) # right tailed
 
 
-temp_as_categorical |> 
+temp_cat |> 
   ggplot(aes(x = wnv_cases)) +
   geom_histogram() +
   facet_grid(~temp_quantile) 

@@ -19,4 +19,4 @@ navbar:
       href: https://github.com/tcheouj/p8105_wnv_nyc
 output:
   html_document:
-   theme: yeti
+   theme: journal
