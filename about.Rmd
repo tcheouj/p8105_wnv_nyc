@@ -6,16 +6,16 @@ output:
     toc_float: true
 ---
 
-## Our Team
+## Meet our team
 
-### Mahdi Maktabi
+### **Mahdi Maktabi**
 Mahdi is a second year MPH student in the Department of Epidemiology with a certificate in Infectious Disease Epidemiology. Learn more about Mahdi [here](https://mahdi-maktabi.github.io/).
 
-### Johnstone Tcheou
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+### **Johnstone Tcheou**
+Johnstone is a second year MPH student studying epidemiology with a certificate in Applied Biostatistics and Data Science. Visit Johnstone’s website [here](https://tcheouj.github.io/).
 
-### Samina Rashiq
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+### **Samina Rashiq**
+Samina is a second-year MPH student in Sociomedical Sciences with a certificate Applied Biostatistics and Data Science. Visit Samina’s website [here](https://samshiq.github.io/). 
 
-### Sean Sorek
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+### **Sean Sorek**
+Sean is a first-year MS Biostatistics student in the Theory/Methods track. Learn more about Sean [here](https://seansorek.github.io/).
