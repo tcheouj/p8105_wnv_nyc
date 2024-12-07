@@ -2209,6 +2209,98 @@ difference in the analysis. Comparing influence versus standardized
 residual shows better performance than the linear count model.</p>
 </div>
 </div>
+<div id="final-model" class="section level1">
+<h1>Final Model</h1>
+<pre class="r"><code>final_fit_quadratic_counts |&gt; 
+  tidy() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Term&quot;, &quot;Estimate&quot;, &quot;Standard error&quot;, &quot;Test statistic&quot;, &quot;p value&quot;)
+  )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="right">Estimate</th>
+<th align="right">Standard error</th>
+<th align="right">Test statistic</th>
+<th align="right">p value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-2.3367</td>
+<td align="right">0.7528</td>
+<td align="right">-3.1039</td>
+<td align="right">0.0019</td>
+</tr>
+<tr class="even">
+<td align="left">lag_count</td>
+<td align="right">0.0430</td>
+<td align="right">0.0047</td>
+<td align="right">9.2325</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">I(lag_count^2)</td>
+<td align="right">-0.0002</td>
+<td align="right">0.0000</td>
+<td align="right">-6.0501</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">lag_temp</td>
+<td align="right">0.0621</td>
+<td align="right">0.0103</td>
+<td align="right">6.0193</td>
+<td align="right">0.0000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>final_fit_quadratic_counts |&gt; 
+  glance() |&gt; 
+  knitr::kable(
+    digits = 4,
+    col.names = c(&quot;Null deviance&quot;, &quot;Null df&quot;, &quot;Log likelihood&quot;, &quot;AIC&quot;, &quot;BIC&quot;, &quot;Deviance&quot;, &quot;Residual df&quot;, &quot;Number of observations&quot;)
+  )</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="8%" />
+<col width="15%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Null deviance</th>
+<th align="right">Null df</th>
+<th align="right">Log likelihood</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">Deviance</th>
+<th align="right">Residual df</th>
+<th align="right">Number of observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">246.2423</td>
+<td align="right">45</td>
+<td align="right">-183.5016</td>
+<td align="right">377.0032</td>
+<td align="right">386.1464</td>
+<td align="right">45.7133</td>
+<td align="right">42</td>
+<td align="right">46</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 
 
