@@ -9,11 +9,16 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(modelr)
+library(broom)
 library(rvest)
 library(httr)
 library(GSODR)
 library(sf)
 library(patchwork)
+library(car)
+library(GGally)
+library(broom.helpers)
 ```
 
 ## **Motivation**
@@ -575,14 +580,8 @@ mos_by_modzcta |>
 
 Interestingly, from the figure, we found that there are zip codes in Queens and Staten Island that appear to have an increase in the number of mosquitoes positive for WNV from 2021 to 2024. Manhattan, Brooklyn, and the Bronx remained relatively low.  
 
-
-
-
-
-  
 ## **Data Analysis**
-formal statistical analyses  
-can link to page with full code  
+
   
 ## **Discussion**
 *findings  
