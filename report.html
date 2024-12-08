@@ -379,11 +379,8 @@ Mosquitoes, and West Nile Virus in New York City</strong></h1>
 
 <div id="motivation" class="section level2">
 <h2><strong>Motivation</strong></h2>
-<p>merging motivaion (project goals, motivation) and related work
-(things that inspired us)</p>
-</div>
-<div id="related-work" class="section level2">
-<h2><strong>Related Work</strong></h2>
+<div id="inspiration" class="section level3">
+<h3>Inspiration</h3>
 <p>Our group has a shared interest in addressing climate change,
 studying infectious diseases, and uniting over our mutual hatred of
 mosquito bites. Inspiration for this project stems from several relevant
@@ -406,6 +403,28 @@ mosquitoes carrying WNV and may increase human-mosquito interaction.
 Motivated by these concerns, we aimed to explore the rising temperatures
 trends in NYC, WNV incidence in NYC, and what is being done to control
 its spread.</p>
+</div>
+<div id="background-and-aims" class="section level3">
+<h3>Background and Aims</h3>
+<p>Climate change is worsening the transmission and spread of
+vector-borne diseases. Among these is West Nile Virus (WNV), a
+mosquito-borne disease that has recently become endemic to New York
+City. While approximately most WNV cases are asymptomatic or lead to
+mild flu-like symptoms, some lead to <a
+href="https://www.cdc.gov/west-nile-virus/hcp/clinical-signs/index.html">serious
+complications</a> like neuroinvasive disease which is associated with
+significant morbidity and mortality.</p>
+<p>The potential for severe disease, long-term disability, and fatality
+makes WNV a serious public health concern on the horizon as temperatures
+continue to rise in NYC. The Heat Vulnerability Index (HVI) varies
+significantly across New York City neighborhoods, which could influence
+the incidence of mosquito vectors.</p>
+<p>Our project aims to uncover the relationships between climate change,
+location, and the incidence of West Nile Virus in New York City.
+Similarly to how the COVID-19 pandemic revealed stark inequities in
+disease morbidity and mortality by location, we would like to understand
+if similar patterns exist in this context.</p>
+</div>
 </div>
 <div id="initial-questions" class="section level2">
 <h2><strong>Initial Questions</strong></h2>
@@ -942,6 +961,11 @@ by 1 month, with a p value of 0.0022.</p>
   ggplot(aes(x = month, y = count)) +
   geom_point(color = &quot;#404688FF&quot;, alpha = 0.5) + 
   geom_line(aes(y = pred), size = 0.6)</code></pre>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <p><img src="report_files/figure-html/month%20model%20fit-1.png" width="672" /></p>
 <p>However, despite a significant model, the model does not fit our
 dataset well, so it is not useful in predicting counts. When plotting
@@ -1440,8 +1464,8 @@ mosq_cases &lt;-
   group_by(year, week) |&gt;
   summarise(count = n()) |&gt;
   mutate(weekyear = (year - 2021)*52 + week) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
-## the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>weekly_weather &lt;- 
   day_weather |&gt;
   mutate(
@@ -1460,8 +1484,8 @@ mosq_cases &lt;-
          lag_max =  lag(avg_max),
          lag_min =  lag(avg_min)) |&gt;
   mutate(weekyear = (year - 2021)*52 + week) #week since start of 2021</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
-## the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>mosq_cases_temp &lt;- 
   mosq_cases |&gt;
   left_join(y = weekly_weather, by = join_by(weekyear)) |&gt;
@@ -2837,9 +2861,11 @@ final_fit |&gt;
       .default = 0
     )
   ) |&gt; 
-  select(id, everything())
-
-avg_hat_2 &lt;- 
+  select(id, everything())</code></pre>
+<pre><code>## Warning: The `augment()` method for objects of class `negbin` is not maintained by the broom team, and is only supported through the `glm` tidier method. Please be cautious in interpreting and reporting broom output.
+## 
+## This warning is displayed once per session.</code></pre>
+<pre class="r"><code>avg_hat_2 &lt;- 
   augment_df |&gt; 
   pull(avg_hat_2) |&gt; 
   nth(1)
@@ -3089,10 +3115,120 @@ to be weighing the model heavily.</p>
 </div>
 </div>
 <div id="discussion" class="section level2">
-<h2><strong>Discussion</strong></h2>
-<p><em>findings<br />
-</em>are they what we expected?<br />
-*what insights into data can we make?</p>
+<h2>Discussion</h2>
+<div id="highlights" class="section level3">
+<h3>Highlights</h3>
+<p>WNV(+) mosquito counts follow a distinct seasonal pattern (large
+increases July to September, peak in August) Incidence of WNV(+)
+mosquitos differs significantly by borough, but average temperature does
+not Higher temperatures associated with WNV(+) mosquito incidence WNV(+)
+mosquito count is associated with week &amp; month of year, but not year
+(incidence did not increase year-to-year) Lagging analysis: prior
+temperatures and WNV(+) mosquito counts predict current WNV(+) mosquito
+counts, but precipitation does not</p>
+</div>
+<div id="results" class="section level3">
+<h3>Results</h3>
+<p>Data Exploration: Analysis of Global Surface Summary of the Day
+(GSODR) data showed that variation in average temperature between
+boroughs was minor. This supported the decision to average temperature
+data across five weather stations.</p>
+<p>From 2021 to 2024, the distribution of WNV(+) mosquitoes differs by
+borough. Queens consistently has the highest counts, while counts were
+lowest in Manhattan and Staten Island.</p>
+<div id="temporal-trends-in-wnv-mosquito-counts" class="section level4">
+<h4>Temporal Trends in WNV(+) Mosquito Counts</h4>
+<p>We initially expected that with time, WNV(+) mosquitos detected would
+increase. On the contrary, we did not see an association between WNV(+)
+mosquito count when just modelling by year (estimate = -0.0271,
+p=0.1016).</p>
+<p>When combining WNV(+) mosquito count data by month for all four years
+(2021-2024), we see a distinct mosquito season arise. We see a large
+jump in cases from July to September, with counts being the highest in
+August.</p>
+<p>Month is significantly associated with WNV(+) mosquito count
+(estimate = 0.04, p = 0.0022), but these findings are not entirely
+useful because our data does not appear to fit a linear model well. When
+including a month-squared term in the model, we see a better fit of the
+model, suggesting that mosquito counts follow a parabolic shape of the
+data.</p>
+<p>Our data was overdispersed (variance greater than mean), which
+violates a key assumption of the Poisson model. With this, a Negative
+Binomial model was made to assess the effects of time. In addition,
+using time as a predictor masked that the samples per sufficiently short
+time period were technically not independent.</p>
+<p>When conducting a similar model as above with first and second-order
+terms for week-of-the-year and year using Negative Binomial regression,
+we saw significant results. The NB model including week-of-the-year,
+week-of-the-year squared, and year all had significant p-values (less
+than 0.05). These results demonstrate that WNV(+) mosquito counts
+exhibit a seasonal trend that appears to follow a curved or parabolic
+pattern across both weeks and months of the year, supported by the
+improved model fit with the inclusion of second-order terms.</p>
+</div>
+<div id="lagging-analysis-past-count-temperature-and-precipitation"
+class="section level4">
+<h4>Lagging Analysis: Past Count, Temperature, and Precipitation</h4>
+<p>We performed a lagging analysis to identify the impact of past
+mosquito count, temperature, and precipitation on WNV(+) mosquito
+counts. This is based on the assumption that mosquito counts,
+temperature, or precipitation from prior days can impact mosquito counts
+in the present.</p>
+<p>Mosquito incidence is highly dependent on incidence in previous time
+periods due to the short reproductive cycle of mosquitoes. Past
+temperature and precipitation go hand-in-hand, and can directly
+contribute to future mosquito counts because rainfall creates breeding
+and larval development sites. While lagging precipitation was
+significant in the Poisson model, this was likely due to the effects of
+our overdispersed data. Since lagging precipitation did not improve
+model fit overall, the final model includes only lagging average
+temperature and lagging mosquito counts.</p>
+<p>The mosquito season in 2021 had unusually high levels of WNV(+)
+mosquitoes detected. These outliers caused a slight positive bias in the
+predictions for 2022 and 2023, but did not affect significance of any
+variable in our dataset. Instead of omitting the outliers, we added a
+quadratic term for lagged counts which improved the predictive accuracy
+for all years except 2021.</p>
+<p>Using a Negative Binomial model with a linear effect of the previous
+week’s mean temperature and a quadratic effect of the previous week’s
+count, estimated increase in WNV(+) mosquito count was significantly
+associated with prior mosquito counts (linear estimate =0.0430, p &lt;
+1e-4, quadratic effect = -2e-4, p &lt; 1e-4) and prior temperature
+(estimate =0.0717, p &lt; 1e-4).</p>
+<p>We ultimately cannot conclude that the presence of West Nile Virus
+positive mosquitoes has increased per year in the timespan that our data
+spans, but the significant positive coefficient of temperature in our
+model implies that higher temperatures will lead to a larger WNV(+)
+mosquito incidence.</p>
+</div>
+</div>
+<div id="limitations" class="section level3">
+<h3>Limitations</h3>
+<p>A major limitation of our analysis is that mosquito count data was
+only available for four years. This made it very difficult to assess
+temporal trends in mosquito activity over the years, which is critical
+for understanding the effects of climate change on mosquito
+incidence.</p>
+<p>Furthermore, our project did not include an analysis of human WNV
+cases in NYC due to the limited availability of data. There was no
+geographic (ZIP code) information on where human cases came from, so
+these data did not add value to our analysis. Without this, we are
+unable to assess the impact of WNV(+) mosquito incidence on the number
+of human cases of WNV, which was the initial question we wanted to
+answer.</p>
+</div>
+<div id="closing" class="section level3">
+<h3>Closing</h3>
+<p>Ultimately, our analysis showed that year-to-year climate change may
+not yet be having a major impact on WNV(+) mosquito incidence in NYC,
+and rather that we should focus on temporal trends during peak mosquito
+reproductive months to tailor mosquito control strategies.</p>
+<p>West Nile Virus may not be as big of a public health issue in New
+York City as we initially expected, but our findings about temperature
+serve as a warning for the future as global warming progresses. Future
+research on the relationships between mosquito incidence and human cases
+is necessary to truly understand the severity of the issue.</p>
+</div>
 </div>
 
 
