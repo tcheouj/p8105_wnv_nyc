@@ -6,7 +6,7 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
+```{r setup_models, include=FALSE}
 knitr::opts_chunk$set(
 	echo = TRUE,
 	message = FALSE,

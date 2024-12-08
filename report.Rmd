@@ -8,7 +8,12 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE,
+	comment = NA
+)
 library(tidyverse)
 library(modelr)
 library(broom)
@@ -592,12 +597,9 @@ mos_by_modzcta |>
 
 Interestingly, from the figure, we found that there are zip codes in Queens and Staten Island that appear to have an increase in the number of mosquitoes positive for WNV from 2021 to 2024. Manhattan, Brooklyn, and the Bronx remained relatively low.  
 
-
-
-
-
-
 ## **Data Analysis**
+
+In this section, we show our model building process. We start with an uninformative month-based model and move to a more granular autoregressive model with temperature effects.
 
 ### Data import
 
@@ -667,7 +669,8 @@ mosq_count_by_month |>
   geom_bar(stat = "identity", fill = "#440154FF") +
   guides(
     fill = "none"
-  )
+  ) +
+  labs(title = "Count by Month")
 
 ```
 
@@ -699,7 +702,8 @@ mosq_count_by_month |>
   cbind(pred = predict(fit2, type = "response")) |> 
   ggplot(aes(x = month, y = count)) +
   geom_point(color = "#404688FF", alpha = 0.5) + 
-  geom_line(aes(y = pred), size = 0.6)
+  geom_line(aes(y = pred), size = 0.6) +
+  labs(title = "Prediction of Linear Month Model")
 ```
 
 However, despite a significant model, the model does not fit our dataset well, so it is not useful in predicting counts. When plotting the predicted values against the observed values, the predicted values are linear since model is represented as a linear term, while our observed counts are parabolic.
@@ -723,14 +727,15 @@ fit3 |>
 ```
 
 With this model, both linear and second order terms are significant predictors of mosquito counts, with p values of 
-`r fit3 |> tidy() |>  filter(term == "month") |> pull(p.value) |> round(4)` and `r fit3 |> tidy() |>  filter(term == "I(month^2)") |> pull(p.value) |> round(4)`, respectively.
+`r fit3 |> tidy() |>  filter(term == "month") |> pull(p.value) |> round(6)` and `r fit3 |> tidy() |>  filter(term == "I(month^2)") |> pull(p.value) |> round(6)`, respectively.
 
 ```{r linear and quadratic month fit}
 mosq_count_by_month |> 
   cbind(pred = predict(fit3, type = "response")) |> 
   ggplot(aes(x = month, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred), color = "#3B528BFF", size = 0.6)
+  geom_line(aes(y = pred), color = "#3B528BFF", size = 0.6)  +
+  labs(title = "Prediction of Quadratic Month Model")
 
 ```
 
@@ -787,7 +792,8 @@ fit4 |>
   )
 
 anova(fit3.5, fit4) |> 
-  tidy()
+  tidy() |>
+  knitr::kable()
 
 ```
 
@@ -808,7 +814,9 @@ mosq_month_year |>
   ) |> 
   ggplot(aes(x = pred, y = resid)) +
   geom_point(color = "#31688EFF",, size = 3) + 
-  geom_hline(yintercept = 0)
+  geom_hline(yintercept = 0)  +
+  labs(title = "Prediction of Month + Year Model",
+       x = "Months Since January 2021")
 
 performance::check_overdispersion(fit4) 
 
@@ -882,6 +890,7 @@ mosq_cases_temp <-
   na.omit()
 
 mosq_cases_temp |> 
+  head() |>
   knitr::kable()
 ```
 
@@ -908,21 +917,25 @@ mosq_cases_temp |>
   cbind(pred = predict(null_fit, type = "response")) |> 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred, group = year), color = "#472D7BFF", size = 0.6)
+  geom_line(aes(y = pred, group = year), color = "#472D7BFF", size = 0.6)   +
+  labs(title = "Prediction of Week + Year Model",
+       x = "Weeks Since January 2021")
 
 mosq_cases_temp |> 
   cbind(resid = resid(null_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = "#472D7BFF") # null model works well
+  geom_point(color = "#472D7BFF")   +
+  labs(title = "Residual vs Prediction of Month + Year Model",
+       x = "Count")
 ```
 
-All predictors in the model are significant, with p values for first order week and second order week of `r null_fit |> tidy() |> filter(term == "week") |>  pull(p.value) |> round(4)` and `r null_fit |> tidy() |> filter(term == "I(week^2)") |>  pull(p.value) |> round(4)`, respectively. Year has a p value of `r null_fit |> tidy() |> filter(term == "year") |>  pull(p.value) |> round(4)`. 
+All predictors in the model are significant, with p values for first order week and second order week of `r null_fit |> tidy() |> filter(term == "week") |>  pull(p.value) |> round(6)` and `r null_fit |> tidy() |> filter(term == "I(week^2)") |>  pull(p.value) |> round(6)`, respectively. Year has a p value of `r null_fit |> tidy() |> filter(term == "year") |>  pull(p.value) |> round(6)`. 
 
 When fitting the model to the data, we see that it also fits well.
 
 ### Fitting temperature
 
-Before we continue, we note another regression assumption may be violated. A standard generalized linear model assumes that the samples are independent. In most situations this assumption is trivial, but in our case it becomes an issue. Since mosquitoes reproduce, mosquito incidence in a sufficiently short time period is highly dependent on the incidence in a previous time period. The null model is essentially guessing this effect based on the average in the other years. This leads to an inappropriate fit for the data in 2021. To address this problem, we fit an autoregressive model based on the previous week.
+Before we continue, we note another regression assumption may be violated. A standard generalized linear model assumes that the samples are independent. In most situations this assumption is trivial, but in our case it becomes an issue. Since mosquitoes reproduce, mosquito incidence in a sufficiently short time period is highly dependent on the incidence in a previous time period. The null model is essentially guessing this effect based on the average in the other years. This leads to an inappropriate fit for the data in 2021. To address this problem, we fit an autoregressive model based on the previous week. For the first week of each year, we assume the count of WNV+ mosquitoes is 0.
 
 ```{r lag count model}
 ar_fit <- MASS::glm.nb(count ~ lag_count, mosq_cases_temp)
@@ -945,15 +958,18 @@ mosq_cases_temp |>
   cbind(pred = predict(ar_fit, type = "response")) |> 
   ggplot(aes(x = weekyear, y = count)) +
   geom_point(alpha = 0.5, size = 2) + 
-  geom_line(aes(y = pred, group = year), color = "#31688EFF", size = 0.6)
+  geom_line(aes(y = pred, group = year), color = "#31688EFF", size = 0.6) +
+  labs(title = "Prediction of Autoregressive Count Model",
+       x = "Weeks Since January 2021")
 
 mosq_cases_temp |> 
   cbind(resid = resid(ar_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = "#31688EFF") 
+  geom_point(color = "#31688EFF") +
+  labs(title = "Residuals vs Prediction of Autoregressive Count Model")
 ```
 
-Now, we have a model with just the lagging count of mosquitoes. The estimated increase in counts based on the prior count of mosquitoes is `r ar_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)` with a p value of `r ar_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`. The lagging mosquito count is then a significant predictor of estimated mosquito counts, and the graph illustrates the model fits the observed points well, except for the peaks in the 2021 data.
+Now, we have a model with just the lagging count of mosquitoes. The estimated increase in counts based on the prior count of mosquitoes is `r ar_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)` with a p value of `r ar_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(6)`. The lagging mosquito count is then a significant predictor of estimated mosquito counts, and the graph illustrates the model fits the observed points well, except for the peaks in the 2021 data. Further, there appears to be a positive bias in the model when the count is close to zero. 
 
 ```{r lag count temp model}
 ar_temp_fit <- MASS::glm.nb(count ~ lag_count + lag_temp, mosq_cases_temp)
@@ -981,16 +997,19 @@ mosq_cases_temp |>
   geom_point(alpha = 0.5, size = 2) + 
   geom_line(aes(y = pred_ar, color = "AR", group = year), linetype = "dashed", size = 0.6) +
   geom_line(aes(y = pred_ar_temp, color = "AR+temp", group = year), linetype = "solid", size = 0.6) +
-  scale_color_manual(name = "models", values = c("AR" = "#31688EFF", "AR+temp" = "#1F9A8AFF"))
+  scale_color_manual(name = "models", values = c("AR" = "#31688EFF", "AR+temp" = "#1F9A8AFF")) +
+  labs(title = "Comparing AR Model with AR + Temperature Effect",
+       x = "Weeks Since January 2021")
 
 mosq_cases_temp |> 
   cbind(resid = resid(ar_temp_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = "#1F9A8AFF") 
+  geom_point(color = "#1F9A8AFF")  +
+  labs(title = "Residuals of AR + Temp")
 
 ```
 
-Afterwards, a model that also has lagging average temperature has significant terms for both lagging temperature and lagging mosquito counts. The associated estimate for lagging count is now `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`, with a p value of `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`. For lagging temperature, the estimate is `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` , with a  p value of `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(p.value) |> round(4)`. This model indicates lagging temperature has a larger effect on estimating mosquito counts than lagging mosquito counts. Compared to the model with just lagging mosquito counts, lagging mosquito counts has a slightly smaller effect on predicting counts in this model. Note the addition of the temperature variable improves the prediction notably for 2021.
+Afterwards, a model that also has lagging average temperature has significant terms for both lagging temperature and lagging mosquito counts. The associated estimate for lagging count is now `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`, with a p value of `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(6)`. For lagging temperature, the estimate is `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` , with a  p value of `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(p.value) |> round(6)`. This model indicates lagging temperature has a larger effect on estimating mosquito counts than lagging mosquito counts. Compared to the model with just lagging mosquito counts, lagging mosquito counts has a slightly smaller effect on predicting counts in this model. Note the addition of the temperature variable improves the prediction notably for 2021 and for low count data points.
 
 Lastly, when we explored Poisson models, we had a saturated model that included precipitation as a predictor and found it was a considerably significant predictor with a larger effect size than the other predictors. However, since a Poisson regression is overdispersed for our data, we wanted to see if precipitation also has a considerable impact on predicting mosquito counts in a negative binomial regression model. 
 
@@ -1022,17 +1041,20 @@ mosq_cases_temp |>
   geom_line(aes(y = pred_null, color = "null", group = year), linetype = "dotted", size = 1.9) +
   geom_line(aes(y = pred_ar_temp, color = "AR+temp", group = year), linetype = "solid", size = 0.6) +
   geom_line(aes(y = pred_ar_temp_rain, color = "AR+temp+rain", group = year), linetype = "dashed", size = 0.6) +
-  scale_color_manual(name = "models", values = c("null" = "#472D7BFF", "AR+temp" = "#1F9A8AFF", "AR+temp+rain" = "#5DC863FF"))
+  scale_color_manual(name = "models", values = c("null" = "#472D7BFF", "AR+temp" = "#1F9A8AFF", "AR+temp+rain" = "#5DC863FF"))  +
+  labs(title = "Comparing Candidate Models",
+       x = "Weeks Since January 2021")
 
 mosq_cases_temp |> 
   cbind(resid = resid(ar_temp_rain_fit)) |> 
   ggplot(aes(x = count, y = resid)) +
-  geom_point(color = "#5DC863FF") 
+  geom_point(color = "#5DC863FF")  +
+  labs(title = "Residuals of AR + Temp + Rain")
 ```
 
-For this model, the estimated coefficient for lagging mosquito counts is `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`, compared to its coefficient in the model without rain with `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`. The p value for this estimate is `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`, while it has a p value in the prior model of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`. With lagging average temperature, the estimate is now `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` (p = `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_temp") |> pull(p.value) |> round(4)` compared to `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` (p = `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`). 
+For this model, the estimated coefficient for lagging mosquito counts is `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`, compared to its coefficient in the model without rain with `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(estimate) |> round(4)`. The p value for this estimate is `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`, while it has a p value in the prior model of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(4)`. With lagging average temperature, the estimate is now `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` (p = `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_temp") |> pull(p.value) |> round(6)` compared to `r ar_temp_fit |> tidy() |> filter(term == "lag_temp") |> pull(estimate) |> round(4)` (p = `r ar_temp_fit |> tidy() |> filter(term == "lag_count") |> pull(p.value) |> round(6)`)). 
 
-The new term of lagging precipitation has an estimate of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_prcp") |> pull(estimate) |> round(4)` with a p value of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_prcp") |> pull(p.value) |> round(4)`. Despite having a large effect size compared to the other predictors, it is now no longer a significant estimate in a negative binomial model. This is likely from adjusting for the overdispersion, which would have biased the standard error of the lagging precipitation estimate towards zero and artificially inflated the significance. In terms of model fit, including the lagging precipitation term only slightly improved model fit for 2023. As such, for maintaining parsimony, our final model only includes lagging average temperature and lagging mosquito counts, not lagging rain.
+The new term of lagging precipitation has an estimate of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_prcp") |> pull(estimate) |> round(4)` with a p value of `r ar_temp_rain_fit |> tidy() |> filter(term == "lag_prcp") |> pull(p.value) |> round(6)`. Despite having a large effect size compared to the other predictors, it is now no longer a significant estimate in a negative binomial model. This is likely from adjusting for the overdispersion, which would have biased the standard error of the lagging precipitation estimate towards zero and artificially inflated the significance. In terms of model fit, including the lagging precipitation term only slightly improved model fit for 2023. As such, for maintaining parsimony, our final model only includes lagging average temperature and lagging mosquito counts, not lagging rain.
 
 
 ```{r final model}
@@ -1056,6 +1078,7 @@ final_fit |>
 
 ```
 
+#### Outlier Analysis
 ```{r influence analysis}
 augment_df <- 
   augment(final_fit) |>
@@ -1187,19 +1210,140 @@ pred_vals <-
 inner_join(pred_vals, pred_vals_omit, by = join_by(id)) |> 
   select(-ends_with(".y")) |>
   rename(count = count.x) |> 
-  ggplot(aes(x = count, y = pred_fin)) +
-  geom_point(color = "#404788FF") +
-  geom_point(aes(y = pred_fin_omit), color = "#55C667FF") +
+  pivot_longer(
+    cols = starts_with("pred_fin"),
+    values_to = "prediction",
+    names_to = "model",
+    names_prefix = "pred_") |>
+  mutate(
+    model = case_when(
+      model == "fin" ~ "original",
+      .default = "outliers omitted"
+    )
+  ) |>
+  ggplot(aes(x = count, y = prediction, color = model)) +
+  geom_point() +
   labs(
+    title = "Comparing Predictions When Outliers are Removed",
     y = "Predicted values",
     x = "Observed values"
   )
-```
-When plotting predicted values from both models for a given observed count, the values do not seem to differ much either, especially for smaller observed values. These influential points therefore do not seem to be weighing the model heavily. 
-  
-  
 
-## Discussion
+mosq_cases_temp |> 
+  select(id, count, lag_count, everything()) |> 
+  filter(!(id %in% influential_ids)) |>
+  cbind(resid = resid(final_fit_omitted)) |> 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = "#5DC863FF")  +
+  labs(title = "Residuals When Outliers are Removed")
+```
+
+Plotting predicted values from both models shows a reduction in the positive bias from the full model. This is a slight improvement, but the residuals vs predicted values plot shows this model does not completely characterize the response data. There remains a quadratic trend not accounted for by our model.
+
+#### Adding Quadratic Lag Terms
+```{r}
+final_fit_quadratic_counts <-
+  mosq_cases_temp |> 
+  MASS::glm.nb(count ~ lag_count + I(lag_count^2) + lag_temp, data = _)
+
+final_fit_quadratic_counts |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  ) 
+
+mosq_cases_temp |> 
+  cbind(resid = resid(final_fit_quadratic_counts)) |> 
+  ggplot(aes(x = count, y = resid)) +
+  geom_point(color = "#5DC863FF") + 
+  geom_hline(yintercept = 0) +
+  labs(title = "Partial Residuals for Quadratic Count Model (Counts)")
+
+mosq_cases_temp |> 
+  cbind(resid = resid(final_fit_quadratic_counts)) |> 
+  ggplot(aes(x = lag_temp, y = resid)) +
+  geom_point(color = "#5DC863FF") + 
+  geom_hline(yintercept = 0) +
+  labs(title = "Residuals for Quadratic Count Model (Temps)")
+
+mosq_cases_temp |>
+  cbind(prediction = predict(final_fit_quadratic_counts, type = "response")) |> 
+  ggplot(aes(x = weekyear, y = count, group = year)) +
+  geom_point() + 
+  geom_line(aes(x = weekyear, y = prediction), color = "#5DC863FF") +
+  labs(title = "Predictions for Quadratic Count Model")
+```
+
+Adding a quadratic term for the previous week's count of mosquitoes improved the residual behavior, but caused unusual behavior in the predictions. The does not appear to be a non-linear trend for the partial residuals of the lagged temperature variable.
+
+```{r}
+augment_df <- 
+  augment(final_fit_quadratic_counts) |>
+  mutate(
+    id = row_number(),
+    avg_hat_2 = 2*mean(.hat),
+    avg_hat_3 = 3*mean(.hat),
+    influential = case_when(
+      .cooksd > avg_hat_2 ~ 1,
+      .cooksd > avg_hat_3 ~ 1,
+      .std.resid > 2 ~ 1, 
+      .default = 0
+    )
+  ) |> 
+  select(id, everything())
+
+avg_hat_2 <- 
+  augment_df |> 
+  pull(avg_hat_2) |> 
+  nth(1)
+  
+avg_hat_3 <-
+  augment_df |> 
+  pull(avg_hat_3) |> 
+  nth(1)
+  
+augment_df |> 
+  ggplot(aes(x = .hat, y = .std.resid)) + 
+  geom_point(aes(size = .cooksd, color = .cooksd)) +
+  geom_hline(
+    yintercept = c(-2, 0, 2)
+  ) +
+  geom_vline(
+    xintercept = c(avg_hat_2, avg_hat_3)
+  ) +
+  guides(
+    color = "none",
+    size = "none"
+  ) +
+  labs(title = "Influence Plot for Quadratic Count Model",
+       y = "Standardized Residuals",
+       x = "Hat Value")
+
+```
+
+Again, we look for influential outliers and see whether they made a difference in the analysis. Comparing influence versus standardized residual shows better performance than the linear count model.
+
+### Final Model
+```{r}
+final_fit_quadratic_counts |> 
+  tidy() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
+  )
+
+final_fit_quadratic_counts |> 
+  glance() |> 
+  knitr::kable(
+    digits = 4,
+    col.names = c("Null deviance", "Null df", "Log likelihood", "AIC", "BIC", "Deviance", "Residual df", "Number of observations")
+  )
+```
+
+
+
+## **Discussion**
 
 ### Highlights
 * WNV(+) mosquito counts follow a distinct seasonal pattern (large increases July to September, peak in August)  
