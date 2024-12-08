@@ -25,7 +25,7 @@ library(broom.helpers)
 ## **Motivation**
 
 ### Inspiration
-Our group has a shared interest in addressing climate change, studying infectious diseases, and uniting over our mutual hatred of mosquito bites. Inspiration for this project stems from several relevant news articles and papers:
+Our group has a shared interest in addressing climate change, studying infectious diseases, and uniting over our mutual hatred of mosquito bites. Inspiration for this project stems from a few articles: 
 
 * A [2024 New York Times article](https://www.nytimes.com/article/west-nile-virus-nyc.html) highlights the rising concern for an increased number of mosquitoes infected with West Nile virus (WNV) over the summer in New York City (NYC) and how this likely driven by climate change. 
 * A [2020 Nature article](https://www.nature.com/articles/s41590-020-0648-y) finds that climate change can affect mosquito abundance, survival, transmission dynamics, and pathogen development within vectors.
@@ -33,14 +33,15 @@ Our group has a shared interest in addressing climate change, studying infectiou
 This issue is concerning as worsening climate change trends and warmer temperatures in NYC can create more hospitable environments for mosquitoes carrying WNV and may increase human-mosquito interaction. Motivated by these concerns, we aimed to explore the rising temperatures trends in NYC, WNV incidence in NYC, and what is being done to control its spread. 
 
 ### Background and Aims
-Climate change is worsening the transmission and spread of vector-borne diseases. Among these is West Nile Virus (WNV), a mosquito-borne disease that has recently become endemic to New York City. While approximately most WNV cases are asymptomatic or lead to mild flu-like symptoms, some lead to [serious complications](https://www.cdc.gov/west-nile-virus/hcp/clinical-signs/index.html) like neuroinvasive disease which is associated with significant morbidity and mortality. 
+Climate change is worsening the transmission and spread of vector-borne diseases. Among these is West Nile Virus (WNV), a mosquito-borne disease that has been endemic to North America since 1999. While approximately most WNV cases are asymptomatic or lead to mild flu-like symptoms, some lead to [serious complications](https://www.cdc.gov/west-nile-virus/hcp/clinical-signs/index.html) like neuroinvasive disease which is associated with significant morbidity and mortality. 
+
+Concerningly, WNV disease was [detected in New Yorkers for the first time in 2024](https://www.nyc.gov/site/doh/about/press/pr2024/west-nile-virus-detected-in-new-york.page). This year, there were 1,286 mosquitio pools positive for WNV across all five boroughs, which is more than double the number detected last year. An average of 17 people per year over the last decade have been diagnosed with West Nile neuroinvasive disease in NYC, with a case fatality rate of 10%. 
 
 The potential for severe disease, long-term disability, and fatality makes WNV a serious public health concern on the horizon as temperatures continue to rise in NYC. The Heat Vulnerability Index (HVI) varies significantly across New York City neighborhoods, which could influence the incidence of mosquito vectors. 
 
 Our project aims to uncover the relationships between climate change, location, and the incidence of West Nile Virus in New York City. Similarly to how the COVID-19 pandemic revealed stark inequities in disease morbidity and mortality by location, we would like to understand if similar patterns exist in this context.
 
 
-  
 ## **Initial Questions**
 
 With this inspiration, we wanted to explore available NYC data sets to answer some of these initial questions:
@@ -1201,11 +1202,11 @@ When plotting predicted values from both models for a given observed count, the 
 ## Discussion
 
 ### Highlights
-WNV(+) mosquito counts follow a distinct seasonal pattern (large increases July to September, peak in August)
-Incidence of WNV(+) mosquitos differs significantly by borough, but average temperature does not
-Higher temperatures associated with WNV(+) mosquito incidence
-WNV(+) mosquito count is associated with week & month of year, but not year (incidence did not increase year-to-year)
-Lagging analysis: prior temperatures and WNV(+) mosquito counts predict current WNV(+) mosquito counts, but precipitation does not
+* WNV(+) mosquito counts follow a distinct seasonal pattern (large increases July to September, peak in August)  
+* Incidence of WNV(+) mosquitos differs significantly by borough, but average temperature does not  
+* Higher temperatures associated with WNV(+) mosquito incidence  
+* WNV(+) mosquito count is associated with week & month of year, but not year (incidence did not increase year-to-year)  
+* Lagging analysis: prior temperatures and WNV(+) mosquito counts predict current WNV(+) mosquito counts, but precipitation does not  
 
 ### Results
 Data Exploration: 
