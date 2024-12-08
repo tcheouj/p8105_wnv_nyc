@@ -382,9 +382,11 @@ div.tocify {
 library(tidyverse)
 library(rvest)
 library(httr)
-library(GSODR)
-library(sf)
-library(patchwork)</code></pre>
+library(GSODR)</code></pre>
+<pre><code>## Warning: package &#39;GSODR&#39; was built under R version 4.4.2</code></pre>
+<pre class="r"><code>library(sf)</code></pre>
+<pre><code>## Warning: package &#39;sf&#39; was built under R version 4.4.2</code></pre>
+<pre class="r"><code>library(patchwork)</code></pre>
 <p>First, load in necessary packages.</p>
 </div>
 <div id="data" class="section level2">
@@ -700,12 +702,6 @@ the WNV+ mosquito was detected.</li>
       zip_code == 10000 ~ &quot;Central Park&quot;,
       .default = neighborhood
     )
-  )
-
-inner_join(wnv_mosquito_detection, hvi_zcta, by = join_by(zip_code)) |&gt; 
-  group_by(hvi) |&gt; 
-  summarize(
-    count = n()
   )</code></pre>
 <p><strong>GSODR</strong></p>
 <ul>
@@ -793,11 +789,21 @@ weather_2021_2024 |&gt;
   geom_point(size = 0.5, alpha = 0.5) +
   geom_smooth(se = FALSE, color = &quot;white&quot;, alpha = 0.5) +
   theme(legend.position = &quot;bottom&quot;) + 
-  geom_errorbar(aes(ymin = min, ymax = max), alpha = 0.5)</code></pre>
+  geom_errorbar(aes(ymin = min, ymax = max), alpha = 0.5) +
+  labs(
+    x = &quot;Year&quot;,
+    y = &quot;Temperature\n(degrees Fahrenheit)&quot;
+  )</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>We found that, despite being in different boroughs, there is not much
 variation in measured temperatures. Since they were all fairly similar,
 we ended up taking the average of the 5 weather stations.</p>
+<p>Worth noting is that over the years, the troughs in the temperature
+graphs appear to get higher, indicating that the minimum temperature may
+be increasing, though the same is not the case for the maximum
+temperature. The minimum temperature is around 10 degrees higher in 2023
+than 2022, save for some outliers, and 2024 also has higher minimum
+temperatures than 2022.</p>
 </div>
 <div id="exploring-trends-in-wnv-positive-mosquito-counts"
 class="section level3">
@@ -816,6 +822,11 @@ for each year from 2021 through 2024, separated by borough.</p>
   ) |&gt; 
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = &quot;identity&quot;) +
+  labs(
+    y = &quot;WNV+ mosquitoes&quot;,
+    x = &quot;Months&quot;,
+    title = &quot;WNV+ mosquitoes in 2021&quot;
+  ) +
   facet_grid(~borough)</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre class="r"><code>mosquitoes_2022_table |&gt;
@@ -825,6 +836,11 @@ for each year from 2021 through 2024, separated by borough.</p>
   ) |&gt; 
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = &quot;identity&quot;) +
+  labs(
+    y = &quot;WNV+ mosquitoes&quot;,
+    x = &quot;Months&quot;,
+    title = &quot;WNV+ mosquitoes in 2022&quot;
+  ) +
   facet_grid(~borough)</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <pre class="r"><code>mosquitoes_2023_table |&gt;
@@ -834,6 +850,11 @@ for each year from 2021 through 2024, separated by borough.</p>
   ) |&gt; 
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = &quot;identity&quot;) +
+  labs(
+    y = &quot;WNV+ mosquitoes&quot;,
+    x = &quot;Months&quot;,
+    title = &quot;WNV+ mosquitoes in 2023&quot;
+  ) +
   facet_grid(~borough)</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
 <pre class="r"><code>mosquitoes_2024_table |&gt;
@@ -843,6 +864,11 @@ for each year from 2021 through 2024, separated by borough.</p>
   ) |&gt; 
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = &quot;identity&quot;) +
+  labs(
+    y = &quot;WNV+ mosquitoes&quot;,
+    x = &quot;Months&quot;,
+    title = &quot;WNV+ mosquitoes in 2024&quot;
+  ) +
   facet_grid(~borough)</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
 <p>The figures show that there are drastic differences in the counts of
@@ -860,7 +886,12 @@ wnv_mosquitoes |&gt;
   summarise(count = n()) |&gt;
   mutate(weekyear = (year - 2021)*52 + week) |&gt; 
 ggplot(aes(x = weekyear, y = count)) +
-geom_point()</code></pre>
+geom_point() +
+labs(
+  x = &quot;Weeks since 2021&quot;,
+  y = &quot;WNV+ mosquitoes&quot;,
+  title = &quot;Total citywide WNV+ mosquito counts per week&quot;
+)</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Further, when boroughs are grouped together, we see that the number
 of WNV-positive mosquitoes peaked in 2021, followed by a decline in 2022

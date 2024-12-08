@@ -276,12 +276,6 @@ wnv_mosquito_detection <- bind_rows(
       .default = neighborhood
     )
   )
-
-inner_join(wnv_mosquito_detection, hvi_zcta, by = join_by(zip_code)) |> 
-  group_by(hvi) |> 
-  summarize(
-    count = n()
-  )
 ```
 
 
@@ -370,16 +364,20 @@ weather_2021_2024 |>
   geom_point(size = 0.5, alpha = 0.5) +
   geom_smooth(se = FALSE, color = "white", alpha = 0.5) +
   theme(legend.position = "bottom") + 
-  geom_errorbar(aes(ymin = min, ymax = max), alpha = 0.5)
+  geom_errorbar(aes(ymin = min, ymax = max), alpha = 0.5) +
+  labs(
+    x = "Year",
+    y = "Temperature\n(degrees Fahrenheit)"
+  )
 ```
 
 We found that, despite being in different boroughs, there is not much variation in measured temperatures. Since they were all fairly similar, we ended up taking the average of the 5 weather stations. 
 
+Worth noting is that over the years, the troughs in the temperature graphs appear to get higher, indicating that the minimum temperature may be increasing, though the same is not the case for the maximum temperature. The minimum temperature is around 10 degrees higher in 2023 than 2022, save for some outliers, and 2024 also has higher minimum temperatures than 2022.
 
 ### Exploring Trends in WNV-Positive Mosquito Counts
 
 We then wanted to focus on the mosquito data. Specifically, we wanted to look at the number of mosquito counts by year and borough to explore whether mosquito season starts earlier. Since we predicted that temperatures are rising in NYC, then we should expect that warmer climates may cause mosquito season to start sooner. To visualize this, we created four separate plots of counts of mosquitoes positive for WNV for each year from 2021 through 2024, separated by borough. 
-
 
 ```{r, message=FALSE, warning=FALSE}
 mosquitoes_2021_table |>
@@ -389,6 +387,11 @@ mosquitoes_2021_table |>
   ) |> 
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = "identity") +
+  labs(
+    y = "WNV+ Mosquitoes",
+    x = "Months",
+    title = "WNV+ Mosquitoes in 2021"
+  ) +
   facet_grid(~borough)
 
 mosquitoes_2022_table |>
@@ -398,6 +401,11 @@ mosquitoes_2022_table |>
   ) |> 
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = "identity") +
+  labs(
+    y = "WNV+ Mosquitoes",
+    x = "Months",
+    title = "WNV+ Mosquitoes in 2022"
+  ) +
   facet_grid(~borough)
 
 mosquitoes_2023_table |>
@@ -407,6 +415,11 @@ mosquitoes_2023_table |>
   ) |> 
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = "identity") +
+  labs(
+    y = "WNV+ Mosquitoes",
+    x = "Months",
+    title = "WNV+ Mosquitoes in 2023"
+  ) +
   facet_grid(~borough)
 
 mosquitoes_2024_table |>
@@ -416,6 +429,11 @@ mosquitoes_2024_table |>
   ) |> 
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = "identity") +
+  labs(
+    y = "WNV+ Mosquitoes",
+    x = "Months",
+    title = "WNV+ Mosquitoes in 2024"
+  ) +
   facet_grid(~borough)
 ```
 
@@ -432,17 +450,23 @@ wnv_mosquitoes |>
   summarise(count = n()) |>
   mutate(weekyear = (year - 2021)*52 + week) |> 
 ggplot(aes(x = weekyear, y = count)) +
-geom_point()
+geom_point() +
+labs(
+  x = "Weeks Since January 2021",
+  y = "WNV+ mosquitoes",
+  title = "Total Citywide WNV+ Mosquito Counts Per Week"
+)
 ```
 
 Further, when boroughs are grouped together, we see that the number of WNV-positive mosquitoes peaked in 2021, followed by a decline in 2022 and 2023. There is a slight increase in the counts peak in the year 2024.
 
 We can also see from both figures that between the years of 2021-2024, mosquito season typically ranges from June to October, which is still within a normal range of months for mosquito season in NYC. Unfortunately, the data we have access to only provides detections of WNV+ mosquitoes within NYC starting from 2021 so we won't be able to analyze long-term trends.
 
-
 ### Mapping WNV-Positive Mosquito Trends Across NYC
 
 To visualize this further, we wanted to create a map of NYC between 2021-2024 and overlay the WNV positive mosquitoes data to see if we could visualize any trends on which boroughs or neighborhoods may be affected more. 
+
+One thing worth noting is that the WNV+ mosquito counts are by ZIP code, but we could not find a shapefile containing NYC ZIP codes that was within the GitHub storage limit. Hence, we had to use a smaller shapefile that used MODZCTAs, which are approximations of ZIP codes created by the Census Bureau and modified by the NYC city government to combine non-residential ZIP codes with nearby residential ones. The only MODZCTA shapefile available was for 2010 MODZCTAs, making some MODZCTA boundaries somewhat outdated. The mapping of mosquitoes is then not a 1:1 comparison, though it is a close proxy. 
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
 # get ZIP codes that did not have counts of WNV using anti_join with original ZIP code list (for generating proportions and to ensure ZIPs without cases can still be mapped later)
@@ -538,8 +562,8 @@ mos_by_modzcta |>
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() + 
   labs(
-    title = "WNV positive mosquitoes by MODZCTA",
-    caption = "Data and shapefile from DOHMH"
+    title = "WNV+ Mosquitoes by MODZCTA",
+    caption = "Data and Shapefile from DOHMH"
   ) +
   theme(
     axis.text.x = element_blank(), 
