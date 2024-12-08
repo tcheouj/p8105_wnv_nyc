@@ -634,7 +634,7 @@ fit1 |>
   tidy() |> 
   knitr::kable(
     digits = 4,
-    col.names = c("Term", "Estimate", "Standard error", "Tes statistic", "p value")
+    col.names = c("Term", "Estimate", "Standard error", "Test statistic", "p value")
   )
 
 fit1 |> 
