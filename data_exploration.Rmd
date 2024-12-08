@@ -26,7 +26,7 @@ First, load in necessary packages.
 
 ### Sources
 
-We utilized the [Supplmentary Dataset of NYC Zip Codes](https://p8105.com/data/zip_codes.html) that was provided on our P8105 class website, which includes information on *NYC zip codes, boroughs*, and *neighborhoods*.
+We utilized the [Supplementary Dataset of NYC Zip Codes](https://p8105.com/data/zip_codes.html) that was provided on our P8105 class website, which includes information on *NYC zip codes, boroughs*, and *neighborhoods*.
 
 We located the [NYC Heat Vulnerability Index (HVI)](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/climate/?id=2411#display=summary) through the NYC DOHMH Environment and Health Data Portal. We also utilized [Zip Code Tabulated Area Level HVI](https://catalog.data.gov/dataset/heat-vulnerability-index-rankings) data, which is designed to approximate zip codes and works well with merging HVI scores with our other datasets. The HVI shows the risk of community-level health impacts due to extreme heat and includes factors such as surface temperatures, green spaces, access to home air conditioning, median income, and the percentage of residents who are low-income or non-Latinx Black (who are often excluded from heat resources). Neighborhoods with a **HVI score of 1** have the lowest risk while those with a **HVI score of 5** have the highest risk.
 

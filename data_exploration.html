@@ -394,8 +394,8 @@ library(GSODR)</code></pre>
 <div id="sources" class="section level3">
 <h3>Sources</h3>
 <p>We utilized the <a
-href="https://p8105.com/data/zip_codes.html">Supplmentary Dataset of NYC
-Zip Codes</a> that was provided on our P8105 class website, which
+href="https://p8105.com/data/zip_codes.html">Supplementary Dataset of
+NYC Zip Codes</a> that was provided on our P8105 class website, which
 includes information on <em>NYC zip codes, boroughs</em>, and
 <em>neighborhoods</em>.</p>
 <p>We located the <a
@@ -823,9 +823,9 @@ for each year from 2021 through 2024, separated by borough.</p>
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = &quot;identity&quot;) +
   labs(
-    y = &quot;WNV+ mosquitoes&quot;,
+    y = &quot;WNV+ Mosquitoes&quot;,
     x = &quot;Months&quot;,
-    title = &quot;WNV+ mosquitoes in 2021&quot;
+    title = &quot;WNV+ Mosquitoes in 2021&quot;
   ) +
   facet_grid(~borough)</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
@@ -837,9 +837,9 @@ for each year from 2021 through 2024, separated by borough.</p>
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = &quot;identity&quot;) +
   labs(
-    y = &quot;WNV+ mosquitoes&quot;,
+    y = &quot;WNV+ Mosquitoes&quot;,
     x = &quot;Months&quot;,
-    title = &quot;WNV+ mosquitoes in 2022&quot;
+    title = &quot;WNV+ Mosquitoes in 2022&quot;
   ) +
   facet_grid(~borough)</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
@@ -851,9 +851,9 @@ for each year from 2021 through 2024, separated by borough.</p>
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = &quot;identity&quot;) +
   labs(
-    y = &quot;WNV+ mosquitoes&quot;,
+    y = &quot;WNV+ Mosquitoes&quot;,
     x = &quot;Months&quot;,
-    title = &quot;WNV+ mosquitoes in 2023&quot;
+    title = &quot;WNV+ Mosquitoes in 2023&quot;
   ) +
   facet_grid(~borough)</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
@@ -865,9 +865,9 @@ for each year from 2021 through 2024, separated by borough.</p>
   ggplot(aes(x = date, y = count, fill = borough)) +
   geom_col(stat = &quot;identity&quot;) +
   labs(
-    y = &quot;WNV+ mosquitoes&quot;,
+    y = &quot;WNV+ Mosquitoes&quot;,
     x = &quot;Months&quot;,
-    title = &quot;WNV+ mosquitoes in 2024&quot;
+    title = &quot;WNV+ Mosquitoes in 2024&quot;
   ) +
   facet_grid(~borough)</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
@@ -888,9 +888,9 @@ wnv_mosquitoes |&gt;
 ggplot(aes(x = weekyear, y = count)) +
 geom_point() +
 labs(
-  x = &quot;Weeks since 2021&quot;,
+  x = &quot;Weeks Since January 2021&quot;,
   y = &quot;WNV+ mosquitoes&quot;,
-  title = &quot;Total citywide WNV+ mosquito counts per week&quot;
+  title = &quot;Total Citywide WNV+ Mosquito Counts Per Week&quot;
 )</code></pre>
 <p><img src="data_exploration_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Further, when boroughs are grouped together, we see that the number
@@ -911,6 +911,15 @@ class="section level3">
 2021-2024 and overlay the WNV positive mosquitoes data to see if we
 could visualize any trends on which boroughs or neighborhoods may be
 affected more.</p>
+<p>One thing worth noting is that the WNV+ mosquito counts are by ZIP
+code, but we could not find a shapefile containing NYC ZIP codes that
+was within the GitHub storage limit. Hence, we had to use a smaller
+shapefile that used MODZCTAs, which are approximations of ZIP codes
+created by the Census Bureau and modified by the NYC city government to
+combine non-residential ZIP codes with nearby residential ones. The only
+MODZCTA shapefile available was for 2010 MODZCTAs, making some MODZCTA
+boundaries somewhat outdated. The mapping of mosquitoes is then not a
+1:1 comparison, though it is a close proxy.</p>
 <pre class="r"><code># get ZIP codes that did not have counts of WNV using anti_join with original ZIP code list (for generating proportions and to ensure ZIPs without cases can still be mapped later)
 
 
@@ -1004,8 +1013,8 @@ mos_by_modzcta |&gt;
   ggplot(aes(fill = count, geometry = geometry)) +
   geom_sf() + 
   labs(
-    title = &quot;WNV positive mosquitoes by MODZCTA&quot;,
-    caption = &quot;Data and shapefile from DOHMH&quot;
+    title = &quot;WNV+ Mosquitoes by MODZCTA&quot;,
+    caption = &quot;Data and Shapefile from DOHMH&quot;
   ) +
   theme(
     axis.text.x = element_blank(), 
